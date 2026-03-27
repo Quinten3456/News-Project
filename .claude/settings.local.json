@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(gh repo:*)"
+      "Bash(gh repo:*)",
+      "Bash(powershell.exe -Command \"schtasks /create /tn 'NewsProjectAutoCommit' /tr 'powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File C:\\\\\\\\Users\\\\\\\\qalle\\\\\\\\OneDrive\\\\\\\\Documenten\\\\\\\\ClaudeProjects\\\\\\\\auto-commit.ps1' /sc minute /mo 30 /it /f\")"
     ]
   }
 }
