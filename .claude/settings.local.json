@@ -10,7 +10,15 @@
       "Bash(py:*)",
       "Bash(yt-dlp --version)",
       "Bash(pip install:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "WebFetch(domain:openai.com)",
+      "WebFetch(domain:www.anthropic.com)",
+      "WebFetch(domain:www.microsoft.com)",
+      "WebFetch(domain:techcrunch.com)",
+      "WebFetch(domain:venturebeat.com)",
+      "WebFetch(domain:www.mckinsey.com)",
+      "WebFetch(domain:www.reuters.com)",
+      "WebSearch"
     ]
   }
 }
