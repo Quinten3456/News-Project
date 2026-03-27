@@ -121,10 +121,19 @@ def _extract_article_text(url: str) -> str:
         return ""
 
 
+def _parse_rss(url: str) -> object:
+    """Fetch RSS via requests (handles redirects), then parse with feedparser."""
+    resp = _fetch_url(url)
+    if resp and resp.content:
+        return feedparser.parse(resp.content)
+    # Fallback: let feedparser try directly
+    return feedparser.parse(url, request_headers={"User-Agent": HEADERS["User-Agent"]})
+
+
 def fetch_rss(source: dict, cutoff: datetime, verbose: bool = False) -> List[Article]:
     articles = []
     try:
-        feed = feedparser.parse(source["url"])
+        feed = _parse_rss(source["url"])
         if verbose:
             print(f"  [{source['id']}] RSS: {len(feed.entries)} entries found")
         for entry in feed.entries[:source.get("max_articles", 20)]:
@@ -140,7 +149,7 @@ def fetch_rss(source: dict, cutoff: datetime, verbose: bool = False) -> List[Art
             snippet = BeautifulSoup(
                 entry.get("summary", entry.get("description", "")), "html.parser"
             ).get_text(" ", strip=True)[:500]
-            full_text = _extract_article_text(url)
+            # Full text is fetched lazily during summarization, not here
             articles.append(Article(
                 id=_article_id(url),
                 source_id=source["id"],
@@ -149,8 +158,8 @@ def fetch_rss(source: dict, cutoff: datetime, verbose: bool = False) -> List[Art
                 title=title,
                 url=url,
                 published_date=pub,
-                body_snippet=snippet or full_text[:500],
-                full_text=full_text,
+                body_snippet=snippet,
+                full_text="",  # fetched later if article passes filter
                 score_threshold=source["score_threshold"],
             ))
     except Exception as e:
@@ -186,15 +195,25 @@ def fetch_scrape(source: dict, cutoff: datetime, verbose: bool = False) -> List[
                 continue
             candidates.append((href, text))
 
+        # Filter out navigation-style links: require href to contain path depth > 1
+        # (e.g. /blog/some-article-title, not just /blog/ or /)
+        def is_article_link(href: str, text: str) -> bool:
+            try:
+                path = href.split("//", 1)[-1].split("/", 1)[-1] if "//" in href else href
+                segments = [s for s in path.split("/") if s]
+                # Article links typically have 2+ path segments and a meaningful title text
+                return len(segments) >= 2 and len(text) >= 20
+            except Exception:
+                return False
+
         seen_urls = set()
         count = 0
         for url, title in candidates:
             if url in seen_urls or count >= source.get("max_articles", 20):
                 break
-            seen_urls.add(url)
-            full_text = _extract_article_text(url)
-            if not full_text:
+            if not is_article_link(url, title):
                 continue
+            seen_urls.add(url)
             articles.append(Article(
                 id=_article_id(url),
                 source_id=source["id"],
@@ -202,9 +221,9 @@ def fetch_scrape(source: dict, cutoff: datetime, verbose: bool = False) -> List[
                 tier=source["tier"],
                 title=title,
                 url=url,
-                published_date=_now_utc(),  # scraping doesn't reliably get dates
-                body_snippet=full_text[:500],
-                full_text=full_text,
+                published_date=_now_utc(),
+                body_snippet="",   # fetched later if article passes filter
+                full_text="",
                 score_threshold=source["score_threshold"],
             ))
             count += 1
@@ -217,13 +236,52 @@ def fetch_scrape(source: dict, cutoff: datetime, verbose: bool = False) -> List[
 
 
 def fetch_rss_with_fallback(source: dict, cutoff: datetime, verbose: bool = False) -> List[Article]:
-    articles = fetch_rss(source, cutoff, verbose)
-    if not articles and "fallback_url" in source:
+    """Try RSS feed. Only fall back to scraping if the RSS feed itself fails (no entries at all)."""
+    try:
+        feed = _parse_rss(source["url"])
+        if feed.entries:
+            # RSS feed works — use it even if all entries are older than cutoff
+            # (scraping won't give us fresher articles if RSS doesn't have them)
+            articles = []
+            for entry in feed.entries[:source.get("max_articles", 20)]:
+                pub = _parse_date(entry.get("published_parsed") or entry.get("updated_parsed"))
+                if pub and pub < cutoff:
+                    continue
+                if pub is None:
+                    pub = _now_utc()
+                url = entry.get("link", "")
+                if not url:
+                    continue
+                title = entry.get("title", "").strip()
+                snippet = BeautifulSoup(
+                    entry.get("summary", entry.get("description", "")), "html.parser"
+                ).get_text(" ", strip=True)[:500]
+                articles.append(Article(
+                    id=_article_id(url),
+                    source_id=source["id"],
+                    source_name=source["name"],
+                    tier=source["tier"],
+                    title=title,
+                    url=url,
+                    published_date=pub,
+                    body_snippet=snippet,
+                    full_text="",
+                    score_threshold=source["score_threshold"],
+                ))
+            if verbose:
+                print(f"  [{source['id']}] RSS: {len(feed.entries)} entries, {len(articles)} within freshness window")
+            return articles
+        else:
+            if verbose:
+                print(f"  [{source['id']}] RSS returned no entries, trying scrape fallback")
+    except Exception as e:
         if verbose:
-            print(f"  [{source['id']}] RSS empty, trying scrape fallback")
+            print(f"  [{source['id']}] RSS failed ({e}), trying scrape fallback")
+
+    if "fallback_url" in source:
         fallback_source = {**source, "url": source["fallback_url"]}
-        articles = fetch_scrape(fallback_source, cutoff, verbose)
-    return articles
+        return fetch_scrape(fallback_source, cutoff, verbose)
+    return []
 
 
 def filter_freshness(articles: List[Article], days: int) -> List[Article]:

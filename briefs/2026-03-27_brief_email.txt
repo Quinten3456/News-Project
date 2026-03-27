@@ -1,0 +1,336 @@
+AI INTELLIGENCE BRIEF — WEEK OF 2026-03-27
+33 stories included this week
+
+============================================================
+
+TOP STORIES
+
+1. [DRY RUN] INSIDE OUR APPROACH TO THE MODEL SPEC
+   OpenAI Blog | Tier 1 | Mar 25
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://openai.com/index/our-approach-to-the-model-spec
+
+------------------------------------------------------------
+
+2. [DRY RUN] INTRODUCING THE OPENAI SAFETY BUG BOUNTY PROGRAM
+   OpenAI Blog | Tier 1 | Mar 25
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://openai.com/index/safety-bug-bounty
+
+------------------------------------------------------------
+
+3. [DRY RUN] HELPING DEVELOPERS BUILD SAFER AI EXPERIENCES FOR TEENS
+   OpenAI Blog | Tier 1 | Mar 24
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://openai.com/index/teen-safety-policies-gpt-oss-safeguard
+
+------------------------------------------------------------
+
+4. [DRY RUN] UPDATE ON THE OPENAI FOUNDATION
+   OpenAI Blog | Tier 1 | Mar 24
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://openai.com/index/update-on-the-openai-foundation
+
+------------------------------------------------------------
+
+5. [DRY RUN] POWERING PRODUCT DISCOVERY IN CHATGPT
+   OpenAI Blog | Tier 1 | Mar 24
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://openai.com/index/powering-product-discovery-in-chatgpt
+
+------------------------------------------------------------
+
+6. [DRY RUN] CREATING WITH SORA SAFELY
+   OpenAI Blog | Tier 1 | Mar 23
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://openai.com/index/creating-with-sora-safely
+
+------------------------------------------------------------
+
+7. [DRY RUN] GEMINILEARN, BUILD, AND PLAN ANYTHING
+   Google DeepMind | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://deepmind.google/models/gemini/
+
+------------------------------------------------------------
+
+8. [DRY RUN] NANO BANANACREATE AND EDIT DETAILED IMAGES
+   Google DeepMind | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://deepmind.google/models/gemini-image/
+
+------------------------------------------------------------
+
+9. [DRY RUN] GEMINI AUDIOTALK, CREATE AND CONTROL AUDIO
+   Google DeepMind | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://deepmind.google/models/gemini-audio/
+
+------------------------------------------------------------
+
+10. [DRY RUN] VEOGENERATE CINEMATIC VIDEO WITH AUDIO
+   Google DeepMind | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://deepmind.google/models/veo/
+
+------------------------------------------------------------
+
+11. [DRY RUN] IMAGENGENERATE HIGH-QUALITY IMAGES FROM TEXT
+   Google DeepMind | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://deepmind.google/models/imagen/
+
+------------------------------------------------------------
+
+12. [DRY RUN] LYRIAGENERATE HIGH FIDELITY MUSIC AND AUDIO
+   Google DeepMind | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://deepmind.google/models/lyria/
+
+------------------------------------------------------------
+
+13. [DRY RUN] GENIE 3GENERATE AND EXPLORE INTERACTIVE WORLDS
+   Google DeepMind | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://deepmind.google/models/genie/
+
+------------------------------------------------------------
+
+14. [DRY RUN] GEMINI ROBOTICSPERCEIVE, REASON, USE TOOLS AND INTERACT
+   Google DeepMind | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://deepmind.google/models/gemini-robotics/
+
+------------------------------------------------------------
+
+15. [DRY RUN] GEMMABUILD RESPONSIBLE AI APPLICATIONS AT SCALE
+   Google DeepMind | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://deepmind.google/models/gemma/
+
+------------------------------------------------------------
+
+16. [DRY RUN] SIMA 2AN AGENT THAT PLAYS, REASONS, AND LEARNS WITH YOU
+   Google DeepMind | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://deepmind.google/blog/sima-2-an-agent-that-plays-reasons-and-learns-with-you-in-virtual-3d-worlds/
+
+------------------------------------------------------------
+
+17. [DRY RUN] PRODUCTFEB 17, 2026INTRODUCING CLAUDE SONNET 4.6SONNET 4.6 D
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/claude-sonnet-4-6
+
+------------------------------------------------------------
+
+18. [DRY RUN] ANNOUNCEMENTSFEB 5, 2026INTRODUCING CLAUDE OPUS 4.6WE’RE UPG
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/claude-opus-4-6
+
+------------------------------------------------------------
+
+19. [DRY RUN] ANNOUNCEMENTSFEB 4, 2026CLAUDE IS A SPACE TO THINKWE’VE MADE
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/claude-is-a-space-to-think
+
+------------------------------------------------------------
+
+20. [DRY RUN] MAR 12, 2026ANNOUNCEMENTSANTHROPIC INVESTS $100 MILLION INTO
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/claude-partner-network
+
+------------------------------------------------------------
+
+21. [DRY RUN] MAR 11, 2026ANNOUNCEMENTSINTRODUCING THE ANTHROPIC INSTITUTE
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/the-anthropic-institute
+
+------------------------------------------------------------
+
+22. [DRY RUN] MAR 10, 2026ANNOUNCEMENTSSYDNEY WILL BECOME ANTHROPIC’S FOUR
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/sydney-fourth-office-asia-pacific
+
+------------------------------------------------------------
+
+23. [DRY RUN] MAR 6, 2026POLICYPARTNERING WITH MOZILLA TO IMPROVE FIREFOX’
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/mozilla-firefox-security
+
+------------------------------------------------------------
+
+24. [DRY RUN] MAR 5, 2026ANNOUNCEMENTSWHERE THINGS STAND WITH THE DEPARTME
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/where-stand-department-war
+
+------------------------------------------------------------
+
+25. [DRY RUN] FEB 27, 2026ANNOUNCEMENTSSTATEMENT ON THE COMMENTS FROM SECR
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/statement-comments-secretary-war
+
+------------------------------------------------------------
+
+26. [DRY RUN] FEB 26, 2026ANNOUNCEMENTSSTATEMENT FROM DARIO AMODEI ON OUR 
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/statement-department-of-war
+
+------------------------------------------------------------
+
+27. [DRY RUN] FEB 25, 2026ANNOUNCEMENTSANTHROPIC ACQUIRES VERCEPT TO ADVAN
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/acquires-vercept
+
+------------------------------------------------------------
+
+28. [DRY RUN] FEB 24, 2026POLICYANTHROPIC’S RESPONSIBLE SCALING POLICY: VE
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/responsible-scaling-policy-v3
+
+------------------------------------------------------------
+
+29. [DRY RUN] FEB 23, 2026ANNOUNCEMENTSDETECTING AND PREVENTING DISTILLATI
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/detecting-and-preventing-distillation-attacks
+
+------------------------------------------------------------
+
+30. [DRY RUN] RESPONSIBLE SCALING POLICY
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/news/announcing-our-updated-responsible-scaling-policy
+
+------------------------------------------------------------
+
+31. [DRY RUN] CONSUMER HEALTH DATA PRIVACY POLICY
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/legal/consumer-health-data-privacy-policy
+
+------------------------------------------------------------
+
+32. [DRY RUN] TERMS OF SERVICE: COMMERCIAL
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/legal/commercial-terms
+
+------------------------------------------------------------
+
+33. [DRY RUN] TERMS OF SERVICE: CONSUMER
+   Anthropic | Tier 1 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.anthropic.com/legal/consumer-terms
+
+------------------------------------------------------------

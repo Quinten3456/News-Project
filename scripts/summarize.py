@@ -19,6 +19,30 @@ from typing import List, Optional
 import anthropic
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+def _fetch_full_text(url: str) -> str:
+    """Fetch article full text on demand."""
+    if not url:
+        return ""
+    try:
+        import time, requests
+        from bs4 import BeautifulSoup
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+        time.sleep(0.5)
+        resp = requests.get(url, headers=headers, timeout=15)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "html.parser")
+        for tag in soup(["nav", "header", "footer", "script", "style", "aside"]):
+            tag.decompose()
+        for selector in ["article", "main", "body"]:
+            container = soup.select_one(selector)
+            if container:
+                text = " ".join(container.get_text(" ", strip=True).split())
+                if len(text) > 200:
+                    return text[:3000]
+        return ""
+    except Exception:
+        return ""
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts"))
 from collect import Article
 from filter_score import ScoredArticle
@@ -89,7 +113,9 @@ def summarize_article(item: ScoredArticle, client: anthropic.Anthropic, dry_run:
     if item.supporting_sources:
         multi_source = f"Also covered by: {', '.join(item.supporting_sources)}\n"
 
-    content = item.full_text[:2500] if item.full_text else item.body_snippet
+    # Fetch full text on demand if not already available
+    full_text = item.full_text or _fetch_full_text(item.url)
+    content = full_text[:2500] if full_text else item.body_snippet
 
     prompt = f"""Article details:
 Title: {item.title}

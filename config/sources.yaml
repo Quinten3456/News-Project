@@ -55,8 +55,10 @@ sources:
   - id: reuters_tech
     name: "Reuters Technology"
     tier: 2
-    method: scrape
-    url: "https://www.reuters.com/technology/artificial-intelligence/"
+    method: rss
+    # Note: Reuters public RSS feed is unreliable. Replace with working alternative if needed.
+    # Option: https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml (NYT Tech)
+    url: "https://feeds.reuters.com/reuters/technologyNews"
     score_threshold: 8
 
 settings:
