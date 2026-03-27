@@ -35,23 +35,23 @@ TOP STORIES
 
 ------------------------------------------------------------
 
-4. [DRY RUN] UPDATE ON THE OPENAI FOUNDATION
-   OpenAI Blog | Tier 1 | Mar 24
-
-   What happened: [dry-run placeholder]
-   Why it matters: [dry-run placeholder]
-   Strategic implication: [dry-run placeholder]
-   https://openai.com/index/update-on-the-openai-foundation
-
-------------------------------------------------------------
-
-5. [DRY RUN] POWERING PRODUCT DISCOVERY IN CHATGPT
+4. [DRY RUN] POWERING PRODUCT DISCOVERY IN CHATGPT
    OpenAI Blog | Tier 1 | Mar 24
 
    What happened: [dry-run placeholder]
    Why it matters: [dry-run placeholder]
    Strategic implication: [dry-run placeholder]
    https://openai.com/index/powering-product-discovery-in-chatgpt
+
+------------------------------------------------------------
+
+5. [DRY RUN] UPDATE ON THE OPENAI FOUNDATION
+   OpenAI Blog | Tier 1 | Mar 24
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://openai.com/index/update-on-the-openai-foundation
 
 ------------------------------------------------------------
 

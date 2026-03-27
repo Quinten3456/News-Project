@@ -12,6 +12,7 @@ sources:
     tier: 1
     method: scrape
     url: "https://deepmind.google/blog/"
+    url_must_contain: "/blog/"
     score_threshold: 6
 
   - id: anthropic_news
@@ -20,6 +21,7 @@ sources:
     method: rss_with_fallback
     url: "https://www.anthropic.com/rss.xml"
     fallback_url: "https://www.anthropic.com/news"
+    url_must_contain: "/news/"
     score_threshold: 6
 
   - id: microsoft_ai

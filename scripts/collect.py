@@ -206,6 +206,8 @@ def fetch_scrape(source: dict, cutoff: datetime, verbose: bool = False) -> List[
             except Exception:
                 return False
 
+        url_must_contain = source.get("url_must_contain", "")
+
         seen_urls = set()
         count = 0
         for url, title in candidates:
@@ -213,6 +215,13 @@ def fetch_scrape(source: dict, cutoff: datetime, verbose: bool = False) -> List[
                 break
             if not is_article_link(url, title):
                 continue
+            if url_must_contain and url_must_contain not in url:
+                continue
+            # Clean garbled titles: if title is very long or contains digits mid-word,
+            # derive a cleaner title from the URL slug instead
+            if len(title) > 120 or any(c.isdigit() for c in title[:20]):
+                slug = url.rstrip("/").split("/")[-1]
+                title = slug.replace("-", " ").title() if slug else title[:80]
             seen_urls.add(url)
             articles.append(Article(
                 id=_article_id(url),
