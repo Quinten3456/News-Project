@@ -2,7 +2,15 @@
   "permissions": {
     "allow": [
       "Bash(gh repo:*)",
-      "Bash(powershell.exe -Command \"schtasks /create /tn 'NewsProjectAutoCommit' /tr 'powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File C:\\\\\\\\Users\\\\\\\\qalle\\\\\\\\OneDrive\\\\\\\\Documenten\\\\\\\\ClaudeProjects\\\\\\\\auto-commit.ps1' /sc minute /mo 30 /it /f\")"
+      "Bash(powershell.exe -Command \"schtasks /create /tn 'NewsProjectAutoCommit' /tr 'powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File C:\\\\\\\\Users\\\\\\\\qalle\\\\\\\\OneDrive\\\\\\\\Documenten\\\\\\\\ClaudeProjects\\\\\\\\auto-commit.ps1' /sc minute /mo 30 /it /f\")",
+      "Bash(curl -s \"https://www.youtube.com/watch?v=gK0SafDz5KM\" -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\")",
+      "Bash(python3:*)",
+      "Bash(python3.exe --version)",
+      "Bash(py --version)",
+      "Bash(py:*)",
+      "Bash(yt-dlp --version)",
+      "Bash(pip install:*)",
+      "Bash(python:*)"
     ]
   }
 }
