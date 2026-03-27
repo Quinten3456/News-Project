@@ -1,0 +1,285 @@
+"""
+summarize.py
+
+Generates strategic summaries for scored articles and podcast transcripts using Claude.
+
+Usage (standalone test):
+    python scripts/summarize.py [--verbose] [--dry-run]
+"""
+
+import json
+import os
+import sys
+import time
+import argparse
+from dataclasses import dataclass, asdict
+from datetime import datetime, timezone
+from typing import List, Optional
+
+import anthropic
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts"))
+from collect import Article
+from filter_score import ScoredArticle
+
+
+@dataclass
+class SummarizedItem:
+    # Article identity
+    source_id: str
+    source_name: str
+    tier: int
+    title: str
+    url: str
+    published_date: datetime
+    relevance_score: int
+    cluster_id: str
+    cluster_size: int
+    supporting_sources: List[str]
+    is_podcast: bool
+
+    # Generated summary fields
+    headline: str = ""
+    what_happened: str = ""
+    why_it_matters: str = ""
+    strategic_implication: str = ""
+
+    # Podcast-specific fields
+    podcast_topics: List[dict] = None   # [{topic, what_was_discussed, why_it_matters}]
+    podcast_takeaway: str = ""
+
+    def __post_init__(self):
+        if self.podcast_topics is None:
+            self.podcast_topics = []
+
+    def to_dict(self):
+        d = asdict(self)
+        d["published_date"] = self.published_date.isoformat()
+        return d
+
+
+ARTICLE_SYSTEM_PROMPT = """You write for a weekly AI intelligence brief read by senior technology strategists and enterprise consultants. Be direct, analytical, and free of hype. No filler sentences. Never start with "This article" or "The author"."""
+
+PODCAST_SYSTEM_PROMPT = """You summarize podcast transcripts for a weekly AI intelligence brief read by senior technology strategists. The transcript may be in Dutch — translate key points to English before summarizing. Be direct and analytical."""
+
+
+def summarize_article(item: ScoredArticle, client: anthropic.Anthropic, dry_run: bool = False) -> SummarizedItem:
+    """Generate a strategic summary for one article (or cluster primary)."""
+    if dry_run:
+        return SummarizedItem(
+            source_id=item.source_id,
+            source_name=item.source_name,
+            tier=item.tier,
+            title=item.title,
+            url=item.url,
+            published_date=item.published_date,
+            relevance_score=item.relevance_score,
+            cluster_id=item.cluster_id,
+            cluster_size=item.cluster_size,
+            supporting_sources=item.supporting_sources,
+            is_podcast=False,
+            headline=f"[DRY RUN] {item.title[:60]}",
+            what_happened="[dry-run placeholder]",
+            why_it_matters="[dry-run placeholder]",
+            strategic_implication="[dry-run placeholder]",
+        )
+
+    multi_source = ""
+    if item.supporting_sources:
+        multi_source = f"Also covered by: {', '.join(item.supporting_sources)}\n"
+
+    content = item.full_text[:2500] if item.full_text else item.body_snippet
+
+    prompt = f"""Article details:
+Title: {item.title}
+Source: {item.source_name} (Tier {item.tier})
+{multi_source}Content:
+{content}
+
+Write exactly:
+1. A punchy headline (max 10 words, factual, no clickbait)
+2. What happened: 1 sentence, factual
+3. Why it matters: 2 sentences, focus on competitive/regulatory/capability implications for enterprises
+4. Strategic implication: 1 sentence — what should a technology strategist do or watch?
+
+Respond in JSON only:
+{{"headline": "...", "what_happened": "...", "why_it_matters": "...", "strategic_implication": "..."}}"""
+
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=512,
+            system=ARTICLE_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        text = response.content[0].text.strip()
+        if text.startswith("```"):
+            text = text.split("```")[1]
+            if text.startswith("json"):
+                text = text[4:]
+        data = json.loads(text)
+        return SummarizedItem(
+            source_id=item.source_id,
+            source_name=item.source_name,
+            tier=item.tier,
+            title=item.title,
+            url=item.url,
+            published_date=item.published_date,
+            relevance_score=item.relevance_score,
+            cluster_id=item.cluster_id,
+            cluster_size=item.cluster_size,
+            supporting_sources=item.supporting_sources,
+            is_podcast=False,
+            headline=data.get("headline", item.title),
+            what_happened=data.get("what_happened", ""),
+            why_it_matters=data.get("why_it_matters", ""),
+            strategic_implication=data.get("strategic_implication", ""),
+        )
+    except Exception as e:
+        print(f"  [summarize_article] Error for '{item.title[:50]}': {e}")
+        return SummarizedItem(
+            source_id=item.source_id,
+            source_name=item.source_name,
+            tier=item.tier,
+            title=item.title,
+            url=item.url,
+            published_date=item.published_date,
+            relevance_score=item.relevance_score,
+            cluster_id=item.cluster_id,
+            cluster_size=item.cluster_size,
+            supporting_sources=item.supporting_sources,
+            is_podcast=False,
+            headline=item.title,
+            what_happened="[Summary unavailable — API error]",
+            why_it_matters="",
+            strategic_implication="",
+        )
+
+
+def summarize_podcast(
+    transcript: str,
+    source_name: str,
+    published_date: datetime,
+    client: anthropic.Anthropic,
+    dry_run: bool = False,
+) -> SummarizedItem:
+    """Generate a strategic summary for a podcast transcript."""
+    if dry_run:
+        return SummarizedItem(
+            source_id="podcast",
+            source_name=source_name,
+            tier=3,
+            title=f"{source_name} — this week's episode",
+            url="",
+            published_date=published_date,
+            relevance_score=10,
+            cluster_id="podcast",
+            cluster_size=1,
+            supporting_sources=[],
+            is_podcast=True,
+            headline=f"[DRY RUN] {source_name} podcast",
+            podcast_topics=[{"topic": "dry-run", "what_was_discussed": "placeholder", "why_it_matters": "placeholder"}],
+            podcast_takeaway="[dry-run placeholder]",
+        )
+
+    prompt = f"""Podcast: {source_name}
+Transcript (may be in Dutch — translate key points to English before summarizing):
+{transcript[:5000]}
+
+Extract the 3-5 most strategically significant topics discussed. For each:
+- Topic name
+- What was discussed (2 sentences)
+- Why it matters for technology strategists (1 sentence)
+
+Also provide one overall strategic takeaway for the episode.
+
+Respond in JSON only:
+{{
+  "headline": "Podcast: [main theme in max 8 words]",
+  "topics": [
+    {{"topic": "...", "what_was_discussed": "...", "why_it_matters": "..."}}
+  ],
+  "overall_takeaway": "..."
+}}"""
+
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=1024,
+            system=PODCAST_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        text = response.content[0].text.strip()
+        if text.startswith("```"):
+            text = text.split("```")[1]
+            if text.startswith("json"):
+                text = text[4:]
+        data = json.loads(text)
+        return SummarizedItem(
+            source_id="podcast",
+            source_name=source_name,
+            tier=3,
+            title=data.get("headline", f"{source_name} — this week"),
+            url="",
+            published_date=published_date,
+            relevance_score=10,
+            cluster_id="podcast",
+            cluster_size=1,
+            supporting_sources=[],
+            is_podcast=True,
+            headline=data.get("headline", source_name),
+            podcast_topics=data.get("topics", []),
+            podcast_takeaway=data.get("overall_takeaway", ""),
+        )
+    except Exception as e:
+        print(f"  [summarize_podcast] Error: {e}")
+        return SummarizedItem(
+            source_id="podcast",
+            source_name=source_name,
+            tier=3,
+            title=f"{source_name} — this week's episode",
+            url="",
+            published_date=published_date,
+            relevance_score=10,
+            cluster_id="podcast",
+            cluster_size=1,
+            supporting_sources=[],
+            is_podcast=True,
+            headline=f"{source_name} — this week",
+            podcast_topics=[],
+            podcast_takeaway="[Summary unavailable — API error]",
+        )
+
+
+def summarize_all(
+    scored_articles: List[ScoredArticle],
+    client: anthropic.Anthropic,
+    podcast_transcript: Optional[str] = None,
+    podcast_source_name: str = "AI Report",
+    dry_run: bool = False,
+    verbose: bool = False,
+) -> List[SummarizedItem]:
+    results = []
+
+    for i, item in enumerate(scored_articles):
+        if verbose:
+            print(f"  Summarizing ({i+1}/{len(scored_articles)}): {item.title[:60]}")
+        summary = summarize_article(item, client, dry_run)
+        results.append(summary)
+        if not dry_run:
+            time.sleep(1)
+
+    if podcast_transcript:
+        if verbose:
+            print(f"  Summarizing podcast: {podcast_source_name}")
+        podcast_summary = summarize_podcast(
+            podcast_transcript,
+            podcast_source_name,
+            datetime.now(timezone.utc),
+            client,
+            dry_run,
+        )
+        results.append(podcast_summary)
+
+    return results

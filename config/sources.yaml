@@ -1,0 +1,66 @@
+sources:
+  # --- TIER 1: Always include if relevant (score >= 6) ---
+  - id: openai_blog
+    name: "OpenAI Blog"
+    tier: 1
+    method: rss
+    url: "https://openai.com/news/rss.xml"
+    score_threshold: 6
+
+  - id: deepmind_blog
+    name: "Google DeepMind"
+    tier: 1
+    method: scrape
+    url: "https://deepmind.google/blog/"
+    score_threshold: 6
+
+  - id: anthropic_news
+    name: "Anthropic"
+    tier: 1
+    method: rss_with_fallback
+    url: "https://www.anthropic.com/rss.xml"
+    fallback_url: "https://www.anthropic.com/news"
+    score_threshold: 6
+
+  - id: microsoft_ai
+    name: "Microsoft AI Blog"
+    tier: 1
+    method: rss_with_fallback
+    url: "https://blogs.microsoft.com/ai/feed/"
+    fallback_url: "https://www.microsoft.com/en-us/ai/blog/"
+    score_threshold: 6
+
+  # --- TIER 2: Include only if high impact (score >= 8) ---
+  - id: techcrunch_ai
+    name: "TechCrunch AI"
+    tier: 2
+    method: rss
+    url: "https://techcrunch.com/category/artificial-intelligence/feed/"
+    score_threshold: 8
+
+  - id: venturebeat_ai
+    name: "VentureBeat AI"
+    tier: 2
+    method: rss
+    url: "https://venturebeat.com/category/ai/feed/"
+    score_threshold: 8
+
+  - id: mckinsey_ai
+    name: "McKinsey Insights"
+    tier: 2
+    method: rss
+    url: "https://www.mckinsey.com/insights/rss"
+    score_threshold: 8
+
+  - id: reuters_tech
+    name: "Reuters Technology"
+    tier: 2
+    method: scrape
+    url: "https://www.reuters.com/technology/artificial-intelligence/"
+    score_threshold: 8
+
+settings:
+  freshness_days: 7
+  max_articles_per_source: 20
+  max_final_articles: 12
+  cache_file: "cache/seen_articles.json"
