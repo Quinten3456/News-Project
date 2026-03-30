@@ -25,7 +25,7 @@ import yaml
 import anthropic
 
 from collect import collect_all, Article, _article_id
-from filter_score import score_and_filter, ScoredArticle
+from filter_score import score_and_filter, editorial_select, ScoredArticle
 from summarize import summarize_all, SummarizedItem
 from compile_brief import render_markdown, render_email_text, write_brief
 
@@ -198,7 +198,7 @@ def main():
     scored = score_and_filter(articles, client, dry_run=args.dry_run, verbose=args.verbose)
     print(f"  {len(scored)} articles passed filter (from {len(articles)} collected)")
 
-    # --- PHASE 4: SUMMARIZE ---
+    # --- PHASE 4: SUMMARIZE ALL PASSING ARTICLES ---
     print("\n[3/4] Generating strategic summaries...")
     summarized = summarize_all(
         scored,
@@ -209,6 +209,12 @@ def main():
         verbose=args.verbose,
     )
     print(f"  {len(summarized)} items summarized")
+
+    # --- PHASE 4b: EDITORIAL SELECTION ---
+    print("\n  Selecting final stories...")
+    summarized = editorial_select(summarized, client, dry_run=args.dry_run, verbose=args.verbose)
+    n_stories = len([i for i in summarized if not i.is_podcast])
+    print(f"  {n_stories} stories selected for brief")
 
     # --- PHASE 5: COMPILE ---
     print("\n[4/4] Compiling brief...")
@@ -233,7 +239,7 @@ def main():
 
     # --- SUMMARY ---
     print(f"\n{'='*60}")
-    print(f"Done. {len([i for i in summarized if not i.is_podcast])} stories | {'+ podcast' if podcast_transcript else 'no podcast'}")
+    print(f"Done. {n_stories} stories | {'+ podcast' if podcast_transcript else 'no podcast'}")
     print(f"Brief: {md_path}")
     print(f"{'='*60}\n")
 

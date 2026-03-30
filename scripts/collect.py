@@ -245,12 +245,10 @@ def fetch_scrape(source: dict, cutoff: datetime, verbose: bool = False) -> List[
 
 
 def fetch_rss_with_fallback(source: dict, cutoff: datetime, verbose: bool = False) -> List[Article]:
-    """Try RSS feed. Only fall back to scraping if the RSS feed itself fails (no entries at all)."""
+    """Try RSS feed. Fall back to scraping if RSS has no entries or all entries are stale."""
     try:
         feed = _parse_rss(source["url"])
         if feed.entries:
-            # RSS feed works — use it even if all entries are older than cutoff
-            # (scraping won't give us fresher articles if RSS doesn't have them)
             articles = []
             for entry in feed.entries[:source.get("max_articles", 20)]:
                 pub = _parse_date(entry.get("published_parsed") or entry.get("updated_parsed"))
@@ -279,7 +277,10 @@ def fetch_rss_with_fallback(source: dict, cutoff: datetime, verbose: bool = Fals
                 ))
             if verbose:
                 print(f"  [{source['id']}] RSS: {len(feed.entries)} entries, {len(articles)} within freshness window")
-            return articles
+            if articles:
+                return articles
+            if verbose:
+                print(f"  [{source['id']}] RSS entries all stale, trying scrape fallback")
         else:
             if verbose:
                 print(f"  [{source['id']}] RSS returned no entries, trying scrape fallback")

@@ -1,11 +1,13 @@
 sources:
-  # --- TIER 1: Always include if relevant (score >= 6) ---
+  # All sources use a unified score threshold of 7.
+  # Non-AI articles (e.g. from TLDR Tech) are filtered by the scoring prompt before this threshold applies.
+
   - id: openai_blog
     name: "OpenAI Blog"
     tier: 1
     method: rss
     url: "https://openai.com/news/rss.xml"
-    score_threshold: 6
+    score_threshold: 7
 
   - id: deepmind_blog
     name: "Google DeepMind"
@@ -13,7 +15,7 @@ sources:
     method: scrape
     url: "https://deepmind.google/blog/"
     url_must_contain: "/blog/"
-    score_threshold: 6
+    score_threshold: 7
 
   - id: anthropic_news
     name: "Anthropic"
@@ -22,7 +24,7 @@ sources:
     url: "https://www.anthropic.com/rss.xml"
     fallback_url: "https://www.anthropic.com/news"
     url_must_contain: "/news/"
-    score_threshold: 6
+    score_threshold: 7
 
   - id: microsoft_ai
     name: "Microsoft AI Blog"
@@ -30,41 +32,30 @@ sources:
     method: rss_with_fallback
     url: "https://blogs.microsoft.com/ai/feed/"
     fallback_url: "https://www.microsoft.com/en-us/ai/blog/"
-    score_threshold: 6
+    score_threshold: 7
 
-  # --- TIER 2: Include only if high impact (score >= 8) ---
   - id: techcrunch_ai
     name: "TechCrunch AI"
     tier: 2
     method: rss
     url: "https://techcrunch.com/category/artificial-intelligence/feed/"
-    score_threshold: 8
-
-  - id: venturebeat_ai
-    name: "VentureBeat AI"
-    tier: 2
-    method: rss
-    url: "https://venturebeat.com/category/ai/feed/"
-    score_threshold: 8
+    score_threshold: 7
 
   - id: mckinsey_ai
     name: "McKinsey Insights"
     tier: 2
     method: rss
     url: "https://www.mckinsey.com/insights/rss"
-    score_threshold: 8
+    score_threshold: 7
 
-  - id: reuters_tech
-    name: "Reuters Technology"
+  - id: tldr_ai
+    name: "TLDR Tech"
     tier: 2
     method: rss
-    # Note: Reuters public RSS feed is unreliable. Replace with working alternative if needed.
-    # Option: https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml (NYT Tech)
-    url: "https://feeds.reuters.com/reuters/technologyNews"
-    score_threshold: 8
+    url: "https://tldr.tech/rss"
+    score_threshold: 7
 
 settings:
   freshness_days: 7
   max_articles_per_source: 20
-  max_final_articles: 12
   cache_file: "cache/seen_articles.json"

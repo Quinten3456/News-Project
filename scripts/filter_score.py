@@ -53,12 +53,13 @@ class ScoredArticle(Article):
 SCORING_SYSTEM_PROMPT = """You are a relevance filter for a weekly AI intelligence brief read by senior technology strategists and enterprise consultants.
 
 Score each article 1-10 for strategic relevance using this scale:
-- 9-10: Changes competitive dynamics or strategic options significantly (e.g., major model release, significant regulatory ruling, large enterprise AI deployment)
-- 7-8:  Worth tracking — meaningful new capability, partnership, or finding with near-term implications for enterprises
-- 5-6:  Incremental — minor product update, general trend piece, no new data
-- 1-4:  Skip — hype, speculation, listicle, rehash of known information, or developer-only content
+- 9-10: Changes competitive dynamics or strategic options significantly (major model release, significant regulatory ruling, large enterprise AI deployment)
+- 7-8:  Worth tracking — meaningful new AI capability, partnership, or finding with near-term implications for enterprises
+- 4-6:  Incremental — minor AI product update, general trend piece, no new data
+- 1-3:  Skip — not about AI, hype, speculation, listicle, rehash, or developer-only content
 
-Primary question: Is this worth knowing to support better decision-making and client conversations for a technology strategist?"""
+Primary question: Is this an AI development worth knowing to support better decision-making for a technology strategist?
+If the article is not about AI or has no strategic relevance to AI, score it 1-3."""
 
 
 CLUSTERING_SYSTEM_PROMPT = """You are deduplicating a list of AI news articles. Group articles that cover the same underlying story, announcement, or event — even if covered by different sources.
@@ -68,18 +69,28 @@ Rules:
 - Articles covering different aspects of a broad topic (e.g., "AI regulation" vs "EU AI Act vote") are separate clusters unless they directly reference the same event
 - Each article must appear in exactly one cluster"""
 
+EDITORIAL_SELECT_SYSTEM_PROMPT = """You are the editor of a weekly AI intelligence brief for technology strategists. You will receive fully analyzed AI news stories including their summaries. Select the 4-6 most worth reading this week. Prioritize stories that change competitive dynamics, signal a strategic shift, or give actionable intelligence for enterprise decisions. Avoid duplicating themes — if two stories cover the same development, pick only the more informative one.
+
+Return a JSON array of article IDs in ranked order, most important first. Example: ["abc123", "def456"]"""
+
+
+_DRY_RUN_SCORES = [5, 7, 6, 8, 5, 9, 6, 7, 4, 8]  # realistic spread, ~40% pass at threshold 7
+
 
 def score_batch(articles: List[Article], client: anthropic.Anthropic, dry_run: bool = False) -> List[dict]:
     """Score a batch of articles. Returns list of {id, score, rationale}."""
     if dry_run:
-        return [{"id": a.id, "score": 7 if a.tier == 1 else 6, "rationale": "[dry-run mock score]"} for a in articles]
+        results = []
+        for i, a in enumerate(articles):
+            score = _DRY_RUN_SCORES[i % len(_DRY_RUN_SCORES)]
+            results.append({"id": a.id, "score": score, "rationale": f"[dry-run mock score {score}]"})
+        return results
 
     payload = [
         {
             "id": a.id,
             "title": a.title,
             "source": a.source_name,
-            "tier": a.tier,
             "snippet": (a.body_snippet or a.full_text[:500])[:400],
         }
         for a in articles
@@ -135,6 +146,76 @@ def cluster_articles(articles: List[ScoredArticle], client: anthropic.Anthropic,
         return [{"cluster_id": a.id, "article_ids": [a.id], "canonical_title": a.title} for a in articles]
 
 
+def editorial_select(
+    items: list,
+    client: anthropic.Anthropic,
+    dry_run: bool = False,
+    verbose: bool = False,
+) -> list:
+    """Claude picks the 4-6 best stories from fully analyzed candidates.
+    Operates on SummarizedItem objects. Podcast items are always preserved."""
+    candidates = [i for i in items if not i.is_podcast]
+    podcasts = [i for i in items if i.is_podcast]
+
+    if len(candidates) <= 6:
+        return items
+
+    if dry_run:
+        if verbose:
+            print(f"  [editorial_select] dry-run: keeping top 6 of {len(candidates)}")
+        return candidates[:6] + podcasts
+
+    payload = [
+        {
+            "id": i.cluster_id,
+            "title": i.title,
+            "source": i.source_name,
+            "what": i.what_happened,
+            "why": i.why_it_matters,
+            "implication": i.strategic_implication,
+        }
+        for i in candidates
+    ]
+    prompt = (
+        f"From the {len(candidates)} analyzed stories below, select the 4-6 most worth "
+        f"reading this week. Return a JSON array of article IDs in ranked order.\n\n"
+        f"{json.dumps(payload, ensure_ascii=False)}"
+    )
+
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=256,
+            system=EDITORIAL_SELECT_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        text = response.content[0].text.strip()
+        if text.startswith("```"):
+            text = text.split("```")[1]
+            if text.startswith("json"):
+                text = text[4:]
+        selected_ids = json.loads(text)
+    except Exception as e:
+        print(f"  [editorial_select] Error: {e} — keeping top 6 by score")
+        return candidates[:6] + podcasts
+
+    id_to_item = {i.cluster_id: i for i in candidates}
+    selected = [id_to_item[aid] for aid in selected_ids if aid in id_to_item]
+
+    # Safety: pad to 4 if Claude returned fewer
+    if len(selected) < 4:
+        included_ids = {i.cluster_id for i in selected}
+        for i in candidates:
+            if i.cluster_id not in included_ids:
+                selected.append(i)
+            if len(selected) >= 4:
+                break
+
+    if verbose:
+        print(f"  [editorial_select] {len(candidates)} → {len(selected)} articles selected")
+    return selected + podcasts
+
+
 def score_and_filter(
     articles: List[Article],
     client: anthropic.Anthropic,
@@ -176,7 +257,8 @@ def score_and_filter(
         sa.passed_threshold = score >= a.score_threshold
         if verbose:
             status = "PASS" if sa.passed_threshold else "FAIL"
-            print(f"  [{status}] score={score} threshold={a.score_threshold} | {a.source_name} | {a.title[:60]}")
+            title_safe = a.title[:60].encode("ascii", errors="replace").decode("ascii")
+            print(f"  [{status}] score={score} threshold={a.score_threshold} | {a.source_name} | {title_safe}")
         scored.append(sa)
 
     # Filter to passing articles

@@ -290,7 +290,8 @@ def summarize_all(
 
     for i, item in enumerate(scored_articles):
         if verbose:
-            print(f"  Summarizing ({i+1}/{len(scored_articles)}): {item.title[:60]}")
+            title_safe = item.title[:60].encode("ascii", errors="replace").decode("ascii")
+            print(f"  Summarizing ({i+1}/{len(scored_articles)}): {title_safe}")
         summary = summarize_article(item, client, dry_run)
         results.append(summary)
         if not dry_run:
