@@ -234,8 +234,11 @@ def main():
 
     # --- UPDATE CACHE ---
     if not args.dry_run:
-        save_cache(cache, articles)
-        print(f"\n  Cache updated ({len(cache['articles'])} total seen articles)")
+        if scored:
+            save_cache(cache, articles)
+            print(f"\n  Cache updated ({len(cache['articles'])} total seen articles)")
+        else:
+            print("\n  Warning: scoring produced no results — cache not updated so articles can be retried next run")
 
     # --- SUMMARY ---
     print(f"\n{'='*60}")
