@@ -128,6 +128,7 @@ def cluster_articles(articles: List[ScoredArticle], client: anthropic.Anthropic,
     payload = [{"id": a.id, "title": a.title, "source": a.source_name} for a in articles]
     prompt = f"Articles to cluster:\n{json.dumps(payload, ensure_ascii=False)}\n\nRespond with a JSON array of clusters only."
 
+    fallback = [{"cluster_id": a.id, "article_ids": [a.id], "canonical_title": a.title} for a in articles]
     try:
         response = client.messages.create(
             model="claude-sonnet-4-6",
@@ -140,10 +141,28 @@ def cluster_articles(articles: List[ScoredArticle], client: anthropic.Anthropic,
             text = text.split("```")[1]
             if text.startswith("json"):
                 text = text[4:]
-        return json.loads(text)
+        parsed = json.loads(text)
+        # Unwrap if Claude returned {"clusters": [...]} instead of a bare array
+        if isinstance(parsed, dict):
+            parsed = next((v for v in parsed.values() if isinstance(v, list)), fallback)
+        # Normalise keys: accept "id" as alias for "cluster_id", "articles" for "article_ids"
+        normalised = []
+        for c in parsed:
+            normalised.append({
+                "cluster_id": c.get("cluster_id") or c.get("id", ""),
+                "article_ids": c.get("article_ids") or c.get("articles", []),
+                "canonical_title": c.get("canonical_title") or c.get("title", ""),
+            })
+        # Validate: every article must appear in exactly one cluster
+        seen = set()
+        for c in normalised:
+            seen.update(c["article_ids"])
+        if not seen:
+            return fallback
+        return normalised
     except Exception as e:
         print(f"  [cluster_articles] Error: {e}")
-        return [{"cluster_id": a.id, "article_ids": [a.id], "canonical_title": a.title} for a in articles]
+        return fallback
 
 
 def editorial_select(
