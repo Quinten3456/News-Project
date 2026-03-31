@@ -198,27 +198,27 @@ def main():
     scored = score_and_filter(articles, client, dry_run=args.dry_run, verbose=args.verbose)
     print(f"  {len(scored)} articles passed filter (from {len(articles)} collected)")
 
-    # --- PHASE 4: SUMMARIZE ALL PASSING ARTICLES ---
+    # --- PHASE 3b: EDITORIAL SELECTION ---
+    print("\n  Selecting final stories...")
+    selected = editorial_select(scored, client, dry_run=args.dry_run, verbose=args.verbose)
+    print(f"  {len(selected)} stories selected for brief")
+
+    # --- PHASE 4: SUMMARIZE SELECTED ARTICLES ONLY ---
     print("\n[3/4] Generating strategic summaries...")
     summarized = summarize_all(
-        scored,
+        selected,
         client,
         podcast_transcript=podcast_transcript,
         podcast_source_name="AI Report",
         dry_run=args.dry_run,
         verbose=args.verbose,
     )
-    print(f"  {len(summarized)} items summarized")
-
-    # --- PHASE 4b: EDITORIAL SELECTION ---
-    print("\n  Selecting final stories...")
-    summarized = editorial_select(summarized, client, dry_run=args.dry_run, verbose=args.verbose)
     n_stories = len([i for i in summarized if not i.is_podcast])
-    print(f"  {n_stories} stories selected for brief")
+    print(f"  {len(summarized)} items summarized")
 
     # --- PHASE 5: COMPILE ---
     print("\n[4/4] Compiling brief...")
-    source_stats = compute_source_stats(CONFIG_PATH, articles, scored)
+    source_stats = compute_source_stats(CONFIG_PATH, articles, selected)
     metadata = {
         "date": date_str,
         "n_sources": len(source_stats),

@@ -167,6 +167,71 @@ def fetch_rss(source: dict, cutoff: datetime, verbose: bool = False) -> List[Art
     return articles
 
 
+def _parse_date_text(text: str) -> Optional[datetime]:
+    """Parse a display date string like 'Mar 18, 2026' into a UTC datetime."""
+    try:
+        dt = dateutil_parser.parse(text.strip())
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt
+    except Exception:
+        return None
+
+
+def _fetch_scrape_structured(
+    source: dict, cutoff: datetime, soup: BeautifulSoup,
+    base_url: str, verbose: bool
+) -> List[Article]:
+    """Extract articles using article_selector + date_selector from source config.
+    Returns articles with real publish dates instead of today's date."""
+    articles = []
+    seen_urls = set()
+    url_must_contain = source.get("url_must_contain", "")
+    date_sel = source["date_selector"]
+
+    for container in soup.select(source["article_selector"])[:source.get("max_articles", 20)]:
+        link_el = container if container.name == "a" else container.find("a", href=True)
+        if not link_el:
+            continue
+        href = link_el.get("href", "")
+        if href.startswith("/"):
+            href = base_url + href
+        if not href.startswith("http") or href in seen_urls:
+            continue
+        if url_must_contain and url_must_contain not in href:
+            continue
+
+        date_el = container.select_one(date_sel)
+        pub = _parse_date_text(date_el.get_text()) if date_el else None
+        if pub and pub < cutoff:
+            continue
+        if pub is None:
+            pub = _now_utc()
+
+        title = link_el.get_text(strip=True)
+        if not title or len(title) < 10:
+            heading = container.find(["h1", "h2", "h3", "h4"])
+            title = heading.get_text(strip=True) if heading else href.rstrip("/").split("/")[-1]
+
+        seen_urls.add(href)
+        articles.append(Article(
+            id=_article_id(href),
+            source_id=source["id"],
+            source_name=source["name"],
+            tier=source["tier"],
+            title=title,
+            url=href,
+            published_date=pub,
+            body_snippet="",
+            full_text="",
+            score_threshold=source["score_threshold"],
+        ))
+
+    if verbose:
+        print(f"  [{source['id']}] Structured scrape: {len(articles)} articles with real dates")
+    return articles
+
+
 def fetch_scrape(source: dict, cutoff: datetime, verbose: bool = False) -> List[Article]:
     articles = []
     try:
@@ -175,10 +240,13 @@ def fetch_scrape(source: dict, cutoff: datetime, verbose: bool = False) -> List[
             print(f"  [{source['id']}] Scrape: failed to fetch page")
             return []
         soup = BeautifulSoup(resp.text, "html.parser")
+        base_url = "/".join(source["url"].split("/")[:3])
+
+        if source.get("article_selector") and source.get("date_selector"):
+            return _fetch_scrape_structured(source, cutoff, soup, base_url, verbose)
 
         # Generic article link discovery: find all <a> with meaningful href
         candidates = []
-        base_url = "/".join(source["url"].split("/")[:3])
 
         for a in soup.find_all("a", href=True):
             href = a["href"]
@@ -294,6 +362,84 @@ def fetch_rss_with_fallback(source: dict, cutoff: datetime, verbose: bool = Fals
     return []
 
 
+def fetch_date_range(source: dict, cutoff: datetime, verbose: bool = False) -> List[Article]:
+    """Fetch a date-based source by constructing daily URLs for the freshness window.
+    Extracts individual story cards per day using selectors defined in source config."""
+    import re
+    articles = []
+    seen_urls = set()
+    base_url = source["base_url"]
+    story_sel = source["story_selector"]
+    headline_sel = source["headline_selector"]
+    link_sel = source["link_selector"]
+    summary_sel = source.get("summary_selector", "")
+    skip_sections = set(source.get("skip_sections", []))
+
+    today = _now_utc().date()
+    cutoff_date = cutoff.date()
+    current = today
+    while current >= cutoff_date:
+        date_str = current.strftime("%Y-%m-%d")
+        url = f"{base_url}{date_str}"
+        pub_date = datetime(current.year, current.month, current.day, tzinfo=timezone.utc)
+
+        resp = _fetch_url(url)
+        if resp is not None:
+            try:
+                soup = BeautifulSoup(resp.text, "html.parser")
+
+                # Identify story cards that belong to skipped sections (e.g. ads)
+                skip_these = set()
+                for section in soup.find_all("section"):
+                    if section.get("id", "") in skip_sections:
+                        for story in section.select(story_sel):
+                            skip_these.add(id(story))
+
+                for story in soup.select(story_sel):
+                    if id(story) in skip_these:
+                        continue
+                    link_el = story.select_one(link_sel)
+                    if not link_el:
+                        continue
+                    href = link_el.get("href", "")
+                    if not href.startswith("http") or href in seen_urls:
+                        continue
+                    headline_el = story.select_one(headline_sel)
+                    if not headline_el:
+                        continue
+                    title = re.sub(r'\s*\(\d+\s+minute read\)\s*$', '',
+                                   headline_el.get_text(strip=True))
+                    if not title:
+                        continue
+                    snippet = ""
+                    if summary_sel:
+                        summary_el = story.select_one(summary_sel)
+                        if summary_el:
+                            snippet = summary_el.get_text(" ", strip=True)[:500]
+                    seen_urls.add(href)
+                    articles.append(Article(
+                        id=_article_id(href),
+                        source_id=source["id"],
+                        source_name=source["name"],
+                        tier=source["tier"],
+                        title=title,
+                        url=href,
+                        published_date=pub_date,
+                        body_snippet=snippet,
+                        full_text="",
+                        score_threshold=source["score_threshold"],
+                    ))
+            except Exception as e:
+                if verbose:
+                    print(f"  [{source['id']}] Error parsing {url}: {e}")
+        current -= timedelta(days=1)
+        time.sleep(0.5)
+
+    if verbose:
+        print(f"  [{source['id']}] date_range: {len(articles)} individual stories")
+    return articles
+
+
 def filter_freshness(articles: List[Article], days: int) -> List[Article]:
     cutoff = _now_utc() - timedelta(days=days)
     return [a for a in articles if a.published_date >= cutoff]
@@ -343,6 +489,8 @@ def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False) -> List[A
                 articles = fetch_scrape(source, cutoff, verbose)
             elif method == "rss_with_fallback":
                 articles = fetch_rss_with_fallback(source, cutoff, verbose)
+            elif method == "date_range":
+                articles = fetch_date_range(source, cutoff, verbose)
             else:
                 print(f"  [{source['id']}] Unknown method: {method}")
                 articles = []

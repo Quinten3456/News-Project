@@ -1,6 +1,5 @@
 sources:
   # All sources use a unified score threshold of 7.
-  # Non-AI articles (e.g. from TLDR Tech) are filtered by the scoring prompt before this threshold applies.
 
   - id: openai_blog
     name: "OpenAI Blog"
@@ -24,14 +23,8 @@ sources:
     url: "https://www.anthropic.com/rss.xml"
     fallback_url: "https://www.anthropic.com/news"
     url_must_contain: "/news/"
-    score_threshold: 7
-
-  - id: microsoft_ai
-    name: "Microsoft AI Blog"
-    tier: 1
-    method: rss_with_fallback
-    url: "https://blogs.microsoft.com/ai/feed/"
-    fallback_url: "https://www.microsoft.com/en-us/ai/blog/"
+    article_selector: "article.postCard, div[class*='featuredGrid'] a[href]"
+    date_selector: ".date"
     score_threshold: 7
 
   - id: techcrunch_ai
@@ -49,10 +42,15 @@ sources:
     score_threshold: 7
 
   - id: tldr_ai
-    name: "TLDR Tech"
+    name: "TLDR AI"
     tier: 2
-    method: rss
-    url: "https://tldr.tech/rss"
+    method: date_range
+    base_url: "https://tldr.tech/ai/"
+    story_selector: "article.mt-3"
+    headline_selector: "a.font-bold h3"
+    link_selector: "a.font-bold"
+    summary_selector: "div.newsletter-html"
+    skip_sections: ["aisponsor"]
     score_threshold: 7
 
 settings:

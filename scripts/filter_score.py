@@ -166,34 +166,30 @@ def cluster_articles(articles: List[ScoredArticle], client: anthropic.Anthropic,
 
 
 def editorial_select(
-    items: list,
+    articles: List[ScoredArticle],
     client: anthropic.Anthropic,
     dry_run: bool = False,
     verbose: bool = False,
-) -> list:
-    """Claude picks the 4-6 best stories from fully analyzed candidates.
-    Operates on SummarizedItem objects. Podcast items are always preserved."""
-    candidates = [i for i in items if not i.is_podcast]
-    podcasts = [i for i in items if i.is_podcast]
-
-    if len(candidates) <= 6:
-        return items
+) -> List[ScoredArticle]:
+    """Claude picks the 4-6 best stories from scored+clustered candidates.
+    Uses title + score + rationale as selection signal — no summarization needed yet."""
+    if len(articles) <= 6:
+        return articles
 
     if dry_run:
         if verbose:
-            print(f"  [editorial_select] dry-run: keeping top 6 of {len(candidates)}")
-        return candidates[:6] + podcasts
+            print(f"  [editorial_select] dry-run: keeping top 6 of {len(articles)}")
+        return articles[:6]
 
     payload = [
         {
-            "id": i.cluster_id,
-            "title": i.title,
-            "source": i.source_name,
-            "what": i.what_happened,
-            "why": i.why_it_matters,
-            "implication": i.strategic_implication,
+            "id": a.cluster_id,
+            "title": a.title,
+            "source": a.source_name,
+            "score": a.relevance_score,
+            "rationale": a.relevance_rationale,
         }
-        for i in candidates
+        for a in articles
     ]
     prompt = (
         f"From the {len(candidates)} analyzed stories below, select the 4-6 most worth "
@@ -216,23 +212,23 @@ def editorial_select(
         selected_ids = json.loads(text)
     except Exception as e:
         print(f"  [editorial_select] Error: {e} — keeping top 6 by score")
-        return candidates[:6] + podcasts
+        return articles[:6]
 
-    id_to_item = {i.cluster_id: i for i in candidates}
-    selected = [id_to_item[aid] for aid in selected_ids if aid in id_to_item]
+    id_to_article = {a.cluster_id: a for a in articles}
+    selected = [id_to_article[aid] for aid in selected_ids if aid in id_to_article]
 
     # Safety: pad to 4 if Claude returned fewer
     if len(selected) < 4:
-        included_ids = {i.cluster_id for i in selected}
-        for i in candidates:
-            if i.cluster_id not in included_ids:
-                selected.append(i)
+        included_ids = {a.cluster_id for a in selected}
+        for a in articles:
+            if a.cluster_id not in included_ids:
+                selected.append(a)
             if len(selected) >= 4:
                 break
 
     if verbose:
-        print(f"  [editorial_select] {len(candidates)} → {len(selected)} articles selected")
-    return selected + podcasts
+        print(f"  [editorial_select] {len(articles)} → {len(selected)} articles selected")
+    return selected
 
 
 def score_and_filter(

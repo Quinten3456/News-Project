@@ -1,0 +1,66 @@
+AI INTELLIGENCE BRIEF — WEEK OF 2026-03-31
+6 stories included this week
+
+============================================================
+
+TOP STORIES
+
+1. [DRY RUN] AS MORE AMERICANS ADOPT AI TOOLS, FEWER SAY THEY CAN TRUST T
+   TechCrunch AI | Tier 2 | Mar 30
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://techcrunch.com/2026/03/30/ai-trust-adoption-poll-more-americans-adopt-tools-fewer-say-they-can-trust-the-results/
+
+------------------------------------------------------------
+
+2. [DRY RUN] A MIRROR TEST FOR LLMS
+   TLDR AI | Tier 2 | Mar 31
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.lesswrong.com/posts/TfKM9PgztxieEcKiv/a-mirror-test-for-llms?utm_source=tldrai
+
+------------------------------------------------------------
+
+3. [DRY RUN] STARCLOUD RAISES $170 MILLION SERIES A TO BUILD DATA CENTERS
+   TLDR AI | Tier 2 | Mar 31
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://techcrunch.com/2026/03/30/starcloud-raises-170-million-series-ato-build-data-centers-in-space/?utm_source=tldrai
+
+------------------------------------------------------------
+
+4. [DRY RUN] THE CAPABILITY OVERHANG IN AI
+   TLDR AI | Tier 2 | Mar 30
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://x.com/levie/status/2037928306977509601?utm_source=tldrai
+
+------------------------------------------------------------
+
+5. [DRY RUN] SECURE YOUR AI TRANSFORMATION WITH CATO AI SECURITY (SPONSOR
+   TLDR AI | Tier 2 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.catonetworks.com/resources/secure-your-ai-transformation/?utm_source=tldr-ai&amp;utm_medium=newsletter&amp;utm_campaign=ai-security&amp;utm_content=20260327
+
+------------------------------------------------------------
+
+6. [DRY RUN] ANTHROPIC WINS PRELIMINARY INJUNCTION IN DOD FIGHT AS JUDGE 
+   TLDR AI | Tier 2 | Mar 27
+
+   What happened: [dry-run placeholder]
+   Why it matters: [dry-run placeholder]
+   Strategic implication: [dry-run placeholder]
+   https://www.cnbc.com/2026/03/26/anthropic-pentagon-dod-claude-court-ruling.html?utm_source=tldrai
+
+------------------------------------------------------------
