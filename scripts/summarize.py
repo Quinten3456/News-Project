@@ -69,6 +69,10 @@ class SummarizedItem:
     why_it_matters: str = ""
     strategic_implication: str = ""
 
+    # Digest fields (used for stories ranked 6-10 — brief 2-3 sentence treatment)
+    is_digest: bool = False
+    digest_summary: str = ""
+
     # Podcast-specific fields
     podcast_topics: List[dict] = None   # [{topic, what_was_discussed, why_it_matters}]
     podcast_takeaway: str = ""
@@ -183,6 +187,61 @@ Respond in JSON only:
         )
 
 
+def summarize_digest_article(item: ScoredArticle, client: anthropic.Anthropic, dry_run: bool = False) -> SummarizedItem:
+    """Generate a 2-3 sentence digest summary for a lower-ranked story."""
+    base = SummarizedItem(
+        source_id=item.source_id,
+        source_name=item.source_name,
+        tier=item.tier,
+        title=item.title,
+        url=item.url,
+        published_date=item.published_date,
+        relevance_score=item.relevance_score,
+        cluster_id=item.cluster_id,
+        cluster_size=item.cluster_size,
+        supporting_sources=item.supporting_sources,
+        is_podcast=False,
+        is_digest=True,
+    )
+    if dry_run:
+        base.headline = item.title[:80]
+        base.digest_summary = "[dry-run digest placeholder]"
+        return base
+
+    full_text = item.full_text or _fetch_full_text(item.url)
+    content = full_text[:1500] if full_text else item.body_snippet
+
+    prompt = f"""Article:
+Title: {item.title}
+Source: {item.source_name}
+Content: {content}
+
+Write 2-3 sentences for a technology strategist: what happened and why it may be relevant. Be factual and concise. No headers, no bullet points.
+
+Respond in JSON only: {{"headline": "...", "summary": "..."}}"""
+
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=256,
+            system=ARTICLE_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        text = response.content[0].text.strip()
+        if text.startswith("```"):
+            text = text.split("```")[1]
+            if text.startswith("json"):
+                text = text[4:]
+        data = json.loads(text)
+        base.headline = data.get("headline", item.title[:80])
+        base.digest_summary = data.get("summary", "")
+    except Exception as e:
+        print(f"  [summarize_digest] Error for '{item.title[:50]}': {e}")
+        base.headline = item.title[:80]
+        base.digest_summary = item.relevance_rationale or "[Summary unavailable]"
+    return base
+
+
 def summarize_podcast(
     transcript: str,
     source_name: str,
@@ -285,14 +344,20 @@ def summarize_all(
     podcast_source_name: str = "AI Report",
     dry_run: bool = False,
     verbose: bool = False,
+    full_count: int = 5,
 ) -> List[SummarizedItem]:
     results = []
 
     for i, item in enumerate(scored_articles):
+        is_digest = i >= full_count
         if verbose:
             title_safe = item.title[:60].encode("ascii", errors="replace").decode("ascii")
-            print(f"  Summarizing ({i+1}/{len(scored_articles)}): {title_safe}")
-        summary = summarize_article(item, client, dry_run)
+            label = "digest" if is_digest else "full"
+            print(f"  Summarizing [{label}] ({i+1}/{len(scored_articles)}): {title_safe}")
+        if is_digest:
+            summary = summarize_digest_article(item, client, dry_run)
+        else:
+            summary = summarize_article(item, client, dry_run)
         results.append(summary)
         if not dry_run:
             time.sleep(1)

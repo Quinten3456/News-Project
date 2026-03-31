@@ -212,6 +212,7 @@ def main():
         podcast_source_name="AI Report",
         dry_run=args.dry_run,
         verbose=args.verbose,
+        full_count=5,
     )
     n_stories = len([i for i in summarized if not i.is_podcast])
     print(f"  {len(summarized)} items summarized")

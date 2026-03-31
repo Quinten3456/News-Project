@@ -32,19 +32,22 @@ def render_markdown(
     lines.append("---")
     lines.append("")
 
-    # Top Stories (non-podcast)
+    # Top Stories (non-podcast, full treatment)
     stories = [i for i in items if not i.is_podcast]
-    if stories:
+    top_stories = [i for i in stories if not i.is_digest]
+    digest_stories = [i for i in stories if i.is_digest]
+
+    if top_stories:
         lines.append("## Top Stories")
         lines.append("")
-        for idx, item in enumerate(stories, 1):
+        for idx, item in enumerate(top_stories, 1):
             pub = item.published_date.strftime("%b %d") if item.published_date else ""
             multi = ""
             if item.supporting_sources:
                 multi = f"  \n*Also covered by: {', '.join(item.supporting_sources)}*"
 
             lines.append(f"### {idx}. {item.headline}")
-            lines.append(f"*{item.source_name} | Tier {item.tier} | {pub} | Score {item.relevance_score}/10*{multi}")
+            lines.append(f"*{item.source_name} | {pub} | Score {item.relevance_score}/10*{multi}")
             lines.append("")
             if item.what_happened:
                 lines.append(f"**What happened:** {item.what_happened}")
@@ -56,6 +59,21 @@ def render_markdown(
                 lines.append(f"[Read more]({item.url})")
             lines.append("")
             lines.append("---")
+            lines.append("")
+
+    if digest_stories:
+        lines.append("## Also Worth Reading")
+        lines.append("")
+        for idx, item in enumerate(digest_stories, len(top_stories) + 1):
+            pub = item.published_date.strftime("%b %d") if item.published_date else ""
+            multi = f" | Also: {', '.join(item.supporting_sources)}" if item.supporting_sources else ""
+            lines.append(f"**{idx}. {item.headline}**  ")
+            lines.append(f"*{item.source_name} | {pub}{multi}*  ")
+            lines.append("")
+            if item.digest_summary:
+                lines.append(item.digest_summary)
+            if item.url:
+                lines.append(f"[Read more]({item.url})")
             lines.append("")
 
     # Podcast Intelligence
@@ -108,14 +126,17 @@ def render_email_text(items: List[SummarizedItem], metadata: dict) -> str:
     lines.append("")
 
     stories = [i for i in items if not i.is_podcast]
-    if stories:
+    top_stories = [i for i in stories if not i.is_digest]
+    digest_stories = [i for i in stories if i.is_digest]
+
+    if top_stories:
         lines.append("TOP STORIES")
         lines.append("")
-        for idx, item in enumerate(stories, 1):
+        for idx, item in enumerate(top_stories, 1):
             pub = item.published_date.strftime("%b %d") if item.published_date else ""
             multi = f" | Also: {', '.join(item.supporting_sources)}" if item.supporting_sources else ""
             lines.append(f"{idx}. {item.headline.upper()}")
-            lines.append(f"   {item.source_name} | Tier {item.tier} | {pub}{multi}")
+            lines.append(f"   {item.source_name} | {pub}{multi}")
             lines.append("")
             if item.what_happened:
                 lines.append(f"   What happened: {item.what_happened}")
@@ -123,6 +144,23 @@ def render_email_text(items: List[SummarizedItem], metadata: dict) -> str:
                 lines.append(f"   Why it matters: {item.why_it_matters}")
             if item.strategic_implication:
                 lines.append(f"   Strategic implication: {item.strategic_implication}")
+            if item.url:
+                lines.append(f"   {item.url}")
+            lines.append("")
+            lines.append("-" * 60)
+            lines.append("")
+
+    if digest_stories:
+        lines.append("ALSO WORTH READING")
+        lines.append("")
+        for idx, item in enumerate(digest_stories, len(top_stories) + 1):
+            pub = item.published_date.strftime("%b %d") if item.published_date else ""
+            multi = f" | Also: {', '.join(item.supporting_sources)}" if item.supporting_sources else ""
+            lines.append(f"{idx}. {item.headline.upper()}")
+            lines.append(f"   {item.source_name} | {pub}{multi}")
+            lines.append("")
+            if item.digest_summary:
+                lines.append(f"   {item.digest_summary}")
             if item.url:
                 lines.append(f"   {item.url}")
             lines.append("")

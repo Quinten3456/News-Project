@@ -69,7 +69,7 @@ Rules:
 - Articles covering different aspects of a broad topic (e.g., "AI regulation" vs "EU AI Act vote") are separate clusters unless they directly reference the same event
 - Each article must appear in exactly one cluster"""
 
-EDITORIAL_SELECT_SYSTEM_PROMPT = """You are the editor of a weekly AI intelligence brief for technology strategists. You will receive fully analyzed AI news stories including their summaries. Select the 4-6 most worth reading this week. Prioritize stories that change competitive dynamics, signal a strategic shift, or give actionable intelligence for enterprise decisions. Avoid duplicating themes — if two stories cover the same development, pick only the more informative one.
+EDITORIAL_SELECT_SYSTEM_PROMPT = """You are the editor of a weekly AI intelligence brief for technology strategists. Select the 8-10 most worth reading this week. Prioritize stories that change competitive dynamics, signal a strategic shift, or give actionable intelligence for enterprise decisions. Avoid duplicating themes — if two stories cover the same development, pick only the more informative one.
 
 Return a JSON array of article IDs in ranked order, most important first. Example: ["abc123", "def456"]"""
 
@@ -173,13 +173,13 @@ def editorial_select(
 ) -> List[ScoredArticle]:
     """Claude picks the 4-6 best stories from scored+clustered candidates.
     Uses title + score + rationale as selection signal — no summarization needed yet."""
-    if len(articles) <= 6:
+    if len(articles) <= 10:
         return articles
 
     if dry_run:
         if verbose:
-            print(f"  [editorial_select] dry-run: keeping top 6 of {len(articles)}")
-        return articles[:6]
+            print(f"  [editorial_select] dry-run: keeping top 10 of {len(articles)}")
+        return articles[:10]
 
     payload = [
         {
@@ -192,7 +192,7 @@ def editorial_select(
         for a in articles
     ]
     prompt = (
-        f"From the {len(candidates)} analyzed stories below, select the 4-6 most worth "
+        f"From the {len(articles)} analyzed stories below, select the 8-10 most worth "
         f"reading this week. Return a JSON array of article IDs in ranked order.\n\n"
         f"{json.dumps(payload, ensure_ascii=False)}"
     )
@@ -217,13 +217,13 @@ def editorial_select(
     id_to_article = {a.cluster_id: a for a in articles}
     selected = [id_to_article[aid] for aid in selected_ids if aid in id_to_article]
 
-    # Safety: pad to 4 if Claude returned fewer
-    if len(selected) < 4:
+    # Safety: pad to 8 if Claude returned fewer
+    if len(selected) < 8:
         included_ids = {a.cluster_id for a in selected}
         for a in articles:
             if a.cluster_id not in included_ids:
                 selected.append(a)
-            if len(selected) >= 4:
+            if len(selected) >= 8:
                 break
 
     if verbose:
