@@ -183,7 +183,10 @@ def _fetch_scrape_structured(
     base_url: str, verbose: bool
 ) -> List[Article]:
     """Extract articles using article_selector + date_selector from source config.
-    Returns articles with real publish dates instead of today's date."""
+    Returns articles with real publish dates instead of today's date.
+    Falls back to a link-based approach if selectors return 0 results (handles
+    sites with CSS-module-hashed class names, e.g. Anthropic)."""
+    import re
     articles = []
     seen_urls = set()
     url_must_contain = source.get("url_must_contain", "")
@@ -226,6 +229,82 @@ def _fetch_scrape_structured(
             full_text="",
             score_threshold=source["score_threshold"],
         ))
+
+    # Fallback: if selectors matched nothing (e.g. CSS-module hashed classes),
+    # find links by url_must_contain and extract dates from surrounding text.
+    if not articles and url_must_contain:
+        month_re = re.compile(
+            r'\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|'
+            r'Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|'
+            r'Dec(?:ember)?)\s+\d{1,2},\s+\d{4}'
+        )
+        # Category words to strip from start of extracted titles
+        category_prefix_re = re.compile(
+            r'^(Announcements|Product|Policy|Research|News|Update|Blog)\s*', re.IGNORECASE
+        )
+        for a in soup.find_all("a", href=True):
+            href = a.get("href", "")
+            if href.startswith("/"):
+                href = base_url + href
+            if not href.startswith("http") or href in seen_urls:
+                continue
+            if url_must_contain not in href:
+                continue
+            # Skip navigation links: article slugs always contain a hyphen
+            last_segment = href.rstrip("/").split("/")[-1]
+            if "-" not in last_segment:
+                continue
+            if len(articles) >= source.get("max_articles", 20):
+                break
+
+            # Walk up to find the first ancestor whose text contains a date
+            pub = None
+            container = a
+            for _ in range(4):
+                text = container.get_text(" ", strip=True)
+                m = month_re.search(text)
+                if m:
+                    pub = _parse_date_text(m.group(0))
+                    if pub:
+                        break
+                if container.parent:
+                    container = container.parent
+                else:
+                    break
+
+            # In link fallback, skip articles with no visible date — they are
+            # likely footer/related links that don't represent fresh content.
+            if pub is None or pub < cutoff:
+                continue
+
+            # Extract title: prefer heading inside container, else link text
+            heading = container.find(["h1", "h2", "h3", "h4"])
+            if heading:
+                title = heading.get_text(strip=True)
+            else:
+                # Strip date and category from link text
+                raw = a.get_text(" ", strip=True)
+                title = month_re.sub("", raw).strip()
+                title = category_prefix_re.sub("", title).strip()
+            if not title or len(title) < 5:
+                title = href.rstrip("/").split("/")[-1].replace("-", " ").title()
+
+            seen_urls.add(href)
+            articles.append(Article(
+                id=_article_id(href),
+                source_id=source["id"],
+                source_name=source["name"],
+                tier=source["tier"],
+                title=title,
+                url=href,
+                published_date=pub,
+                body_snippet="",
+                full_text="",
+                score_threshold=source["score_threshold"],
+            ))
+
+        if verbose and articles:
+            print(f"  [{source['id']}] Structured scrape (link fallback): {len(articles)} articles")
 
     if verbose:
         print(f"  [{source['id']}] Structured scrape: {len(articles)} articles with real dates")
