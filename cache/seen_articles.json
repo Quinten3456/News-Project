@@ -1,1 +1,425 @@
-{"articles": {}, "last_updated": null}
+{
+  "articles": {
+    "c720bf728da92d55": {
+      "title": "Helping disaster response teams turn AI into action across Asia",
+      "url": "https://openai.com/index/helping-disaster-response-teams-asia",
+      "seen_date": "2026-03-30"
+    },
+    "16594c97bd60c523": {
+      "title": "STADLER reshapes knowledge work at a 230-year-old company",
+      "url": "https://openai.com/index/stadler",
+      "seen_date": "2026-03-30"
+    },
+    "263c2043f1c3113e": {
+      "title": "Inside our approach to the Model Spec",
+      "url": "https://openai.com/index/our-approach-to-the-model-spec",
+      "seen_date": "2026-03-30"
+    },
+    "fb38dfafd80a435f": {
+      "title": "Introducing the OpenAI Safety Bug Bounty program",
+      "url": "https://openai.com/index/safety-bug-bounty",
+      "seen_date": "2026-03-30"
+    },
+    "d75d7d2ee74818d4": {
+      "title": "Helping developers build safer AI experiences for teens",
+      "url": "https://openai.com/index/teen-safety-policies-gpt-oss-safeguard",
+      "seen_date": "2026-03-30"
+    },
+    "f7bebe3fb5356cb2": {
+      "title": "Update on the OpenAI Foundation",
+      "url": "https://openai.com/index/update-on-the-openai-foundation",
+      "seen_date": "2026-03-30"
+    },
+    "d58daa6d846a2b00": {
+      "title": "Powering product discovery in ChatGPT",
+      "url": "https://openai.com/index/powering-product-discovery-in-chatgpt",
+      "seen_date": "2026-03-30"
+    },
+    "73e1e385eec202cf": {
+      "title": "Sima 2 An Agent That Plays Reasons And Learns With You In Virtual 3D Worlds",
+      "url": "https://deepmind.google/blog/sima-2-an-agent-that-plays-reasons-and-learns-with-you-in-virtual-3d-worlds/",
+      "seen_date": "2026-03-30"
+    },
+    "b07e03a111ca96be": {
+      "title": "AlphaGenomeDecode genetics to pinpoint diseases",
+      "url": "https://deepmind.google/blog/alphagenome-ai-for-better-understanding-the-genome/",
+      "seen_date": "2026-03-30"
+    },
+    "b374efe6f2919e83": {
+      "title": "AlphaMissenseFind root causes of rare genetic diseases",
+      "url": "https://deepmind.google/blog/a-catalogue-of-genetic-mutations-to-help-pinpoint-the-cause-of-diseases/",
+      "seen_date": "2026-03-30"
+    },
+    "c19ecf1b92dd445c": {
+      "title": "AlphaEarth FoundationsMap our planet in unprecedented detail",
+      "url": "https://deepmind.google/blog/alphaearth-foundations-helps-map-our-planet-in-unprecedented-detail/",
+      "seen_date": "2026-03-30"
+    },
+    "c4a45eed67ee9087": {
+      "title": "Claude Sonnet 4 6",
+      "url": "https://www.anthropic.com/news/claude-sonnet-4-6",
+      "seen_date": "2026-03-30"
+    },
+    "6c20810f6d90adf9": {
+      "title": "Claude Opus 4 6",
+      "url": "https://www.anthropic.com/news/claude-opus-4-6",
+      "seen_date": "2026-03-30"
+    },
+    "091b61caa9d6ad3b": {
+      "title": "Claude Is A Space To Think",
+      "url": "https://www.anthropic.com/news/claude-is-a-space-to-think",
+      "seen_date": "2026-03-30"
+    },
+    "9d6a48ccf42b9ba3": {
+      "title": "Claude Partner Network",
+      "url": "https://www.anthropic.com/news/claude-partner-network",
+      "seen_date": "2026-03-30"
+    },
+    "a6aa0996df7b73a9": {
+      "title": "The Anthropic Institute",
+      "url": "https://www.anthropic.com/news/the-anthropic-institute",
+      "seen_date": "2026-03-30"
+    },
+    "2c7edba2551d0d4a": {
+      "title": "Sydney Fourth Office Asia Pacific",
+      "url": "https://www.anthropic.com/news/sydney-fourth-office-asia-pacific",
+      "seen_date": "2026-03-30"
+    },
+    "95b4de2e9e82fce6": {
+      "title": "Mozilla Firefox Security",
+      "url": "https://www.anthropic.com/news/mozilla-firefox-security",
+      "seen_date": "2026-03-30"
+    },
+    "d3ae286e89daf459": {
+      "title": "Where Stand Department War",
+      "url": "https://www.anthropic.com/news/where-stand-department-war",
+      "seen_date": "2026-03-30"
+    },
+    "ca2bdfcccfa09e4d": {
+      "title": "Statement Comments Secretary War",
+      "url": "https://www.anthropic.com/news/statement-comments-secretary-war",
+      "seen_date": "2026-03-30"
+    },
+    "1dfaa948d064af05": {
+      "title": "Statement Department Of War",
+      "url": "https://www.anthropic.com/news/statement-department-of-war",
+      "seen_date": "2026-03-30"
+    },
+    "62d5eb25a465f261": {
+      "title": "Acquires Vercept",
+      "url": "https://www.anthropic.com/news/acquires-vercept",
+      "seen_date": "2026-03-30"
+    },
+    "0d40f97ea619e69d": {
+      "title": "Responsible Scaling Policy V3",
+      "url": "https://www.anthropic.com/news/responsible-scaling-policy-v3",
+      "seen_date": "2026-03-30"
+    },
+    "d3d38ded1c6032b4": {
+      "title": "Detecting And Preventing Distillation Attacks",
+      "url": "https://www.anthropic.com/news/detecting-and-preventing-distillation-attacks",
+      "seen_date": "2026-03-30"
+    },
+    "d0ba81cc7a8fdb2b": {
+      "title": "Responsible Scaling Policy",
+      "url": "https://www.anthropic.com/news/announcing-our-updated-responsible-scaling-policy",
+      "seen_date": "2026-03-30"
+    },
+    "255e93df2ceaae51": {
+      "title": "Defense and intelligence",
+      "url": "https://www.microsoft.com/en-us/ai/defense-intelligence",
+      "seen_date": "2026-03-30"
+    },
+    "107d5c78a19bc4ca": {
+      "title": "Transportation and urban infrastructure",
+      "url": "https://www.microsoft.com/en-us/ai/government/transportation-urban-infrastructure",
+      "seen_date": "2026-03-30"
+    },
+    "d46ec50519213b4b": {
+      "title": "Public health and social services",
+      "url": "https://www.microsoft.com/en-us/ai/government/public-health-social-services",
+      "seen_date": "2026-03-30"
+    },
+    "1bfaf3f33fe3ed97": {
+      "title": "Public safety and justice",
+      "url": "https://www.microsoft.com/en-us/ai/government/public-safety-and-justice",
+      "seen_date": "2026-03-30"
+    },
+    "92273731457649c3": {
+      "title": "Defense and intelligence",
+      "url": "https://www.microsoft.com/en-us/us-government/defense-intelligence",
+      "seen_date": "2026-03-30"
+    },
+    "2f82c0044662fb1a": {
+      "title": "State and local governments",
+      "url": "https://www.microsoft.com/en-us/us-government/state-local",
+      "seen_date": "2026-03-30"
+    },
+    "aa2f37bc3da9e865": {
+      "title": "Cloud for US government",
+      "url": "https://www.microsoft.com/en-us/us-government/government-cloud",
+      "seen_date": "2026-03-30"
+    },
+    "04aa9f89b8a509e7": {
+      "title": "AI for US government",
+      "url": "https://www.microsoft.com/en-us/us-government/ai-for-government",
+      "seen_date": "2026-03-30"
+    },
+    "7e4cb1b0c7ca5e6f": {
+      "title": "Industrial transformation",
+      "url": "https://www.microsoft.com/en-us/ai/manufacturing/industrial-transformation",
+      "seen_date": "2026-03-30"
+    },
+    "ed12ef64955aba34": {
+      "title": "Media and entertainment",
+      "url": "https://www.microsoft.com/en-us/ai/media-entertainment",
+      "seen_date": "2026-03-30"
+    },
+    "199acc6af71d5ab3": {
+      "title": "Travel and transportation",
+      "url": "https://www.microsoft.com/en-us/ai/mobility/travel-transportation",
+      "seen_date": "2026-03-30"
+    },
+    "10fe5f678b7bf9ea": {
+      "title": "Microsoft 365 Copilot",
+      "url": "https://www.microsoft.com/en-us/microsoft-365-copilot",
+      "seen_date": "2026-03-30"
+    },
+    "b40a1c1627bd69a5": {
+      "title": "Download the Copilot app",
+      "url": "https://www.microsoft.com/en-us/microsoft-copilot/for-individuals/get-copilot",
+      "seen_date": "2026-03-30"
+    },
+    "dd1c59d8d7c26f28": {
+      "title": "Microsoft responsible AI",
+      "url": "https://www.microsoft.com/en-us/ai/responsible-ai",
+      "seen_date": "2026-03-30"
+    },
+    "629a271c8a66738c": {
+      "title": "Principles and approach",
+      "url": "https://www.microsoft.com/en-us/ai/principles-and-approach",
+      "seen_date": "2026-03-30"
+    },
+    "639e59b8864aab6b": {
+      "title": "Advancing sustainability",
+      "url": "https://www.microsoft.com/en-us/corporate-responsibility/sustainability",
+      "seen_date": "2026-03-30"
+    },
+    "934259785ff5f68a": {
+      "title": "Data protection and privacy",
+      "url": "https://www.microsoft.com/en-us/trust-center",
+      "seen_date": "2026-03-30"
+    },
+    "198c2b3bbcf861ef": {
+      "title": "Microsoft Cloud blog",
+      "url": "https://www.microsoft.com/en-us/microsoft-cloud/blog/",
+      "seen_date": "2026-03-30"
+    },
+    "deca81cc77ba854b": {
+      "title": "Microsoft Azure Blog",
+      "url": "https://www.microsoft.com/en-us/ai/blog/property/azure-blog/",
+      "seen_date": "2026-03-30"
+    },
+    "2faa3443bacdfb1e": {
+      "title": "Dynamics 365",
+      "url": "https://www.microsoft.com/en-us/ai/blog/property/dynamics-365/",
+      "seen_date": "2026-03-30"
+    },
+    "56699521598be680": {
+      "title": "Mantis Biotech is making ‘digital twins’ of humans to help solve medicine’s data availability problem",
+      "url": "https://techcrunch.com/2026/03/30/mantis-biotech-is-making-digital-twins-of-humans-to-help-solve-medicines-data-availability-problem/",
+      "seen_date": "2026-03-30"
+    },
+    "69d5a79dfd8c7490": {
+      "title": "ScaleOps raises $130M to improve computing efficiency amid AI demand",
+      "url": "https://techcrunch.com/2026/03/30/scaleops-130m-series-c-kubernetes-efficiency-ai-demand-funding/",
+      "seen_date": "2026-03-30"
+    },
+    "73d5b94aff1552cb": {
+      "title": "AI chip startup Rebellions raises $400 million at $2.3B valuation in pre-IPO round",
+      "url": "https://techcrunch.com/2026/03/30/ai-chip-startup-rebellions-raises-400-million-at-2-3b-valuation-in-pre-ipo-round/",
+      "seen_date": "2026-03-30"
+    },
+    "bc932f6bca592f0e": {
+      "title": "Mistral AI raises $830M in debt to set up a data center near Paris",
+      "url": "https://techcrunch.com/2026/03/30/mistral-ai-raises-830m-in-debt-to-set-up-a-data-center-near-paris/",
+      "seen_date": "2026-03-30"
+    },
+    "f001682a294672d5": {
+      "title": "Qodo raises $70M for code verification as AI coding scales",
+      "url": "https://techcrunch.com/2026/03/30/qodo-bets-on-code-verification-as-ai-coding-scales-raises-70m/",
+      "seen_date": "2026-03-30"
+    },
+    "adae22b91c32cf7d": {
+      "title": "Starcloud raises $170 million Series A to build data centers in space",
+      "url": "https://techcrunch.com/2026/03/30/starcloud-raises-170-million-series-ato-build-data-centers-in-space/",
+      "seen_date": "2026-03-30"
+    },
+    "6be8df97b6e4e13f": {
+      "title": "Why OpenAI really shut down Sora",
+      "url": "https://techcrunch.com/2026/03/29/why-openai-really-shut-down-sora/",
+      "seen_date": "2026-03-30"
+    },
+    "448e6d63dc5486a7": {
+      "title": "Sora’s shutdown could be a reality check moment for AI video",
+      "url": "https://techcrunch.com/2026/03/29/soras-shutdown-could-be-a-reality-check-moment-for-ai-video/",
+      "seen_date": "2026-03-30"
+    },
+    "5589c049d7333fcf": {
+      "title": "Bluesky leans into AI with Attie, an app for building custom feeds",
+      "url": "https://techcrunch.com/2026/03/28/bluesky-leans-into-ai-with-attie-an-app-for-building-custom-feeds/",
+      "seen_date": "2026-03-30"
+    },
+    "d75a0158d2aab45f": {
+      "title": "Stanford study outlines dangers of asking AI chatbots for personal advice",
+      "url": "https://techcrunch.com/2026/03/28/stanford-study-outlines-dangers-of-asking-ai-chatbots-for-personal-advice/",
+      "seen_date": "2026-03-30"
+    },
+    "6e3baedd25b1b8ec": {
+      "title": "Elon Musk’s last co-founder reportedly leaves xAI",
+      "url": "https://techcrunch.com/2026/03/28/elon-musks-last-co-founder-reportedly-leaves-xai/",
+      "seen_date": "2026-03-30"
+    },
+    "3ee197824109f389": {
+      "title": "Anthropic’s Claude popularity with paying consumers is skyrocketing",
+      "url": "https://techcrunch.com/2026/03/28/anthropics-claude-popularity-with-paying-consumers-is-skyrocketing/",
+      "seen_date": "2026-03-30"
+    },
+    "1b76789dfb3624b3": {
+      "title": "Why SoftBank’s new $40B loan points to a 2026 OpenAI IPO",
+      "url": "https://techcrunch.com/2026/03/27/why-softbanks-new-40b-loan-points-to-a-2026-openai-ipo/",
+      "seen_date": "2026-03-30"
+    },
+    "03c68e8fecce638b": {
+      "title": "Memory chip giant SK hynix could help end ‘RAMmageddon’ with blockbuster US IPO",
+      "url": "https://techcrunch.com/2026/03/27/memory-chip-giant-sk-hynix-could-help-end-rammageddon-with-blockbuster-us-ipo/",
+      "seen_date": "2026-03-30"
+    },
+    "c7a20c48ec609944": {
+      "title": "VCs are betting billions on AI’s next wave, so why is OpenAI killing Sora?",
+      "url": "https://techcrunch.com/podcast/vcs-are-betting-billions-on-ais-next-wave-so-why-is-openai-killing-sora/",
+      "seen_date": "2026-03-30"
+    },
+    "5170768851c0840d": {
+      "title": "OpenAI shuts down Sora while Meta gets shut out in court",
+      "url": "https://techcrunch.com/video/openai-shuts-down-sora-while-meta-gets-shut-out-in-court/",
+      "seen_date": "2026-03-30"
+    },
+    "57fcef62276f13d5": {
+      "title": "David Sacks is done as AI czar — here’s what he’s doing instead",
+      "url": "https://techcrunch.com/2026/03/26/david-sacks-is-done-as-ai-czar-heres-what-hes-doing-instead/",
+      "seen_date": "2026-03-30"
+    },
+    "4a2ab56effc9abc1": {
+      "title": "Anthropic wins injunction against Trump administration over Defense Department saga",
+      "url": "https://techcrunch.com/2026/03/26/anthropic-wins-injunction-against-trump-administration-over-defense-department-saga/",
+      "seen_date": "2026-03-30"
+    },
+    "7a3c2222831e22f4": {
+      "title": "You can now transfer your chats and personal information from other chatbots directly into Gemini",
+      "url": "https://techcrunch.com/2026/03/26/you-can-now-transfer-your-chats-and-personal-information-from-other-chatbots-directly-into-gemini/",
+      "seen_date": "2026-03-30"
+    },
+    "d8c2c47253189198": {
+      "title": "Wikipedia cracks down on the use of AI in article writing",
+      "url": "https://techcrunch.com/2026/03/26/wikipedia-cracks-down-on-the-use-of-ai-in-article-writing/",
+      "seen_date": "2026-03-30"
+    },
+    "88378ea007be7882": {
+      "title": "An update on Brazilian consumer sentiment: An uptick in confidence—and caution",
+      "url": "https://www.mckinsey.com/industries/consumer-packaged-goods/our-insights/the-state-of-the-brazilian-consumer",
+      "seen_date": "2026-03-30"
+    },
+    "055eac2d016d50f2": {
+      "title": "Banking across islands: BPI’s Limcaoco on leadership and transformation",
+      "url": "https://www.mckinsey.com/featured-insights/future-of-asia/banking-across-islands-bpis-limcaoco-on-leadership-and-transformation",
+      "seen_date": "2026-03-30"
+    },
+    "0a1f6b421d1b1abf": {
+      "title": "Recalibrating technology budgets for the AI era",
+      "url": "https://www.mckinsey.com/capabilities/mckinsey-technology/our-insights/recalibrating-technology-budgets-for-the-ai-era",
+      "seen_date": "2026-03-30"
+    },
+    "1ec42e6e4302563d": {
+      "title": "The next horizon: Engineering simulation for an AI-powered world",
+      "url": "https://www.mckinsey.com/capabilities/operations/our-insights/the-next-horizon-engineering-simulation-for-an-ai-powered-world",
+      "seen_date": "2026-03-30"
+    },
+    "35828ec661915c88": {
+      "title": "The $7 trillion data center build-out: How industrials can capture their share",
+      "url": "https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/the-7-trillion-dollar-data-center-build-out-how-industrials-can-capture-their-share",
+      "seen_date": "2026-03-30"
+    },
+    "c51882dc10f1784d": {
+      "title": "Economic conditions outlook, March 2026",
+      "url": "https://www.mckinsey.com/capabilities/strategy-and-corporate-finance/our-insights/economic-conditions-outlook",
+      "seen_date": "2026-03-30"
+    },
+    "424cfd9232f0b415": {
+      "title": "How radical simplification can transform corporate and investment banking",
+      "url": "https://www.mckinsey.com/industries/financial-services/our-insights/how-radical-simplification-can-transform-corporate-and-investment-banking",
+      "seen_date": "2026-03-30"
+    },
+    "e0ebcd4296aac53f": {
+      "title": "The race takes off in the next big arenas of competition",
+      "url": "https://www.mckinsey.com/mgi/our-research/the-race-takes-off-in-the-next-big-arenas-of-competition",
+      "seen_date": "2026-03-30"
+    },
+    "aa334d9e6eddd968": {
+      "title": "Global Economics Intelligence executive summary, February 2026",
+      "url": "https://www.mckinsey.com/capabilities/strategy-and-corporate-finance/our-insights/global-economics-intelligence",
+      "seen_date": "2026-03-30"
+    },
+    "d334df9f37750d51": {
+      "title": "Bold moves to restore US commercial shipbuilding competitiveness",
+      "url": "https://www.mckinsey.com/industries/aerospace-and-defense/our-insights/bold-moves-to-restore-us-commercial-shipbuilding-competitiveness",
+      "seen_date": "2026-03-30"
+    },
+    "35a48ea7b2a6ed30": {
+      "title": "Preparing the next generation of confident communicators in an AI-driven economy",
+      "url": "https://www.mckinsey.com/industries/education/how-we-help-clients/preparing-the-next-generation-of-confident-communicators-in-an-ai-driven-economy",
+      "seen_date": "2026-03-30"
+    },
+    "d1f7e8b2eaa97243": {
+      "title": "The problem with ‘bringing your whole self to work’",
+      "url": "https://www.mckinsey.com/capabilities/people-and-organizational-performance/our-insights/the-problem-with-bringing-your-whole-self-to-work",
+      "seen_date": "2026-03-30"
+    },
+    "ad959b18f241b09b": {
+      "title": "Securing the agentic enterprise: Opportunities for cybersecurity providers",
+      "url": "https://www.mckinsey.com/capabilities/risk-and-resilience/our-insights/securing-the-agentic-enterprise-opportunities-for-cybersecurity-providers",
+      "seen_date": "2026-03-30"
+    },
+    "7d4d83225d25a6f1": {
+      "title": "Addressing the shortage of aviation maintenance technicians",
+      "url": "https://www.mckinsey.com/industries/travel/our-insights/addressing-the-shortage-of-aviation-maintenance-technicians",
+      "seen_date": "2026-03-30"
+    },
+    "08774ab105289be2": {
+      "title": "Anthropic model leaks 🤖, OpenAI Anthropic feud 💼, important AI ideas 🧠",
+      "url": "https://tldr.tech/tech/2026-03-30",
+      "seen_date": "2026-03-30"
+    },
+    "316d0367c4ce6fa9": {
+      "title": "SpaceX IPO playbook 🚀, Apple allows AI assistants 🤖, Stripe Projects 🧑‍💻",
+      "url": "https://tldr.tech/tech/2026-03-27",
+      "seen_date": "2026-03-30"
+    },
+    "d183ecb34953f391": {
+      "title": "Apple's Gemini deal 🤖, how Claude thinks 🧠, antimatter transport ⚛️",
+      "url": "https://tldr.tech/tech/2026-03-26",
+      "seen_date": "2026-03-30"
+    },
+    "d867eac0d9ef2b7d": {
+      "title": "Inside Siri's reboot 📱, OpenAI cancels Sora 🎥, Claude Code auto mode 👨‍💻",
+      "url": "https://tldr.tech/tech/2026-03-25",
+      "seen_date": "2026-03-30"
+    },
+    "057348ea11b9c15c": {
+      "title": "Claude computer use 🤖, Alphabet drone delivery 🚁, self-maintaining software 👨‍💻",
+      "url": "https://tldr.tech/tech/2026-03-24",
+      "seen_date": "2026-03-30"
+    }
+  },
+  "last_updated": "2026-03-30T20:14:19.734068+00:00"
+}
