@@ -1,5 +1,20 @@
 [
   {
+    "id": "305dfe7ff03a1be0",
+    "source_id": "techcrunch_ai",
+    "source_name": "TechCrunch AI",
+    "tier": 2,
+    "title": "Alexa+ gets new food ordering experiences with Uber Eats and Grubhub",
+    "url": "https://techcrunch.com/2026/03/31/alexa-plus-new-food-ordering-experiences-with-uber-eats-and-grubhub/",
+    "published_date": "2026-03-31T17:41:35+00:00",
+    "body_snippet": "You can now order from Uber Eats and Grubhub using Alexa+, an experience Amazon says will be similar to chatting with a waiter at a restaurant or placing an order at a drive-thru.",
+    "full_text": "",
+    "score_threshold": 7,
+    "is_podcast": false,
+    "transcript": "",
+    "raw_language": "en"
+  },
+  {
     "id": "8840d11a4797bab3",
     "source_id": "techcrunch_ai",
     "source_name": "TechCrunch AI",
@@ -19,7 +34,7 @@
     "source_id": "techcrunch_ai",
     "source_name": "TechCrunch AI",
     "tier": 2,
-    "title": "Exclusive: Runway launches $10M fund, Builders program to support early stage AI startups",
+    "title": "Exclusive: Runway launches $10M fund, Builders program to support early-stage AI startups",
     "url": "https://techcrunch.com/2026/03/31/exclusive-runway-launches-10m-fund-builders-program-to-support-early-stage-ai-startups/",
     "published_date": "2026-03-31T14:00:00+00:00",
     "body_snippet": "Runway is launching a $10 million fund and startup program to back companies building with its AI video models, as it pushes toward interactive, real-time “video intelligence” applications.",

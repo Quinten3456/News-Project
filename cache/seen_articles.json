@@ -419,7 +419,592 @@
       "title": "Claude computer use 🤖, Alphabet drone delivery 🚁, self-maintaining software 👨‍💻",
       "url": "https://tldr.tech/tech/2026-03-24",
       "seen_date": "2026-03-30"
+    },
+    "305dfe7ff03a1be0": {
+      "title": "Alexa+ gets new food ordering experiences with Uber Eats and Grubhub",
+      "url": "https://techcrunch.com/2026/03/31/alexa-plus-new-food-ordering-experiences-with-uber-eats-and-grubhub/",
+      "seen_date": "2026-03-31"
+    },
+    "8840d11a4797bab3": {
+      "title": "Nomadic raises $8.4 million to wrangle the data pouring off autonomous vehicles",
+      "url": "https://techcrunch.com/2026/03/31/nomadic-raises-8-4-million-to-wrangle-the-data-pouring-off-avs/",
+      "seen_date": "2026-03-31"
+    },
+    "952557239fad6a16": {
+      "title": "Exclusive: Runway launches $10M fund, Builders program to support early-stage AI startups",
+      "url": "https://techcrunch.com/2026/03/31/exclusive-runway-launches-10m-fund-builders-program-to-support-early-stage-ai-startups/",
+      "seen_date": "2026-03-31"
+    },
+    "834b2d6a95d71cc0": {
+      "title": "With its new app store, Ring bets on AI to go beyond home security",
+      "url": "https://techcrunch.com/2026/03/31/ring-app-store-bets-on-ai-to-go-beyond-home-security/",
+      "seen_date": "2026-03-31"
+    },
+    "f8044cd7942c4a44": {
+      "title": "15% of Americans say they’d be willing to work for an AI boss, according to new poll",
+      "url": "https://techcrunch.com/2026/03/30/ai-work-boss-supervisor-us-quinnipiac-poll/",
+      "seen_date": "2026-03-31"
+    },
+    "8b5236710fc147e0": {
+      "title": "Popular AI gateway startup LiteLLM ditches controversial startup Delve",
+      "url": "https://techcrunch.com/2026/03/30/popular-ai-gateway-startup-litellm-ditches-controversial-startup-delve/",
+      "seen_date": "2026-03-31"
+    },
+    "22ab3ff2d707b002": {
+      "title": "As more Americans adopt AI tools, fewer say they can trust the results",
+      "url": "https://techcrunch.com/2026/03/30/ai-trust-adoption-poll-more-americans-adopt-tools-fewer-say-they-can-trust-the-results/",
+      "seen_date": "2026-03-31"
+    },
+    "7ea90a0e74f9483b": {
+      "title": "How to build businesses faster and better with AI",
+      "url": "https://www.mckinsey.com/capabilities/business-building/our-insights/how-to-build-businesses-faster-and-better-with-ai",
+      "seen_date": "2026-03-31"
+    },
+    "fd99fe3d751b2e92": {
+      "title": "Shaping the next ‘ARC’ of the North American automotive industry",
+      "url": "https://www.mckinsey.com/industries/automotive-and-assembly/our-insights/shaping-the-next-arc-of-the-north-american-automotive-industry",
+      "seen_date": "2026-03-31"
+    },
+    "01b6763ffc9206dd": {
+      "title": "From potential to performance: A snapshot of African banking",
+      "url": "https://www.mckinsey.com/industries/financial-services/our-insights/from-potential-to-performance-a-snapshot-of-african-banking",
+      "seen_date": "2026-03-31"
+    },
+    "b06538b929317b1e": {
+      "title": "Growth in the era of intentional shoppers: Beyond omnichannel grocery in Latin America",
+      "url": "https://www.mckinsey.com/industries/consumer-packaged-goods/our-insights/growth-in-the-era-of-intentional-shoppers-beyond-omnichannel-grocery-in-latin-america",
+      "seen_date": "2026-03-31"
+    },
+    "927632fe7ce2872d": {
+      "title": "The next era of semiconductor value creation",
+      "url": "https://www.mckinsey.com/industries/semiconductors/our-insights/the-next-era-of-semiconductor-value-creation",
+      "seen_date": "2026-03-31"
+    },
+    "c24e3396f67842ab": {
+      "title": "How to scale code review when AI writes code faster than you can understand it. (Sponsor)",
+      "url": "https://www.sonarsource.com/resources/safeguarding-ai-code/?utm_medium=paid&amp;utm_source=tldr&amp;utm_campaign=ss-ai-code-quality26&amp;utm_content=newsletter-tldr-primary-aiatscale-260331-x&amp;utm_term=ww-psp-utm_term%3Dww-psp-x&amp;s_category=Paid&amp;s_source=Paid+Other&amp;s_origin=tldr",
+      "seen_date": "2026-03-31"
+    },
+    "0ba30aaaf17655f6": {
+      "title": "Introducing Codex Plugin for Claude Code",
+      "url": "https://x.com/reach_vb/status/2038670509768839458?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "6eb6126e4db0f28a": {
+      "title": "Microsoft 365 Copilot gets Critique and Council modes",
+      "url": "https://www.testingcatalog.com/microsoft-365-copilot-gets-critique-and-council-modes/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "d81531329d7daf19": {
+      "title": "Qwen3.5-Omni: Scaling Up, Toward Native Omni-Modal AGI",
+      "url": "https://qwen.ai/blog?id=qwen3.5-omni&amp;utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "1f02250c3c4dffd1": {
+      "title": "A Mirror Test For LLMs",
+      "url": "https://www.lesswrong.com/posts/TfKM9PgztxieEcKiv/a-mirror-test-for-llms?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "8b5da712bc7de721": {
+      "title": "AI Infrastructure Roadmap: Five frontiers for 2026",
+      "url": "https://nextbigteng.substack.com/p/ai-infrastructure-roadmap-five-frontiers-for-2026?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "6dee693eb7725bd8": {
+      "title": "AI Applications and Vertical Integration",
+      "url": "https://www.tanayj.com/p/ai-applications-and-vertical-integration?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "b1d868344f95e8b0": {
+      "title": "Two Weeks of Ideation, Done in One Day? Here's How (Sponsor)",
+      "url": "https://miro.com/events/webinar/prototyping-earlier-to-build/?utm_campaign=glb-27q1-glb-wb-hi-c3_o2-prototyping_earlier_webinar&amp;utm_source=tldr&amp;utm_medium=newsletter&amp;utm_content=sponsorship&amp;src=-tldr_glb&amp;utm_term=tldr-ai-secondary",
+      "seen_date": "2026-03-31"
+    },
+    "f700fc9e451cff76": {
+      "title": "TimesFM (GitHub Repo)",
+      "url": "https://github.com/google-research/timesfm?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "42d2a2f81cba61ff": {
+      "title": "Composer 2 Technical Report",
+      "url": "https://arxiv.org/abs/2603.24477?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "7728996fbfb95067": {
+      "title": "Agent Labs: Workload-Harness Fit",
+      "url": "https://www.akashbajwa.co/p/agent-labs-workload-harness-fit?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "de9393aa33ff0de5": {
+      "title": "Audit Claude Platform activity with the Compliance API",
+      "url": "https://claude.com/blog/claude-platform-compliance-api?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "fb5c0b2ce4b8f27a": {
+      "title": "Plentiful, high-paying jobs in the age of AI",
+      "url": "https://www.noahpinion.blog/p/plentiful-high-paying-jobs-in-the-ff9?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "dea6be5f2b84485e": {
+      "title": "Clerk Skills: auth that your AI agent actually gets right (Sponsor)",
+      "url": "https://go.clerk.com/k05qkUw?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "27420959a8cda996": {
+      "title": "Starcloud raises $170 million Series A to build data centers in space",
+      "url": "https://techcrunch.com/2026/03/30/starcloud-raises-170-million-series-ato-build-data-centers-in-space/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "348ac491679048cb": {
+      "title": "The State of Consumer AI. Part 3: Time is Money",
+      "url": "https://apoorv03.com/p/the-state-of-consumer-ai-part-3-time?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "e0f9dbda8cf25277": {
+      "title": "🚀 Transformers.js v4 (GitHub Repo)",
+      "url": "https://github.com/huggingface/transformers.js/releases/tag/4.0.0?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "468cdc8901922415": {
+      "title": "China's DeepSeek suffers rare outage lasting several hours",
+      "url": "https://www.siliconrepublic.com/enterprise/chinas-deepseek-suffers-rare-outage-lasting-several-hours?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "752febd2c72e2c9f": {
+      "title": "Black Duck Signal: Agentic AppSec built for AI-native development (Sponsor)",
+      "url": "https://www.blackduck.com/signal-ai-appsec.html",
+      "seen_date": "2026-03-31"
+    },
+    "1576df9fba382ed3": {
+      "title": "Claude Mythos",
+      "url": "https://m1astra-mythos.pages.dev/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "b69abe2bf74bf336": {
+      "title": "Meta tests Avocado 9B, Avocado Mango Agent, and more",
+      "url": "https://www.testingcatalog.com/exclusive-meta-tests-avocado-9b-avocado-mango-agent-and-more/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "6bc03ba34afd72e1": {
+      "title": "Anthropic's Claude popularity with paying consumers is skyrocketing",
+      "url": "https://techcrunch.com/2026/03/28/anthropics-claude-popularity-with-paying-consumers-is-skyrocketing/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "c437ba4681084c44": {
+      "title": "Function Calling Harness: From 6.75% to 100%",
+      "url": "https://autobe.dev/blog/function-calling-harness-qwen-meetup-korea/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "59cb3873fd0953bf": {
+      "title": "AI's capability improvements haven't come from it getting less affordable",
+      "url": "https://www.lesswrong.com/posts/E6ELHguZFNF3Czp55/ai-s-capability-improvements-haven-t-come-from-it-getting?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "c8f8143b3659ed54": {
+      "title": "The Capability Overhang in AI",
+      "url": "https://x.com/levie/status/2037928306977509601?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "65ebb05439206514": {
+      "title": "Schedule tasks on the web",
+      "url": "https://code.claude.com/docs/en/web-scheduled-tasks?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "532d0cdd58fd5d09": {
+      "title": "What Pretext Reinforced About AI Loops",
+      "url": "https://www.nibzard.com/oracles/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "d2b9b3f990cd5b0f": {
+      "title": "lat.md (GitHub Repo)",
+      "url": "https://github.com/1st1/lat.md?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "6811a13960ba6021": {
+      "title": "xAI's Last Cofounder Leaves",
+      "url": "https://techcrunch.com/2026/03/28/elon-musks-last-co-founder-reportedly-leaves-xai/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "e77dd6d22f6b3a26": {
+      "title": "Things I learned at OpenAI",
+      "url": "https://semaphore.substack.com/p/things-i-learned-at-openai?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "716ad8523640cf8c": {
+      "title": "Clerk Core 3: auth your agents can set up themselves (Sponsor)",
+      "url": "https://go.clerk.com/zMQmT9v?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "bf92194f4842c53c": {
+      "title": "Why AI is not killing the cybersecurity industry, but expanding it exponentially - thoughts from RSA",
+      "url": "https://x.com/edsim/status/2037878454373241256?s=12&utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "6c92efb4b1abcce1": {
+      "title": "Live Translate Comes to Headphones on iOS",
+      "url": "https://blog.google/products-and-platforms/products/translate/live-translate-with-headphones/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "17c0992440c4a39f": {
+      "title": "Three weeks ago there were rumors that one of the labs had completed its largest ever successful training run",
+      "url": "https://x.com/andrewcurran_/status/2037967531630367218?s=12&utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "d8ab861569dfea25": {
+      "title": "Secure Your AI Transformation with Cato AI Security (Sponsor)",
+      "url": "https://www.catonetworks.com/resources/secure-your-ai-transformation/?utm_source=tldr-ai&amp;utm_medium=newsletter&amp;utm_campaign=ai-security&amp;utm_content=20260327",
+      "seen_date": "2026-03-31"
+    },
+    "c2c8ea9f970397dd": {
+      "title": "Claude AI Maker Anthropic Considers IPO as Soon as October",
+      "url": "https://www.bloomberg.com/news/articles/2026-03-27/claude-ai-maker-anthropic-said-to-weigh-ipo-as-soon-as-october?accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb3VyY2UiOiJTdWJzY3JpYmVyR2lmdGVkQXJ0aWNsZSIsImlhdCI6MTc3NDU5MjEyOCwiZXhwIjoxNzc1MTk2OTI4LCJhcnRpY2xlSWQiOiJUQ0oyWDdLR0NUR0IwMCIsImJjb25uZWN0SWQiOiJFQTExNDNDNTM4NEE0RUY5QTg5RjJEN0IxMTg2MzcwOSJ9.3cW4DKyjO0sUQqRgBjt2Gf5mPx14wbMSzLxTdTyIjro&utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "ba66b471e6d7fcfd": {
+      "title": "Elon Musk's X Restructures Ahead of SpaceX IPO",
+      "url": "https://www.wsj.com/tech/elon-musks-x-restructures-ahead-of-spacex-ipo-6aab5673?st=7MkZFu&reflink=desktopwebshare_permalink&utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "ab1496bf893d463f": {
+      "title": "Gemini 3.1 Flash Live for Real-Time Voice AI",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-live/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "cfe8670d1d876d5a": {
+      "title": "The age of vertical models is here",
+      "url": "https://x.com/eoghan/status/2037197696075981124?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "dc20e1d4a67cf54a": {
+      "title": "Meet the Agents at USV",
+      "url": "https://x.com/usv/status/2036903978555105451?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "821d3c88e7614e75": {
+      "title": "Improving Composer through real-time RL",
+      "url": "https://cursor.com/blog/real-time-rl-for-composer?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "c93148c14fef2c77": {
+      "title": "Cohere Releases Open Source Transcription Model",
+      "url": "https://cohere.com/blog/transcribe?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "c28fd4ec0aa1a980": {
+      "title": "Chroma Context-1: Training a Self-Editing Search Agent",
+      "url": "https://www.trychroma.com/research/context-1?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "fd5b1d488866b6b8": {
+      "title": "Mistral Launches Voxtral TTS Model",
+      "url": "https://mistral.ai/news/voxtral-tts?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "996db3d6e3f863aa": {
+      "title": "Anthropic wins preliminary injunction in DOD fight as judge cites ‘First Amendment retaliation'",
+      "url": "https://www.cnbc.com/2026/03/26/anthropic-pentagon-dod-claude-court-ruling.html?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "edf85e355f82dc2b": {
+      "title": "What do frontier AI companies' job postings reveal about their plans?",
+      "url": "https://epochai.substack.com/p/what-do-frontier-ai-companies-job?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "3d0d16d76b6ca8b8": {
+      "title": "This voice AI beats Google and ElevenLabs. Get $100 in free credits (Sponsor)",
+      "url": "https://rime.ai/?utm_source=email&amp;utm_medium=sponsorship&amp;utm_campaign=tldr-march&amp;utm_term=comparison",
+      "seen_date": "2026-03-31"
+    },
+    "57a442158c64e38d": {
+      "title": "How standalone AI video generation traffic evolved over the past 12 months",
+      "url": "https://threadreaderapp.com/thread/2037175238983622791.html?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "cf9112ba9d59f47b": {
+      "title": "Dreamina Seedance 2.0 Rolling Out in CapCut",
+      "url": "https://www.capcut.com/newsroom/dreamina-seedance-2?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "c76325e1dd4e05a6": {
+      "title": "Announcing Cline Kanban: a CLI-agnostic app for multi-agent orchestration",
+      "url": "https://cline.bot/blog/announcing-kanban?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "39b1b77ba526ae09": {
+      "title": "To get AI pricing right, you need a new playbook (Sponsor)",
+      "url": "https://metronome.com/whitepaper/whitepaper-pricing-experimentation-playbook?utm_campaign=pricing%20quiz&amp;utm_medium=newsletter&amp;utm_source=tldr-ai&amp;utm_content=",
+      "seen_date": "2026-03-31"
+    },
+    "51e2eee3bd979890": {
+      "title": "Google's TurboQuant AI-compression algorithm can reduce LLM memory usage by 6x",
+      "url": "https://arstechnica.com/ai/2026/03/google-says-new-turboquant-compression-can-lower-ai-memory-usage-without-sacrificing-quality/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "536cf554b5861bb8": {
+      "title": "Nvidia-Backed Startup Seeking to Counter Chinese AI Eyes $25 Billion Valuation",
+      "url": "https://www.wsj.com/tech/ai/nvidia-backed-startup-seeking-to-counter-chinese-ai-eyes-25-billion-valuation-3bd8216c?st=6bRbMA&reflink=desktopwebshare_permalink&utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "d22000c9f873e9b4": {
+      "title": "ARC-AGI-3 is out",
+      "url": "https://threadreaderapp.com/thread/2036861192619384989.html?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "6e10078d872bc5db": {
+      "title": "Leaders of AI Firm Bought by Meta Are Restricted From Leaving China",
+      "url": "https://www.wsj.com/tech/leaders-of-ai-firm-bought-by-meta-are-restricted-from-leaving-china-6b79da34?st=K4jbvW&reflink=desktopwebshare_permalink&mod=tldr&utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "9b1a95af86693c79": {
+      "title": "Closed Source vs Open Source AI: A Cage Fight Few People Understand",
+      "url": "https://davefriedman.substack.com/p/closed-source-vs-open-source-ai-a?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "522087842f6d79d4": {
+      "title": "Quantization from the ground up",
+      "url": "https://ngrok.com/blog/quantization?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "cbe72d1f19eb16e6": {
+      "title": "Final training runs account for a minority of R&D compute spending",
+      "url": "https://epochai.substack.com/p/final-training-runs-account-for-a?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "0fe1317d75c02c19": {
+      "title": "The open platform for AI-powered enterprise search (Sponsor)",
+      "url": "https://hubs.la/Q047sLtP0?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "9d427b127ef0e89e": {
+      "title": "How OpenAI Creates Its Model Spec",
+      "url": "https://openai.com/index/our-approach-to-the-model-spec/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "d7bb64a2fa0cd4d5": {
+      "title": "What Happened When I Applied Karpathy's Autoresearch Idea to LLM Inference",
+      "url": "https://x.com/manthanguptaa/status/2036785420349174073?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "360b72cbb6ff2a53": {
+      "title": "OpenAI Safety Bug Bounty Program",
+      "url": "https://openai.com/index/safety-bug-bounty/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "5113d15d6d49f765": {
+      "title": "Inside the grind: The SF startup racing to build an AI software engineer",
+      "url": "https://sfstandard.com/2026/03/24/grind-sf-startup-racing-build-ai-software-engineer/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "7f289ac71ebb3a7c": {
+      "title": "Make your raw meeting notes awesome with Granola. No awkward meeting bot required (Sponsor)",
+      "url": "https://go.granola.ai/adops-tldr-tech?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "e70eccfa64a0dbfc": {
+      "title": "Harvey Reached $11B Valuation",
+      "url": "https://www.prnewswire.com/news-releases/harvey-raises-at-11-billion-valuation-to-scale-agents-across-law-firms-and-enterprises-302724309.html?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "158fee09cb1b3b98": {
+      "title": "AI's Bundling Moment",
+      "url": "https://tomtunguz.com/2026-03-24-saas-unbundled-ai-rebundled/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "e16af7774060f8bd": {
+      "title": "Google released Lyria 3 Pro",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/lyria-3-pro/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "cdc349c201c523c0": {
+      "title": "Crusoe BYOM: 5x Higher Throughput for Custom Models (Sponsor)",
+      "url": "https://www.crusoe.ai/cloud/managed-inference?utm_source=tldr&amp;utm_medium=newsletter&amp;utm_campaign=bring_your_own_model_launch",
+      "seen_date": "2026-03-31"
+    },
+    "3f3be7034b21b221": {
+      "title": "Claude Auto Mode",
+      "url": "https://claude.com/blog/auto-mode?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "b31a70a8af899dc0": {
+      "title": "ChatGPT Refocuses on Product Discovery",
+      "url": "https://openai.com/index/powering-product-discovery-in-chatgpt/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "2cf9a46a1582a1f4": {
+      "title": "App Store | Age of Agent",
+      "url": "https://robonomics.substack.com/p/app-store-age-of-agent?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "36b2ebec7eba3f7e": {
+      "title": "Harness design for long-running application development",
+      "url": "https://www.anthropic.com/engineering/harness-design-long-running-apps?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "ef4b22b90affa3c6": {
+      "title": "Claude 2026: Everything Shipped & How to Use It",
+      "url": "https://x.com/kloss_xyz/status/2036356467629162772?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "2eb86f7c542a7b6b": {
+      "title": "Launch fast. Design beautifully. Build your startup on Framer — free for your first year (Sponsor)",
+      "url": "https://framer.link/TLDRAI?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "c6cb52818569a5f8": {
+      "title": "RLVR's Impact on Reasoning Performance",
+      "url": "https://qwen-pilot.notion.site/rlvr-direction?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "5be05b02b4a63c20": {
+      "title": "Trained on Tokens, Calibrated on Concepts: The Emergence of Semantic Calibration in LLMs",
+      "url": "https://machinelearning.apple.com/research/trained-on-tokens?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "be3718a6d40dda33": {
+      "title": "Introducing Ossature: Spec-Driven Code Generation",
+      "url": "https://ossature.dev/blog/introducing-ossature/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "2785e93f0a7639af": {
+      "title": "Ray Data LLM enables 2x throughput over vLLM's synchronous LLM engine at production-scale",
+      "url": "https://www.anyscale.com/blog/ray-data-llm-2x-throughput-vs-vllm?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "8081d0e4f7b391ff": {
+      "title": "Google's Extreme Vector Compression",
+      "url": "https://research.google/blog/turboquant-redefining-ai-efficiency-with-extreme-compression/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "93c085643f61c860": {
+      "title": "US Government's Ban on Anthropic Looks Like Punishment, Judge Says",
+      "url": "https://www.wsj.com/tech/ai/u-s-governments-ban-on-anthropic-looks-like-punishment-attempt-judge-says-2ff98fe3?st=pf89Em&reflink=desktopwebshare_permalink&utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "99cfe09143d6899f": {
+      "title": "OpenAI raises additional money to bring record funding round to $120 billion, CFO tells Cramer",
+      "url": "https://www.cnbc.com/2026/03/24/openai-secures-an-extra-10-billion-in-record-funding-round-cfo-friar-says.html?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "5889b41ff905734e": {
+      "title": "Replay: The durable execution conference for agentic AI (Sponsor)",
+      "url": "https://replay.temporal.io/?utm_source=newsletter&amp;utm_medium=sponsorship&amp;utm_campaign=newsletter-2026-03-05-tldr&amp;utm_content=replay-2026-tldr-ai-quicklink",
+      "seen_date": "2026-03-31"
+    },
+    "c904058171a39645": {
+      "title": "EVA",
+      "url": "https://huggingface.co/blog/ServiceNow-AI/eva?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "26e2021b0267caef": {
+      "title": "Databricks Launches AI-Powered Security Platform",
+      "url": "https://www.databricks.com/company/newsroom/press-releases/databricks-enters-security-market-launch-lakewatch-new-open-agentic?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "292347b1c068a213": {
+      "title": "Anthropic Economic Index report: Learning curves",
+      "url": "https://www.anthropic.com/research/economic-index-march-2026-report?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "28dfa8476dfd5132": {
+      "title": "Fully autonomous AI depends on trusted data and clear guardrails (Sponsor)",
+      "url": "https://pages.awscloud.com/awsmp-gim-j9sb-adhoc-aim-data-ai-maturity-data-and-ai-foundations-ebook.html?trk=3610799d-40b5-4e56-bdfe-b74031c4f33c&amp;sc_channel=el",
+      "seen_date": "2026-03-31"
+    },
+    "522f55f4c9e12b1c": {
+      "title": "OpenAI is offering private-equity firms a guaranteed minimum return of 17.5%",
+      "url": "https://x.com/AndrewCurran_/status/2036043793968083192?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "81e76b422a52dc58": {
+      "title": "Claude Code and Cowork can now use your computer",
+      "url": "https://www.engadget.com/ai/claude-code-and-cowork-can-now-use-your-computer-210000126.html?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "9137c2073a9471e4": {
+      "title": "OpenAI rolls out ChatGPT Library to store your personal files",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-rolls-out-chatgpt-library-to-store-your-personal-files/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "4879ecfaba5d6ac6": {
+      "title": "Designing AI Chip Hardware and Software (Book)",
+      "url": "https://docs.google.com/document/d/1dZ3vF8GE8_gx6tl52sOaUVEPq0ybmai1xvu3uk89_is/edit?tab=t.0#heading=h.rduzhxi11vcn&amp;utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "09f7cd55e9c26129": {
+      "title": "A Ramsey-style Problem on Hypergraphs",
+      "url": "https://epoch.ai/frontiermath/open-problems/ramsey-hypergraphs?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "f7d4d83058c6f3bd": {
+      "title": "Vibe physics: The AI grad student",
+      "url": "https://www.anthropic.com/research/vibe-physics?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "70f40fc4aefd5d0e": {
+      "title": "Research note: We spent 2 hours working in the future",
+      "url": "https://metr.org/notes/2026-03-19-org-uplift-game/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "d1b3649e81cb9206": {
+      "title": "Black Duck Signal: Agentic AppSec built for AI-native development (Sponsor)",
+      "url": "https://www.blackduck.com/signal-ai-appsec.html?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "c8e96f248cb46055": {
+      "title": "Fast Domain-Specific Embedding Tuning",
+      "url": "https://huggingface.co/blog/nvidia/domain-specific-embedding-finetune?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "49e27efb5f0e5ed0": {
+      "title": "DeepMind introduces training-free video editing",
+      "url": "https://dynaedit.github.io/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "3ab7b8e97064ec7e": {
+      "title": "Why aren't we fine-tuning more?",
+      "url": "https://www.natemeyvis.com/why-arent-we-fine-tuning-more/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "0fa89b2c41cb6eae": {
+      "title": "Fast regex search: indexing text for agent tools",
+      "url": "https://cursor.com/blog/fast-regex-search?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "2bf1a4c969142311": {
+      "title": "OpenAI Taps Former Meta Executive to Lead Ad Push",
+      "url": "https://www.wsj.com/tech/ai/openai-taps-former-meta-executive-to-lead-ad-push-60d39af2?st=8ntszh&reflink=desktopwebshare_permalink&utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "52606a3ae9c5e11b": {
+      "title": "OpenAI calls out Microsoft reliance as risk in investor document ahead of expected IPO",
+      "url": "https://www.cnbc.com/2026/03/23/openai-risk-factors-microsoft-reliance-elon-musk-and-xai-lawsuits.html?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "c83f1a40297261c5": {
+      "title": "2026 B2C ecommerce AI trends (Sponsor)",
+      "url": "https://www.algolia.com/resources/asset/ebook-2026-b2c-ecommerce-ai-trends?utm_campaign=tldr_global_b2x_ecomm_ecomm_tof_reach&amp;utm_medium=display&amp;utm_source=tldr&amp;utm_content=tldr_global_b2x_ecomm&amp;utm_term=ebo_2026-b2c-ecommerce-ai-trends&amp;utm_camp_parent=b2x_ecomm&amp;utm_2nd_camp=ecomm_tof&amp;utm_region=global&amp;utm_goal=reach&amp;utm_creative_format=prmrynwsl&amp;utm_model=cpm&amp;utm_marketing_tactic=reach",
+      "seen_date": "2026-03-31"
+    },
+    "08121d486e051d47": {
+      "title": "Walmart: ChatGPT checkout converted 3x worse than website",
+      "url": "https://searchengineland.com/walmart-chatgpt-checkout-converted-worse-472071?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "e33c84f640224b06": {
+      "title": "Running 400B model on iPhone",
+      "url": "https://x.com/anemll/status/2035901335984611412?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "7c6fd1b307b8b78b": {
+      "title": "If DSPy is So Great, Why Isn't Anyone Using It?",
+      "url": "https://skylarbpayne.com/posts/dspy-engineering-patterns/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
+    },
+    "5272b9896284dc41": {
+      "title": "There are only two paths left for software",
+      "url": "https://a16z.com/there-are-only-two-paths-left-for-software/?utm_source=tldrai",
+      "seen_date": "2026-03-31"
     }
   },
-  "last_updated": "2026-03-30T20:14:19.734068+00:00"
+  "last_updated": "2026-03-31T19:43:13.248046+00:00"
 }
