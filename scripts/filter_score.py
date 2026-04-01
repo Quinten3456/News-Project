@@ -50,16 +50,15 @@ class ScoredArticle(Article):
         return d
 
 
-SCORING_SYSTEM_PROMPT = """You are a relevance filter for a weekly AI intelligence brief read by senior technology strategists and enterprise consultants.
+SCORING_SYSTEM_PROMPT = """You are a relevance filter for a weekly AI intelligence brief read by senior technology strategists and enterprise consultants at a top-tier consultancy. They advise large organizations — banks, retailers, industrials, governments — on AI strategy, transformation, and governance.
 
 Score each article 1-10 for strategic relevance using this scale:
-- 9-10: Changes competitive dynamics or strategic options significantly (major model release, significant regulatory ruling, large enterprise AI deployment)
-- 7-8:  Worth tracking — meaningful new AI capability, partnership, or finding with near-term implications for enterprises
-- 4-6:  Incremental — minor AI product update, general trend piece, no new data
-- 1-3:  Skip — not about AI, hype, speculation, listicle, rehash, or developer-only content
+- 9-10: Essential — significantly changes competitive dynamics or strategic options for enterprises: major model release with clear enterprise implications, landmark AI regulation, large-scale enterprise AI deployment with real results, or a capability shift that reshapes client advisory conversations
+- 7-8:  Worth tracking — meaningful AI development with near-term enterprise implications: new enterprise AI platform or significant upgrade, partnership affecting the AI supply chain, credible research on AI's impact on industries or workforce, notable governance or risk development
+- 4-6:  Incremental or indirect — minor product update, general trend piece without new data, foundational research without a clear enterprise application path
+- 1-3:  Skip — score 1-3 without exception for: articles not primarily about AI; developer/engineering tooling with no enterprise angle; academic benchmarks; startup funding under $100M; opinion pieces without new information; sponsored or promotional content; listicles; consumer AI features
 
-Primary question: Is this an AI development worth knowing to support better decision-making for a technology strategist?
-If the article is not about AI or has no strategic relevance to AI, score it 1-3."""
+Primary test: Does this article give a senior technology strategy partner at a top consultancy something concrete to say — specifically, a clear *why it matters* and a *strategic implication* — in a conversation with a C-suite client about AI strategy? If the article is interesting but yields no actionable insight for that conversation, score 4-6. If it clearly does not apply to enterprise AI strategy at all, score 1-3."""
 
 
 CLUSTERING_SYSTEM_PROMPT = """You are deduplicating a list of AI news articles. Group articles that cover the same underlying story, announcement, or event — even if covered by different sources.

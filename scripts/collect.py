@@ -132,6 +132,7 @@ def _parse_rss(url: str) -> object:
 
 def fetch_rss(source: dict, cutoff: datetime, verbose: bool = False) -> List[Article]:
     articles = []
+    keywords = [kw.lower() for kw in source.get("title_keywords", [])]
     try:
         feed = _parse_rss(source["url"])
         if verbose:
@@ -146,10 +147,14 @@ def fetch_rss(source: dict, cutoff: datetime, verbose: bool = False) -> List[Art
             if not url:
                 continue
             title = entry.get("title", "").strip()
+            # Keyword pre-filter: if defined, skip articles whose title matches none
+            if keywords:
+                title_lower = title.lower()
+                if not any(kw in title_lower for kw in keywords):
+                    continue
             snippet = BeautifulSoup(
                 entry.get("summary", entry.get("description", "")), "html.parser"
             ).get_text(" ", strip=True)[:500]
-            # Full text is fetched lazily during summarization, not here
             articles.append(Article(
                 id=_article_id(url),
                 source_id=source["id"],
@@ -159,7 +164,7 @@ def fetch_rss(source: dict, cutoff: datetime, verbose: bool = False) -> List[Art
                 url=url,
                 published_date=pub,
                 body_snippet=snippet,
-                full_text="",  # fetched later if article passes filter
+                full_text="",
                 score_threshold=source["score_threshold"],
             ))
     except Exception as e:

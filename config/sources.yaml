@@ -39,6 +39,7 @@ sources:
     tier: 2
     method: rss
     url: "https://www.mckinsey.com/insights/rss"
+    title_keywords: ["AI", "artificial intelligence", "machine learning", "generative", "automation", "QuantumBlack", "algorithm", "data platform", "digital transformation", "large language", "LLM"]
     score_threshold: 7
 
   - id: tldr_ai
