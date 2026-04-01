@@ -119,24 +119,33 @@ def _fetch_url(url: str, retries: int = 1) -> Optional[requests.Response]:
 
 
 def _extract_article_text(url: str) -> str:
-    """Fetch article page and extract main text content."""
-    time.sleep(0.5)
-    resp = _fetch_url(url)
-    if not resp:
+    """Fetch full article text. Falls back to Firecrawl if plain HTTP returns too little."""
+    # 1. Try plain HTTP first (free, works for most sources)
+    try:
+        time.sleep(0.5)
+        resp = _fetch_url(url)
+        if resp and resp.status_code == 200:
+            soup = BeautifulSoup(resp.text, "html.parser")
+            for tag in soup(["script", "style", "nav", "header", "footer",
+                              "aside", "form"]):
+                tag.decompose()
+            for sel in ["article", "main", "[role='main']", "body"]:
+                el = soup.select_one(sel)
+                if el:
+                    text = el.get_text(" ", strip=True)[:3000]
+                    if len(text) >= 200:   # got real content
+                        return text
+    except Exception:
+        pass
+
+    # 2. Firecrawl fallback — only if plain HTTP returned too little
+    client = _get_firecrawl_client()
+    if client is None:
         return ""
     try:
-        soup = BeautifulSoup(resp.text, "html.parser")
-        # Remove nav, header, footer, scripts, ads
-        for tag in soup(["nav", "header", "footer", "script", "style", "aside", "form"]):
-            tag.decompose()
-        # Try article tag first, then main, then body
-        for selector in ["article", "main", "[role='main']", "body"]:
-            container = soup.select_one(selector)
-            if container:
-                text = " ".join(container.get_text(" ", strip=True).split())
-                if len(text) > 200:
-                    return text[:3000]
-        return ""
+        result = client.scrape(url=url, formats=["markdown"])
+        markdown = getattr(result, "markdown", "") or ""
+        return markdown[:3000]
     except Exception:
         return ""
 
