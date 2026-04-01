@@ -27,6 +27,26 @@ from dateutil import parser as dateutil_parser
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_PATH = os.path.join(PROJECT_ROOT, "config", "sources.yaml")
 
+_firecrawl_client = None  # type: Optional[object]
+
+
+def _get_firecrawl_client():
+    """Return a cached Firecrawl client, or None if SDK/key is unavailable."""
+    global _firecrawl_client
+    if _firecrawl_client is not None:
+        return _firecrawl_client
+    api_key = os.environ.get("FIRECRAWL_API_KEY")
+    if not api_key:
+        return None
+    try:
+        from firecrawl import Firecrawl
+        _firecrawl_client = Firecrawl(api_key=api_key)
+        return _firecrawl_client
+    except ImportError:
+        print("  [firecrawl] firecrawl-py not installed. Run: pip install firecrawl-py")
+        return None
+
+
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -521,6 +541,106 @@ def fetch_date_range(source: dict, cutoff: datetime, verbose: bool = False) -> L
 
     if verbose:
         print(f"  [{source['id']}] date_range: {len(articles)} individual stories")
+    return articles
+
+
+def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> List[Article]:
+    """
+    Scrape a listing/index page via the Firecrawl SDK (1 API credit per call).
+    Parses markdown for inline-link titles + nearby dates; uses result.links as
+    secondary URL discovery. Falls back to [] on any failure.
+    """
+    import re
+
+    client = _get_firecrawl_client()
+    if client is None:
+        print(f"  [{source['id']}] firecrawl: no client available (check FIRECRAWL_API_KEY)")
+        return []
+
+    url_must_contain = source.get("url_must_contain", "")
+    max_articles = source.get("max_articles", 20)
+
+    try:
+        result = client.scrape(url=source["url"], formats=["markdown", "links"])
+    except Exception as e:
+        print(f"  [{source['id']}] firecrawl: API error: {e}")
+        return []
+
+    markdown_text: str = getattr(result, "markdown", "") or ""
+    raw_links: list = getattr(result, "links", []) or []
+
+    if verbose:
+        print(f"  [{source['id']}] firecrawl: {len(markdown_text)} chars markdown, {len(raw_links)} raw links")
+
+    inline_link_re = re.compile(r'\[([^\]]{5,200})\]\((https?://[^\)]+)\)')
+    month_re = re.compile(
+        r'\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|'
+        r'Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|'
+        r'Dec(?:ember)?)\s+\d{1,2},?\s+\d{4}', re.IGNORECASE)
+    iso_date_re = re.compile(r'\b(20\d{2}-\d{2}-\d{2})\b')
+
+    lines = markdown_text.splitlines()
+    url_data: dict = {}
+
+    for i, line in enumerate(lines):
+        for m in inline_link_re.finditer(line):
+            title_candidate = m.group(1).strip()
+            article_url = m.group(2).strip()
+            if article_url in url_data:
+                continue
+            context = "\n".join(lines[i : i + 3])
+            date_str = None
+            dm = month_re.search(context) or iso_date_re.search(context)
+            if dm:
+                date_str = dm.group(0)
+            snippet = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', context)
+            snippet = re.sub(r'[#*_`>]+', '', snippet).strip()[:300]
+            url_data[article_url] = (title_candidate, date_str, snippet)
+
+    for link_item in raw_links:
+        link_url = link_item.get("url", "") if isinstance(link_item, dict) else str(link_item)
+        link_url = link_url.strip()
+        if not link_url.startswith("http") or link_url in url_data:
+            continue
+        slug = link_url.rstrip("/").split("/")[-1]
+        title_from_slug = slug.replace("-", " ").title() if "-" in slug else ""
+        if len(title_from_slug) >= 10:
+            url_data[link_url] = (title_from_slug, None, "")
+
+    articles: List[Article] = []
+    seen_urls: set = set()
+
+    for article_url, (title, date_str, snippet) in url_data.items():
+        if len(articles) >= max_articles:
+            break
+        if article_url in seen_urls:
+            continue
+        if url_must_contain and url_must_contain not in article_url:
+            continue
+        last_segment = article_url.rstrip("/").split("/")[-1]
+        if "-" not in last_segment:
+            continue
+        pub = _parse_date_text(date_str) if date_str else None
+        if pub and pub < cutoff:
+            continue
+        if pub is None:
+            pub = _now_utc()
+        seen_urls.add(article_url)
+        articles.append(Article(
+            id=_article_id(article_url),
+            source_id=source["id"],
+            source_name=source["name"],
+            tier=source["tier"],
+            title=title,
+            url=article_url,
+            published_date=pub,
+            body_snippet=snippet,
+            full_text="",
+            score_threshold=source["score_threshold"],
+        ))
+
+    if verbose:
+        print(f"  [{source['id']}] firecrawl: {len(articles)} articles after filtering")
     return articles
 
 
