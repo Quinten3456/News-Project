@@ -695,6 +695,8 @@ def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False) -> List[A
                 articles = fetch_rss_with_fallback(source, cutoff, verbose)
             elif method == "date_range":
                 articles = fetch_date_range(source, cutoff, verbose)
+            elif method == "firecrawl":
+                articles = fetch_firecrawl(source, cutoff, verbose)
             else:
                 print(f"  [{source['id']}] Unknown method: {method}")
                 articles = []
