@@ -20,7 +20,8 @@
       "WebFetch(domain:www.reuters.com)",
       "WebSearch",
       "Bash(rm \"C:/Users/qalle/.claude/projects/C--Users-qalle-OneDrive-Documenten-ClaudeProjects/memory/project_news.md\")",
-      "Bash(rm \"C:/Users/qalle/.claude/projects/C--Users-qalle-OneDrive-Documenten-ClaudeProjects/memory/project_transcript_approach.md\")"
+      "Bash(rm \"C:/Users/qalle/.claude/projects/C--Users-qalle-OneDrive-Documenten-ClaudeProjects/memory/project_transcript_approach.md\")",
+      "Bash(powershell:*)"
     ]
   }
 }
