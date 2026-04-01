@@ -1,0 +1,7 @@
+anthropic
+beautifulsoup4
+feedparser
+firecrawl-py
+python-dateutil
+pyyaml
+requests
