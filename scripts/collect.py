@@ -597,6 +597,13 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
             article_url = m.group(2).strip()
             if article_url in url_data:
                 continue
+            # Skip CDN/image URLs, broken image-link captures, and nav/author pages
+            if "?" in article_url or title_candidate.startswith("!"):
+                continue
+            url_path = article_url.split("//", 1)[-1].split("/", 1)[-1] if "//" in article_url else ""
+            path_segments = [s for s in url_path.split("/") if s]
+            if len(path_segments) < 2 or "/author/" in article_url:
+                continue
             context = "\n".join(lines[i : i + 3])
             date_str = None
             dm = month_re.search(context) or iso_date_re.search(context)
@@ -610,6 +617,12 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
         link_url = link_item.get("url", "") if isinstance(link_item, dict) else str(link_item)
         link_url = link_url.strip()
         if not link_url.startswith("http") or link_url in url_data:
+            continue
+        # Skip CDN image URLs, author pages, and shallow nav URLs (< 2 path segments)
+        if "?" in link_url or "/author/" in link_url:
+            continue
+        raw_path = link_url.split("//", 1)[-1].split("/", 1)[-1] if "//" in link_url else ""
+        if len([s for s in raw_path.split("/") if s]) < 2:
             continue
         slug = link_url.rstrip("/").split("/")[-1]
         title_from_slug = slug.replace("-", " ").title() if "-" in slug else ""
