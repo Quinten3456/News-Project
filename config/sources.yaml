@@ -34,12 +34,20 @@ sources:
     url: "https://techcrunch.com/category/artificial-intelligence/feed/"
     score_threshold: 7
 
-  - id: mckinsey_ai
-    name: "McKinsey Insights"
+  - id: mckinsey_insights
+    name: "McKinsey QuantumBlack Insights"
     tier: 2
-    method: rss
-    url: "https://www.mckinsey.com/insights/rss"
-    title_keywords: ["AI", "artificial intelligence", "machine learning", "generative", "automation", "QuantumBlack", "algorithm", "data platform", "digital transformation", "large language", "LLM"]
+    method: firecrawl
+    url: "https://www.mckinsey.com/capabilities/quantumblack/our-insights"
+    url_must_contain: "/quantumblack/our-insights/"
+    score_threshold: 7
+
+  - id: venturebeat_ai
+    name: "VentureBeat AI"
+    tier: 2
+    method: firecrawl
+    url: "https://venturebeat.com/category/ai/"
+    url_must_contain: "/ai/"
     score_threshold: 7
 
   - id: tldr_ai
