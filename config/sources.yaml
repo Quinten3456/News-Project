@@ -6,6 +6,7 @@ sources:
     tier: 1
     method: rss
     url: "https://openai.com/news/rss.xml"
+    max_articles: 50
     score_threshold: 7
 
   - id: deepmind_blog
@@ -30,8 +31,11 @@ sources:
   - id: techcrunch_ai
     name: "TechCrunch AI"
     tier: 2
-    method: rss
-    url: "https://techcrunch.com/category/artificial-intelligence/feed/"
+    method: scrape
+    url: "https://techcrunch.com/category/artificial-intelligence/"
+    article_selector: "li.wp-block-post"
+    date_selector: "time"
+    max_articles: 37
     score_threshold: 7
 
   - id: mckinsey_insights

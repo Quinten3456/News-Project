@@ -52,7 +52,9 @@ HEADERS = {
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/120.0.0.0 Safari/537.36"
-    )
+    ),
+    "Accept": "application/rss+xml, application/xml, text/xml, */*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
 }
 
 
@@ -239,7 +241,8 @@ def _fetch_scrape_structured(
             continue
 
         date_el = container.select_one(date_sel)
-        pub = _parse_date_text(date_el.get_text()) if date_el else None
+        date_text = (date_el.get("datetime") or date_el.get_text()) if date_el else None
+        pub = _parse_date_text(date_text) if date_text else None
         if pub and pub < cutoff:
             continue
         if pub is None:
