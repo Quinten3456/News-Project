@@ -674,18 +674,6 @@ def filter_freshness(articles: List[Article], days: int) -> List[Article]:
     return [a for a in articles if a.published_date >= cutoff]
 
 
-def deduplicate_against_cache(articles: List[Article], cache_path: str) -> List[Article]:
-    if not os.path.exists(cache_path):
-        return articles
-    try:
-        with open(cache_path, "r", encoding="utf-8") as f:
-            cache = json.load(f)
-        seen_ids = set(cache.get("articles", {}).keys())
-        return [a for a in articles if a.id not in seen_ids]
-    except Exception:
-        return articles
-
-
 def deduplicate_within_batch(articles: List[Article]) -> List[Article]:
     """Remove duplicate URLs within a single collection run."""
     seen = set()
@@ -697,14 +685,13 @@ def deduplicate_within_batch(articles: List[Article]) -> List[Article]:
     return result
 
 
-def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False, no_cache: bool = False) -> List[Article]:
+def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False) -> List[Article]:
     with open(config_path, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
 
     settings = config.get("settings", {})
     freshness_days = settings.get("freshness_days", 7)
     cutoff = _now_utc() - timedelta(days=freshness_days)
-    cache_path = os.path.join(PROJECT_ROOT, settings.get("cache_file", "cache/seen_articles.json"))
 
     all_articles = []
     for source in config["sources"]:
@@ -732,11 +719,9 @@ def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False, no_cache:
             print(f"  [{source['id']}] FAILED: {e}")
 
     all_articles = deduplicate_within_batch(all_articles)
-    if not no_cache:
-        all_articles = deduplicate_against_cache(all_articles, cache_path)
 
     if verbose:
-        print(f"\nTotal new articles after deduplication: {len(all_articles)}")
+        print(f"\nTotal articles collected: {len(all_articles)}")
     return all_articles
 
 

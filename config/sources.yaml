@@ -69,4 +69,3 @@ sources:
 settings:
   freshness_days: 7
   max_articles_per_source: 20
-  cache_file: "cache/seen_articles.json"

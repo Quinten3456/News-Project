@@ -30,46 +30,7 @@ from summarize import summarize_all, SummarizedItem
 from compile_brief import render_markdown, render_email_text, write_brief
 
 CONFIG_PATH = os.path.join(PROJECT_ROOT, "config", "sources.yaml")
-CACHE_PATH = os.path.join(PROJECT_ROOT, "cache", "seen_articles.json")
 RAW_CACHE_PATH = os.path.join(PROJECT_ROOT, "cache", "raw_collected.json")
-
-
-# ---------- Cache helpers ----------
-
-def load_cache() -> dict:
-    if os.path.exists(CACHE_PATH):
-        try:
-            with open(CACHE_PATH, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            pass
-    return {"articles": {}, "last_updated": None}
-
-
-def save_cache(cache: dict, articles: List[Article]):
-    """Add collected articles to cache and prune entries older than 30 days."""
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    for a in articles:
-        cache["articles"][a.id] = {
-            "title": a.title,
-            "url": a.url,
-            "seen_date": today,
-        }
-
-    # Prune entries older than 30 days
-    from datetime import timedelta
-    cutoff = (datetime.now(timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%d")
-    cache["articles"] = {
-        k: v for k, v in cache["articles"].items()
-        if v.get("seen_date", "1970-01-01") >= cutoff
-    }
-    cache["last_updated"] = datetime.now(timezone.utc).isoformat()
-
-    os.makedirs(os.path.dirname(CACHE_PATH), exist_ok=True)
-    tmp_path = CACHE_PATH + ".tmp"
-    with open(tmp_path, "w", encoding="utf-8") as f:
-        json.dump(cache, f, indent=2, ensure_ascii=False)
-    os.replace(tmp_path, CACHE_PATH)
 
 
 # ---------- Podcast transcript ----------
@@ -144,7 +105,6 @@ def main():
     parser.add_argument("--podcast-url", help="YouTube URL for this week's AI Report episode")
     parser.add_argument("--dry-run", action="store_true", help="Skip Claude API calls, use mock scores")
     parser.add_argument("--skip-collect", action="store_true", help="Reuse last cached raw collection")
-    parser.add_argument("--no-cache", action="store_true", help="Ignore seen-articles cache (show all articles from past week)")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 
@@ -162,7 +122,6 @@ def main():
         sys.exit(1)
 
     client = anthropic.Anthropic(api_key=api_key or "dummy")
-    cache = load_cache()
 
     # --- PHASE 1: COLLECT ---
     print("\n[1/4] Collecting articles...")
@@ -176,7 +135,7 @@ def main():
             d["published_date"] = dt.fromisoformat(d["published_date"])
             articles.append(Article(**{k: v for k, v in d.items() if k in Article.__dataclass_fields__}))
     else:
-        articles = collect_all(CONFIG_PATH, verbose=args.verbose, no_cache=args.no_cache)
+        articles = collect_all(CONFIG_PATH, verbose=args.verbose)
         # Save raw collection for debugging / --skip-collect reuse
         os.makedirs(os.path.dirname(RAW_CACHE_PATH), exist_ok=True)
         with open(RAW_CACHE_PATH, "w", encoding="utf-8") as f:
@@ -233,16 +192,6 @@ def main():
     md_path, email_path = write_brief(md_text, email_text, date_str)
     print(f"  Brief written to: {md_path}")
     print(f"  Email text:       {email_path}")
-
-    # --- UPDATE CACHE ---
-    if not args.dry_run and not args.no_cache:
-        if scored:
-            save_cache(cache, articles)
-            print(f"\n  Cache updated ({len(cache['articles'])} total seen articles)")
-        else:
-            print("\n  Warning: scoring produced no results — cache not updated so articles can be retried next run")
-    elif args.no_cache:
-        print("\n  Cache not updated (--no-cache mode)")
 
     # --- SUMMARY ---
     print(f"\n{'='*60}")
