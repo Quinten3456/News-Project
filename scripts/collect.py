@@ -697,7 +697,7 @@ def deduplicate_within_batch(articles: List[Article]) -> List[Article]:
     return result
 
 
-def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False) -> List[Article]:
+def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False, no_cache: bool = False) -> List[Article]:
     with open(config_path, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
 
@@ -732,7 +732,8 @@ def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False) -> List[A
             print(f"  [{source['id']}] FAILED: {e}")
 
     all_articles = deduplicate_within_batch(all_articles)
-    all_articles = deduplicate_against_cache(all_articles, cache_path)
+    if not no_cache:
+        all_articles = deduplicate_against_cache(all_articles, cache_path)
 
     if verbose:
         print(f"\nTotal new articles after deduplication: {len(all_articles)}")

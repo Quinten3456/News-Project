@@ -144,6 +144,7 @@ def main():
     parser.add_argument("--podcast-url", help="YouTube URL for this week's AI Report episode")
     parser.add_argument("--dry-run", action="store_true", help="Skip Claude API calls, use mock scores")
     parser.add_argument("--skip-collect", action="store_true", help="Reuse last cached raw collection")
+    parser.add_argument("--no-cache", action="store_true", help="Ignore seen-articles cache (show all articles from past week)")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 
@@ -175,7 +176,7 @@ def main():
             d["published_date"] = dt.fromisoformat(d["published_date"])
             articles.append(Article(**{k: v for k, v in d.items() if k in Article.__dataclass_fields__}))
     else:
-        articles = collect_all(CONFIG_PATH, verbose=args.verbose)
+        articles = collect_all(CONFIG_PATH, verbose=args.verbose, no_cache=args.no_cache)
         # Save raw collection for debugging / --skip-collect reuse
         os.makedirs(os.path.dirname(RAW_CACHE_PATH), exist_ok=True)
         with open(RAW_CACHE_PATH, "w", encoding="utf-8") as f:
@@ -234,12 +235,14 @@ def main():
     print(f"  Email text:       {email_path}")
 
     # --- UPDATE CACHE ---
-    if not args.dry_run:
+    if not args.dry_run and not args.no_cache:
         if scored:
             save_cache(cache, articles)
             print(f"\n  Cache updated ({len(cache['articles'])} total seen articles)")
         else:
             print("\n  Warning: scoring produced no results — cache not updated so articles can be retried next run")
+    elif args.no_cache:
+        print("\n  Cache not updated (--no-cache mode)")
 
     # --- SUMMARY ---
     print(f"\n{'='*60}")
