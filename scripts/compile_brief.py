@@ -79,18 +79,19 @@ def render_markdown(
     # Podcast Intelligence
     podcasts = [i for i in items if i.is_podcast]
     if podcasts:
-        lines.append("## Podcast Intelligence")
+        lines.append("## AI Report Podcast")
         lines.append("")
         for pod in podcasts:
-            lines.append(f"### {pod.headline}")
-            lines.append(f"*{pod.source_name} | Tier 3*")
-            lines.append("")
+            if pod.podcast_title_en:
+                lines.append(f"**TITLE:** *{pod.podcast_title_en}*")
+                lines.append("")
             for topic in pod.podcast_topics:
                 t = topic.get("topic", "")
                 discussed = topic.get("what_was_discussed", "")
                 matters = topic.get("why_it_matters", "")
-                lines.append(f"- **{t}:** {discussed} {matters}")
-            lines.append("")
+                lines.append(f"**{t}**")
+                lines.append(f"{discussed} {matters}")
+                lines.append("")
             if pod.podcast_takeaway:
                 lines.append(f"**This week's takeaway:** {pod.podcast_takeaway}")
             lines.append("")

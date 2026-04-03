@@ -72,10 +72,23 @@ def fetch_podcast_transcript(youtube_url: str, verbose: bool = False) -> Optiona
             f.write(text)
         if verbose:
             print(f"  Transcript saved: {transcript_path} ({len(text)} chars)")
-        return text
+
+        # Fetch YouTube title via oEmbed
+        youtube_title = ""
+        try:
+            import requests as _req
+            oembed = _req.get(
+                f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={video_id}&format=json",
+                timeout=10,
+            )
+            youtube_title = oembed.json().get("title", "")
+        except Exception:
+            pass
+
+        return text, youtube_title
     except Exception as e:
         print(f"  [fetch_podcast_transcript] Error: {e}")
-        return None
+        return None, ""
 
 
 # ---------- Source stats ----------
@@ -145,9 +158,10 @@ def main():
 
     # --- PHASE 2: PODCAST TRANSCRIPT ---
     podcast_transcript = None
+    podcast_youtube_title = ""
     if args.podcast_url:
         print(f"\n[+] Fetching podcast transcript...")
-        podcast_transcript = fetch_podcast_transcript(args.podcast_url, verbose=args.verbose)
+        podcast_transcript, podcast_youtube_title = fetch_podcast_transcript(args.podcast_url, verbose=args.verbose)
         if podcast_transcript:
             print(f"  Transcript fetched ({len(podcast_transcript)} chars)")
         else:
@@ -170,6 +184,7 @@ def main():
         client,
         podcast_transcript=podcast_transcript,
         podcast_source_name="AI Report",
+        podcast_youtube_title=podcast_youtube_title,
         dry_run=args.dry_run,
         verbose=args.verbose,
         full_count=5,

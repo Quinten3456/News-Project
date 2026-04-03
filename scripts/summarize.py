@@ -76,6 +76,7 @@ class SummarizedItem:
     # Podcast-specific fields
     podcast_topics: List[dict] = None   # [{topic, what_was_discussed, why_it_matters}]
     podcast_takeaway: str = ""
+    podcast_title_en: str = ""          # YouTube title translated to English
 
     def __post_init__(self):
         if self.podcast_topics is None:
@@ -248,6 +249,7 @@ def summarize_podcast(
     published_date: datetime,
     client: anthropic.Anthropic,
     dry_run: bool = False,
+    youtube_title: str = "",
 ) -> SummarizedItem:
     """Generate a strategic summary for a podcast transcript."""
     if dry_run:
@@ -268,8 +270,9 @@ def summarize_podcast(
             podcast_takeaway="[dry-run placeholder]",
         )
 
+    title_line = f'YouTube title (in Dutch): "{youtube_title}"\n' if youtube_title else ""
     prompt = f"""Podcast: {source_name}
-Transcript (may be in Dutch — translate key points to English before summarizing):
+{title_line}Transcript (may be in Dutch — translate key points to English before summarizing):
 {transcript[:5000]}
 
 Extract the 3-5 most strategically significant topics discussed. For each:
@@ -278,10 +281,12 @@ Extract the 3-5 most strategically significant topics discussed. For each:
 - Why it matters for technology strategists (1 sentence)
 
 Also provide one overall strategic takeaway for the episode.
+{f'Also translate the YouTube title to English and include it as "title_en".' if youtube_title else ""}
 
 Respond in JSON only:
 {{
   "headline": "Podcast: [main theme in max 8 words]",
+  {"\"title_en\": \"[English translation of the YouTube title]\"," if youtube_title else ""}
   "topics": [
     {{"topic": "...", "what_was_discussed": "...", "why_it_matters": "..."}}
   ],
@@ -316,6 +321,7 @@ Respond in JSON only:
             headline=data.get("headline", source_name),
             podcast_topics=data.get("topics", []),
             podcast_takeaway=data.get("overall_takeaway", ""),
+            podcast_title_en=data.get("title_en", ""),
         )
     except Exception as e:
         print(f"  [summarize_podcast] Error: {e}")
@@ -342,6 +348,7 @@ def summarize_all(
     client: anthropic.Anthropic,
     podcast_transcript: Optional[str] = None,
     podcast_source_name: str = "AI Report",
+    podcast_youtube_title: str = "",
     dry_run: bool = False,
     verbose: bool = False,
     full_count: int = 5,
@@ -371,6 +378,7 @@ def summarize_all(
             datetime.now(timezone.utc),
             client,
             dry_run,
+            youtube_title=podcast_youtube_title,
         )
         results.append(podcast_summary)
 
