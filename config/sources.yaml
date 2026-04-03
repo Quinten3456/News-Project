@@ -39,11 +39,11 @@ sources:
     score_threshold: 7
 
   - id: mckinsey_insights
-    name: "McKinsey QuantumBlack Insights"
+    name: "McKinsey Tech & AI Insights"
     tier: 2
     method: firecrawl
-    url: "https://www.mckinsey.com/capabilities/quantumblack/our-insights"
-    url_must_contain: "/quantumblack/our-insights/"
+    url: "https://www.mckinsey.com/capabilities/tech-and-ai/our-insights"
+    url_must_contain: "/tech-and-ai/our-insights/"
     score_threshold: 7
 
   - id: venturebeat_ai
