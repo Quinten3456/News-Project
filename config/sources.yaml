@@ -34,8 +34,9 @@ sources:
     method: scrape
     url: "https://techcrunch.com/category/artificial-intelligence/"
     article_selector: "li.wp-block-post"
+    link_selector: "a.loop-card__title-link"
     date_selector: "time"
-    max_articles: 37
+    max_articles: 50
     score_threshold: 7
 
   - id: mckinsey_insights
@@ -52,6 +53,7 @@ sources:
     method: firecrawl
     url: "https://venturebeat.com/category/ai/"
     url_must_contain: "venturebeat.com/"
+    max_articles: 50
     score_threshold: 7
 
   - id: tldr_ai

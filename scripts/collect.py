@@ -228,8 +228,13 @@ def _fetch_scrape_structured(
     url_must_contain = source.get("url_must_contain", "")
     date_sel = source["date_selector"]
 
+    link_sel = source.get("link_selector", "")
+
     for container in soup.select(source["article_selector"])[:source.get("max_articles", 20)]:
-        link_el = container if container.name == "a" else container.find("a", href=True)
+        if link_sel:
+            link_el = container.select_one(link_sel)
+        else:
+            link_el = container if container.name == "a" else container.find("a", href=True)
         if not link_el:
             continue
         href = link_el.get("href", "")
