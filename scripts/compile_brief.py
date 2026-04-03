@@ -50,11 +50,17 @@ def render_markdown(
             lines.append(f"*{item.source_name} | {pub} | Score {item.relevance_score}/10*{multi}")
             lines.append("")
             if item.what_happened:
-                lines.append(f"**What happened:** {item.what_happened}")
+                lines.append(f"**What happened**")
+                lines.append(f"{item.what_happened}")
+                lines.append("")
             if item.why_it_matters:
-                lines.append(f"**Why it matters:** {item.why_it_matters}")
+                lines.append(f"**Why it matters**")
+                lines.append(f"{item.why_it_matters}")
+                lines.append("")
             if item.strategic_implication:
-                lines.append(f"**Strategic implication:** {item.strategic_implication}")
+                lines.append(f"**Strategic implication**")
+                lines.append(f"{item.strategic_implication}")
+                lines.append("")
             if item.url:
                 lines.append(f"[Read more]({item.url})")
             lines.append("")
