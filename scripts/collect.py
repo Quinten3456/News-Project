@@ -615,7 +615,7 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
             path_segments = [s for s in url_path.split("/") if s]
             if len(path_segments) < 2 or "/author/" in article_url:
                 continue
-            context = "\n".join(lines[i : i + 3])
+            context = "\n".join(lines[max(0, i - 2) : i + 4])
             date_str = None
             dm = month_re.search(context) or iso_date_re.search(context)
             if dm:
