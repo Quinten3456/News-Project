@@ -615,7 +615,7 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
             path_segments = [s for s in url_path.split("/") if s]
             if len(path_segments) < 2 or "/author/" in article_url:
                 continue
-            context = "\n".join(lines[i : i + 3])
+            context = "\n".join(lines[max(0, i - 3) : i + 8])
             date_str = None
             dm = month_re.search(context) or iso_date_re.search(context)
             if dm:
@@ -675,7 +675,9 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
         ))
 
     if verbose:
-        print(f"  [{source['id']}] firecrawl: {len(articles)} articles after filtering")
+        no_date = sum(1 for a in articles if a.published_date.date() == _now_utc().date())
+        print(f"  [{source['id']}] firecrawl: {len(articles)} articles after filtering "
+              f"({no_date} with no extracted date, assigned today)")
     return articles
 
 
