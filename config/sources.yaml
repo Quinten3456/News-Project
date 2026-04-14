@@ -46,6 +46,8 @@ sources:
     method: firecrawl
     url: "https://www.mckinsey.com/capabilities/tech-and-ai/our-insights"
     url_must_contain: "/tech-and-ai/our-insights/"
+    require_date: true
+    freshness_days: 14
     score_threshold: 7
 
   - id: venturebeat_ai

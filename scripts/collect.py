@@ -707,20 +707,21 @@ def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False) -> List[A
 
     all_articles = []
     for source in config["sources"]:
+        source_cutoff = _now_utc() - timedelta(days=source.get("freshness_days", freshness_days))
         if verbose:
             print(f"\nCollecting: {source['name']} (Tier {source['tier']}, method: {source['method']})")
         try:
             method = source["method"]
             if method == "rss":
-                articles = fetch_rss(source, cutoff, verbose)
+                articles = fetch_rss(source, source_cutoff, verbose)
             elif method == "scrape":
-                articles = fetch_scrape(source, cutoff, verbose)
+                articles = fetch_scrape(source, source_cutoff, verbose)
             elif method == "rss_with_fallback":
-                articles = fetch_rss_with_fallback(source, cutoff, verbose)
+                articles = fetch_rss_with_fallback(source, source_cutoff, verbose)
             elif method == "date_range":
-                articles = fetch_date_range(source, cutoff, verbose)
+                articles = fetch_date_range(source, source_cutoff, verbose)
             elif method == "firecrawl":
-                articles = fetch_firecrawl(source, cutoff, verbose)
+                articles = fetch_firecrawl(source, source_cutoff, verbose)
             else:
                 print(f"  [{source['id']}] Unknown method: {method}")
                 articles = []
