@@ -6,6 +6,7 @@ sources:
     tier: 1
     method: rss
     url: "https://openai.com/news/rss.xml"
+    url_must_contain: "/index/"
     max_articles: 50
     score_threshold: 7
 
@@ -14,7 +15,7 @@ sources:
     tier: 1
     method: scrape
     url: "https://deepmind.google/blog/"
-    url_must_contain: "/blog/"
+    url_must_contain: "/discover/blog/"
     score_threshold: 7
 
   - id: anthropic_news
@@ -53,6 +54,7 @@ sources:
     method: firecrawl
     url: "https://venturebeat.com/category/ai/"
     url_must_contain: "venturebeat.com/"
+    require_date: true
     max_articles: 50
     score_threshold: 7
 

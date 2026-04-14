@@ -164,6 +164,7 @@ def _parse_rss(url: str) -> object:
 def fetch_rss(source: dict, cutoff: datetime, verbose: bool = False) -> List[Article]:
     articles = []
     keywords = [kw.lower() for kw in source.get("title_keywords", [])]
+    url_must_contain = source.get("url_must_contain", "")
     try:
         feed = _parse_rss(source["url"])
         if verbose:
@@ -176,6 +177,8 @@ def fetch_rss(source: dict, cutoff: datetime, verbose: bool = False) -> List[Art
                 pub = _now_utc()
             url = entry.get("link", "")
             if not url:
+                continue
+            if url_must_contain and url_must_contain not in url:
                 continue
             title = entry.get("title", "").strip()
             # Keyword pre-filter: if defined, skip articles whose title matches none
@@ -654,6 +657,8 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
         if pub and pub < cutoff:
             continue
         if pub is None:
+            if source.get("require_date", False):
+                continue
             pub = _now_utc()
         seen_urls.add(article_url)
         articles.append(Article(

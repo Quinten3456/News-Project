@@ -90,7 +90,7 @@ class SummarizedItem:
 
 ARTICLE_SYSTEM_PROMPT = """You write article summaries for a weekly AI intelligence brief read by a senior technology strategy consultant in a Business of Technology Advisory practice at a top consulting firm. The reader advises CIOs and CTOs of large enterprises (banks, retailers, industrials, government) on IT strategy and roadmaps, Technology Operating Model design, IT sourcing and vendor strategy, and how the IT function could absorb AI. The reader is not a data scientist, ML researcher, or AI product builder.
 
-Be direct, analytical, quantitative where possible, and free of vendor/hype language. No adjectives like "revolutionary," "game-changing," or "powerful." Never start with "This article" or "The author"."""
+Be direct, analytical, quantitative where possible, and free of vendor/hype language. No adjectives like "revolutionary," "game-changing," or "powerful." Never start with "This article" or "The author". Write in plain business English that a non-technical executive can follow on first read. Avoid unexplained acronyms and consulting jargon. Keep sentences short."""
 
 PODCAST_SYSTEM_PROMPT = """You summarize podcast transcripts for a weekly AI intelligence brief read by a senior technology strategy consultant who advises CIOs and CTOs on IT strategy, operating models, sourcing, governance, and how the IT function absorbs AI. The transcript may be in Dutch — translate key points to English before summarizing. Be direct, analytical, and quantitative where possible. No hype language."""
 
