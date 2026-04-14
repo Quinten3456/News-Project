@@ -581,16 +581,36 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
     max_articles = source.get("max_articles", 20)
 
     try:
-        result = client.scrape(url=source["url"], formats=["markdown", "links"])
+        result = client.scrape(url=source["url"], formats=["markdown", "links", "html"])
     except Exception as e:
         print(f"  [{source['id']}] firecrawl: API error: {e}")
         return []
 
     markdown_text: str = getattr(result, "markdown", "") or ""
     raw_links: list = getattr(result, "links", []) or []
+    html_text: str = getattr(result, "html", "") or ""
+
+    # Build a map of url -> datetime from <time datetime="..."> tags in the HTML
+    html_date_map: dict = {}
+    if html_text:
+        html_soup = BeautifulSoup(html_text, "html.parser")
+        for a_tag in html_soup.find_all("a", href=True):
+            href = a_tag.get("href", "")
+            if href.startswith("/"):
+                href = source["url"].split("//")[0] + "//" + source["url"].split("//")[1].split("/")[0] + href
+            # Walk up to 5 parent levels looking for a <time datetime="..."> sibling or ancestor
+            node = a_tag
+            for _ in range(5):
+                if node is None:
+                    break
+                time_tag = node.find("time") if hasattr(node, "find") else None
+                if time_tag and time_tag.get("datetime"):
+                    html_date_map[href] = time_tag["datetime"]
+                    break
+                node = node.parent
 
     if verbose:
-        print(f"  [{source['id']}] firecrawl: {len(markdown_text)} chars markdown, {len(raw_links)} raw links")
+        print(f"  [{source['id']}] firecrawl: {len(markdown_text)} chars markdown, {len(raw_links)} raw links, {len(html_date_map)} html dates")
 
     inline_link_re = re.compile(r'\[([^\]]{5,200})\]\((https?://[^\)]+)\)')
     month_re = re.compile(
@@ -616,10 +636,11 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
             if len(path_segments) < 2 or "/author/" in article_url:
                 continue
             context = "\n".join(lines[max(0, i - 2) : i + 4])
-            date_str = None
-            dm = month_re.search(context) or iso_date_re.search(context)
-            if dm:
-                date_str = dm.group(0)
+            date_str = html_date_map.get(article_url)
+            if not date_str:
+                dm = month_re.search(context) or iso_date_re.search(context)
+                if dm:
+                    date_str = dm.group(0)
             snippet = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', context)
             snippet = re.sub(r'[#*_`>]+', '', snippet).strip()[:300]
             url_data[article_url] = (title_candidate, date_str, snippet)
