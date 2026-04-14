@@ -581,41 +581,16 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
     max_articles = source.get("max_articles", 20)
 
     try:
-        result = client.scrape(url=source["url"], formats=["markdown", "links", "html"])
+        result = client.scrape(url=source["url"], formats=["markdown", "links"])
     except Exception as e:
         print(f"  [{source['id']}] firecrawl: API error: {e}")
         return []
 
     markdown_text: str = getattr(result, "markdown", "") or ""
     raw_links: list = getattr(result, "links", []) or []
-    html_text: str = getattr(result, "html", "") or ""
-
-    # Build a map of url slug -> datetime from <time datetime="..."> tags in the HTML.
-    # Keyed by slug (last non-empty path segment) to avoid URL format mismatches
-    # between markdown absolute URLs and HTML relative/absolute URLs.
-    html_slug_date_map: dict = {}
-    if html_text:
-        html_soup = BeautifulSoup(html_text, "html.parser")
-        for time_tag in html_soup.find_all("time", datetime=True):
-            dt_val = time_tag.get("datetime", "")
-            if not dt_val:
-                continue
-            # Find nearest <a> with a meaningful href by walking up the tree
-            node = time_tag.parent
-            for _ in range(6):
-                if node is None:
-                    break
-                a_tag = node.find("a", href=True) if hasattr(node, "find") else None
-                if a_tag:
-                    href = a_tag.get("href", "").rstrip("/")
-                    slug = href.split("/")[-1] if href else ""
-                    if slug and "-" in slug:
-                        html_slug_date_map[slug] = dt_val
-                    break
-                node = node.parent
 
     if verbose:
-        print(f"  [{source['id']}] firecrawl: {len(markdown_text)} chars markdown, {len(raw_links)} raw links, {len(html_slug_date_map)} html dates")
+        print(f"  [{source['id']}] firecrawl: {len(markdown_text)} chars markdown, {len(raw_links)} raw links")
 
     inline_link_re = re.compile(r'\[([^\]]{5,200})\]\((https?://[^\)]+)\)')
     month_re = re.compile(
@@ -641,12 +616,10 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
             if len(path_segments) < 2 or "/author/" in article_url:
                 continue
             context = "\n".join(lines[max(0, i - 2) : i + 4])
-            article_slug = article_url.rstrip("/").split("/")[-1]
-            date_str = html_slug_date_map.get(article_slug)
-            if not date_str:
-                dm = month_re.search(context) or iso_date_re.search(context)
-                if dm:
-                    date_str = dm.group(0)
+            date_str = None
+            dm = month_re.search(context) or iso_date_re.search(context)
+            if dm:
+                date_str = dm.group(0)
             snippet = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', context)
             snippet = re.sub(r'[#*_`>]+', '', snippet).strip()[:300]
             url_data[article_url] = (title_candidate, date_str, snippet)
@@ -665,7 +638,16 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
         slug = link_url.rstrip("/").split("/")[-1]
         title_from_slug = slug.replace("-", " ").title() if "-" in slug else ""
         if len(title_from_slug) >= 10:
-            url_data[link_url] = (title_from_slug, None, "")
+            # Try to find the date by locating the URL in the markdown and checking nearby lines
+            link_date_str = None
+            for j, ln in enumerate(lines):
+                if link_url in ln or slug in ln:
+                    ctx = "\n".join(lines[max(0, j - 2) : j + 4])
+                    dm2 = month_re.search(ctx) or iso_date_re.search(ctx)
+                    if dm2:
+                        link_date_str = dm2.group(0)
+                    break
+            url_data[link_url] = (title_from_slug, link_date_str, "")
 
     articles: List[Article] = []
     seen_urls: set = set()
