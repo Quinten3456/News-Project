@@ -615,7 +615,7 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
             path_segments = [s for s in url_path.split("/") if s]
             if len(path_segments) < 2 or "/author/" in article_url:
                 continue
-            context = "\n".join(lines[max(0, i - 2) : i + 4])
+            context = "\n".join(lines[i : i + 3])
             date_str = None
             dm = month_re.search(context) or iso_date_re.search(context)
             if dm:
@@ -638,16 +638,7 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
         slug = link_url.rstrip("/").split("/")[-1]
         title_from_slug = slug.replace("-", " ").title() if "-" in slug else ""
         if len(title_from_slug) >= 10:
-            # Try to find the date by locating the URL in the markdown and checking nearby lines
-            link_date_str = None
-            for j, ln in enumerate(lines):
-                if link_url in ln or slug in ln:
-                    ctx = "\n".join(lines[max(0, j - 2) : j + 4])
-                    dm2 = month_re.search(ctx) or iso_date_re.search(ctx)
-                    if dm2:
-                        link_date_str = dm2.group(0)
-                    break
-            url_data[link_url] = (title_from_slug, link_date_str, "")
+            url_data[link_url] = (title_from_slug, None, "")
 
     articles: List[Article] = []
     seen_urls: set = set()
