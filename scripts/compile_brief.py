@@ -54,11 +54,11 @@ def render_markdown(
                 lines.append(f"{item.what_happened}")
                 lines.append("")
             if item.why_it_matters:
-                lines.append(f"**Why it matters**")
+                lines.append(f"**Why it matters for the CIO agenda**")
                 lines.append(f"{item.why_it_matters}")
                 lines.append("")
             if item.strategic_implication:
-                lines.append(f"**Strategic implication**")
+                lines.append(f"**So what for the strategist**")
                 lines.append(f"{item.strategic_implication}")
                 lines.append("")
             if item.url:
@@ -148,9 +148,9 @@ def render_email_text(items: List[SummarizedItem], metadata: dict) -> str:
             if item.what_happened:
                 lines.append(f"   What happened: {item.what_happened}")
             if item.why_it_matters:
-                lines.append(f"   Why it matters: {item.why_it_matters}")
+                lines.append(f"   Why it matters for the CIO agenda: {item.why_it_matters}")
             if item.strategic_implication:
-                lines.append(f"   Strategic implication: {item.strategic_implication}")
+                lines.append(f"   So what for the strategist: {item.strategic_implication}")
             if item.url:
                 lines.append(f"   {item.url}")
             lines.append("")

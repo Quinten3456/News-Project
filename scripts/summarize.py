@@ -92,7 +92,7 @@ ARTICLE_SYSTEM_PROMPT = """You write article summaries for a weekly AI intellige
 
 Be direct, analytical, quantitative where possible, and free of vendor/hype language. No adjectives like "revolutionary," "game-changing," or "powerful." Never start with "This article" or "The author"."""
 
-PODCAST_SYSTEM_PROMPT = """You summarize podcast transcripts for a weekly AI intelligence brief read by senior technology strategists. The transcript may be in Dutch — translate key points to English before summarizing. Be direct and analytical."""
+PODCAST_SYSTEM_PROMPT = """You summarize podcast transcripts for a weekly AI intelligence brief read by a senior technology strategy consultant who advises CIOs and CTOs on IT strategy, operating models, sourcing, governance, and how the IT function absorbs AI. The transcript may be in Dutch — translate key points to English before summarizing. Be direct, analytical, and quantitative where possible. No hype language."""
 
 
 def summarize_article(item: ScoredArticle, client: anthropic.Anthropic, dry_run: bool = False) -> SummarizedItem:
@@ -130,11 +130,15 @@ Source: {item.source_name} (Tier {item.tier})
 {multi_source}Content:
 {content}
 
-Write exactly:
-1. A punchy headline (max 10 words, factual, no clickbait)
-2. What happened: 1 sentence, factual
-3. Why it matters: 2 sentences, focus on competitive/regulatory/capability implications for enterprises
-4. Strategic implication: 1 sentence — what should a technology strategist do or watch?
+Write exactly these four blocks, nothing else:
+
+1. HEADLINE (max 12 words): factual, names the actor and the action. No clickbait, no rhetorical questions, no colons-as-drama, no "Why X means Y" constructions.
+
+2. WHAT HAPPENED (1-2 sentences): the concrete fact. Include numbers, names, dates, pricing, or availability when the article gives them. Skip narrative framing.
+
+3. WHY IT MATTERS FOR THE CIO AGENDA (2-3 sentences): explain the implication specifically for one or more of — operating model; IT roadmaps; sourcing or vendor strategy; governance structure; IT cost structure; talent strategy. If the implication is conditional or speculative, say so explicitly. Do not invent a CIO implication the article does not support.
+
+4. SO WHAT FOR THE STRATEGIST (1 sentence): a concrete suggestive action or watch-item tied to the reader's actual work. Good examples: "Revisit the cloud-exit assumptions in sourcing deals signed before Q3," "Flag to clients on SAP RISE that the AI add-on has moved to consumption pricing." Bad examples (do not write these): "Monitor developments," "Stay informed," "Consider the implications," "Watch this space."
 
 Respond in JSON only:
 {{"headline": "...", "what_happened": "...", "why_it_matters": "...", "strategic_implication": "..."}}"""
@@ -219,7 +223,7 @@ Title: {item.title}
 Source: {item.source_name}
 Content: {content}
 
-Write 2-3 sentences for a technology strategist: what happened and why it may be relevant. Be factual and concise. No headers, no bullet points.
+Write 2-3 sentences for a technology strategy consultant who advises CIOs on IT strategy, operating models, sourcing, and governance: what happened and why it may be relevant to the CIO agenda. Be factual and concise. No headers, no bullet points.
 
 Respond in JSON only: {{"headline": "...", "summary": "..."}}"""
 
@@ -277,10 +281,10 @@ def summarize_podcast(
 {title_line}Transcript (may be in Dutch — translate key points to English before summarizing):
 {transcript[:5000]}
 
-Extract the 3-5 most strategically significant topics discussed. For each:
+Extract the 3-5 most significant topics for a CIO/CTO audience. For each:
 - Topic name
 - What was discussed (2 sentences)
-- Why it matters for technology strategists (1 sentence)
+- Why it matters for the CIO agenda — operating model, IT roadmaps, sourcing, governance, or IT cost structure (1 sentence)
 
 Also provide one overall strategic takeaway for the episode.
 {f'Also translate the YouTube title to English and include it as "title_en".' if youtube_title else ""}
