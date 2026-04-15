@@ -581,7 +581,7 @@ def fetch_firecrawl(source: dict, cutoff: datetime, verbose: bool = False) -> Li
     max_articles = source.get("max_articles", 20)
 
     try:
-        result = client.scrape(url=source["url"], formats=["markdown", "links"])
+        result = client.scrape(url=source["url"], formats=["markdown", "links"], store_in_cache=False)
     except Exception as e:
         print(f"  [{source['id']}] firecrawl: API error: {e}")
         return []
