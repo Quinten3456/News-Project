@@ -281,6 +281,8 @@ def summarize_podcast(
 {title_line}Transcript (may be in Dutch — translate key points to English before summarizing):
 {transcript[:5000]}
 
+Skip any sponsor, advertisement, or promotional segments in the transcript — do not include them as topics.
+
 Extract the 3-5 most significant topics for a CIO/CTO audience. For each:
 - Topic name
 - What was discussed (2 sentences)

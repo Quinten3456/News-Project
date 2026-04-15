@@ -1,7 +1,7 @@
 anthropic
 beautifulsoup4
 feedparser
-firecrawl-py
+firecrawl-py==4.21.0
 python-dateutil
 pyyaml
 requests
