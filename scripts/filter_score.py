@@ -50,7 +50,9 @@ class ScoredArticle(Article):
         return d
 
 
-SCORING_SYSTEM_PROMPT = """You are a relevance filter for a weekly AI intelligence brief read by a senior technology strategy consultant in a Business of Technology Advisory practice at a top consulting firm. The reader advises CIOs and CTOs of large enterprises (banks, retailers, industrials, government) on IT strategy and roadmaps, Technology Operating Model design, IT sourcing and vendor strategy, and how the IT function could absorb AI. The reader is NOT a data scientist, ML researcher, or AI product builder. They care about AI only insofar as it reshapes how the IT organization is structured, funded, sourced, governed, and run.
+SCORING_SYSTEM_PROMPT = """You are a relevance filter for a weekly AI intelligence brief read by a senior technology strategy consultant in a Business of Technology Advisory practice at a top consulting firm. The reader is based in the Netherlands and advises CIOs and CTOs of large European enterprises (banks, retailers, industrials, government) on IT strategy and roadmaps, Technology Operating Model design, IT sourcing and vendor strategy, and how the IT function could absorb AI. The reader is NOT a data scientist, ML researcher, or AI product builder. They care about AI only insofar as it reshapes how the IT organization is structured, funded, sourced, governed, and run.
+
+US-specific developments are relevant when they affect global AI vendors, product availability, pricing, or regulation that European enterprises will encounter — but US-only regulatory, legal, or political events with no European implication should be scored lower.
 
 Scope is AI-related news only. Articles not primarily about AI are out of scope and should be scored 1-3 regardless of how interesting they are on other dimensions.
 

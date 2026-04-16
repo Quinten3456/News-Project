@@ -88,11 +88,21 @@ class SummarizedItem:
         return d
 
 
-ARTICLE_SYSTEM_PROMPT = """You write article summaries for a weekly AI intelligence brief read by a senior technology strategy consultant in a Business of Technology Advisory practice at a top consulting firm. The reader advises CIOs and CTOs of large enterprises (banks, retailers, industrials, government) on IT strategy and roadmaps, Technology Operating Model design, IT sourcing and vendor strategy, and how the IT function could absorb AI. The reader is not a data scientist, ML researcher, or AI product builder.
+ARTICLE_SYSTEM_PROMPT = """You write article summaries for a weekly AI intelligence brief read by a senior technology strategy consultant in a Business of Technology Advisory practice at a top consulting firm. The reader is based in the Netherlands and advises CIOs and CTOs of large European enterprises (banks, retailers, industrials, government) on IT strategy and roadmaps, Technology Operating Model design, IT sourcing and vendor strategy, and how the IT function could absorb AI. The reader is not a data scientist, ML researcher, or AI product builder.
+
+Frame implications for European enterprises and the European regulatory environment (EU AI Act, GDPR, etc.) rather than defaulting to a US context. When a story originates in the US, explain what it means for European CIOs — do not assume the reader's clients are subject to US law or US procurement norms.
 
 Be direct, analytical, quantitative where possible, and free of vendor/hype language. No adjectives like "revolutionary," "game-changing," or "powerful." Never start with "This article" or "The author". Write in plain business English that a non-technical executive can follow on first read. Avoid unexplained acronyms and consulting jargon. Keep sentences short."""
 
-PODCAST_SYSTEM_PROMPT = """You summarize podcast transcripts for a weekly AI intelligence brief read by a senior technology strategy consultant who advises CIOs and CTOs on IT strategy, operating models, sourcing, governance, and how the IT function absorbs AI. The transcript may be in Dutch — translate key points to English before summarizing. Be direct, analytical, and quantitative where possible. No hype language."""
+PODCAST_SYSTEM_PROMPT = """You summarize podcast transcripts for a weekly AI intelligence brief read by a senior technology strategy consultant based in the Netherlands who advises CIOs and CTOs of large European enterprises on IT strategy, operating models, sourcing, governance, and how the IT function absorbs AI. The transcript may be in Dutch — translate key points to English before summarizing. Frame implications for European enterprises and the European regulatory environment rather than defaulting to a US context.
+
+Style rules — identical to the article summaries in the same brief:
+- Be direct, analytical, and quantitative where possible
+- No adjectives like "revolutionary," "game-changing," "powerful," or "groundbreaking"
+- No hype language or breathless phrasing
+- Write in plain business English that a non-technical executive can follow on first read
+- Avoid unexplained acronyms and consulting jargon
+- Keep sentences short — one idea per sentence"""
 
 
 def summarize_article(item: ScoredArticle, client: anthropic.Anthropic, dry_run: bool = False) -> SummarizedItem:
@@ -284,11 +294,11 @@ def summarize_podcast(
 Skip any sponsor, advertisement, or promotional segments in the transcript — do not include them as topics.
 
 Extract the 3-5 most significant topics for a CIO/CTO audience. For each:
-- Topic name
-- What was discussed (2 sentences)
-- Why it matters for the CIO agenda — operating model, IT roadmaps, sourcing, governance, or IT cost structure (1 sentence)
+- Topic name (short noun phrase, no hype words)
+- What was discussed (2 sentences max — concrete facts, names, and numbers where available; no narrative framing)
+- Why it matters for the CIO agenda (1 sentence — tie specifically to operating model, IT roadmaps, sourcing, governance, or IT cost structure; do not invent an implication the transcript does not support)
 
-Also provide one overall strategic takeaway for the episode.
+Also provide one overall strategic takeaway for the episode (2 sentences max; end with a concrete watch-item or action, not "stay informed" or "monitor developments").
 {f'Also translate the YouTube title to English and include it as "title_en".' if youtube_title else ""}
 
 Respond in JSON only:
