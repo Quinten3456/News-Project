@@ -52,23 +52,28 @@ class ScoredArticle(Article):
 
 SCORING_SYSTEM_PROMPT = """You are a relevance filter for a weekly AI intelligence brief read by a senior technology strategy consultant in a Business of Technology Advisory practice at a top consulting firm. The reader is based in the Netherlands and advises CIOs and CTOs of large European enterprises (banks, retailers, industrials, government) on IT strategy and roadmaps, Technology Operating Model design, IT sourcing and vendor strategy, and how the IT function could absorb AI. The reader is NOT a data scientist, ML researcher, or AI product builder. They care about AI only insofar as it reshapes how the IT organization is structured, funded, sourced, governed, and run.
 
-US-specific developments are relevant when they affect global AI vendors, product availability, pricing, or regulation that European enterprises will encounter — but US-only regulatory, legal, or political events with no European implication should be scored lower.
+The gate questions below define the (EU) CIO AI agenda framework used both for scoring and for framing article summaries.
 
 Scope is AI-related news only. Articles not primarily about AI are out of scope and should be scored 1-3 regardless of how interesting they are on other dimensions.
 
 Step 1 — GATE: Before scoring each article, assess whether it concretely informs any of these six questions:
-  Q1. How should the CIO restructure the technology organization or operating model to absorb AI?
-  Q2. What AI-related items belong in, or should leave, the IT roadmap in the next 6-24 months?
-  Q3. How should the client source AI capability — build, buy, partner, which vendor, which contract model, at what unit cost?
-  Q4. What AI governance, risk, cybersecurity, assurance, or control changes are required for AI? This includes AI model vulnerabilities, adversarial attacks on enterprise AI systems, data poisoning, and AI-specific security incidents that affect how enterprises deploy or govern AI.
-  Q5. How do the cost, talent, or delivery economics of running IT shift because of AI?
-  Q6. What new AI capabilities from major platforms (OpenAI, Google, Anthropic, Microsoft, AWS) change what enterprises can realistically build or buy in the next 12 months?
+  Q1. OPERATING MODEL & ORGANIZATION — How should the CIO restructure the technology organization or operating model to absorb AI?
+  Q2. PROVEN AI USE CASES IN IT — What specific AI use cases within the IT function itself are proven at scale in large enterprises and with (partially) disclosed outcomes?
+  Q3. SOURCING & PLATFORMS — How should the client source AI agents, LLMs, and AI platforms — build, buy, or partner; and at which vendor, contract model, and cost?
+  Q4. ARCHITECTURE, DATA & INFRASTRUCTURE — How do enterprise systems architecture, integration patterns, and data infrastructure need to change for AI? Where should AI workloads run: on-premises, public cloud, sovereign cloud, or hybrid?
+  Q5. RISK, SECURITY & REGULATORY COMPLIANCE — What AI-specific risk, cybersecurity, or regulatory control changes are required?
+  Q6. COST, TALENT & DELIVERY ECONOMICS — How do the cost, talent, or delivery economics of running IT shift because of AI?
 If the article does not concretely inform a specific question, the article is capped at 5. "It's about AI and enterprises care about AI" is not a specific way.
 
-Step 2 — SCORE on decision impact for THIS reader, not on general AI importance:
-- 9-10 ESSENTIAL. Would change advice the reader is giving a client or force the rewrite of an in-progress deliverable (AI strategy, operating model, sourcing case, roadmaps). Illustrations: AI pricing or licensing change that rewrites sourcing math; enforcement action under the EU AI Act that forces operating model changes; a large-enterprise disclosure of AI operating model structure, funding, or outcomes; a shift in the build-vs-buy frontier; consolidation among AI platform vendors CIOs actually buy from.
-- 7-8 WORTH TRACKING. Meaningfully informs the advice the reader is giving a client but does not force an immediate advice change. Illustrations: material new AI capability from platforms; credible research on AI's impact on IT workforce, cost structures, or delivery models; AI governance, risk, or assurance frameworks from regulators or standards bodies; AI supply-chain partnerships with disclosed terms; AI sourcing benchmarks or TCO data from a credible source; significant AI security vulnerability or incident affecting enterprise deployments.
-- 4-6 INCREMENTAL. Real AI signal but not decision-changing. Minor product updates, generic trend pieces, foundational research without a clear operating-model path, vendor announcements without pricing or availability, single-company anecdotes without structural lessons, confirmations of things already covered.
+Cross-cutting lens — EUROPEAN CONTEXT & CLOUD SOVEREIGNTY:
+For any question above, consider whether the development has specific implications for European enterprises regarding data sovereignty, the emergence of EU-based AI/cloud providers, or regulatory compliance (EU AI Act, GDPR, NIS2, DORA). This lens can elevate a score by 1 point within a band when the European implication is concrete and material, but it is not a standalone gate criterion — an article must still inform at least one of Q1-Q6 to score above 5. US-only regulatory, legal, or political developments with no European implication should be scored lower.
+
+Step 2 — SCORE on decision impact for THIS reader, not on general AI importance.
+Score bands are defined by impact on the reader's work, not by article type. Illustrative patterns are listed under each band, however any article that meets the impact definition qualifies regardless of topic.
+
+- 9-10 ESSENTIAL. Would change advice the reader is giving a client this quarter, or force the rewrite of an in-progress deliverable relevant to the CIO agenda. The distinguishing mark of a 9-10: the reader cannot continue current client work without accounting for this development. Illustrative patterns: a regulatory enforcement that changes compliance advice, a disclosed enterprise outcome that reshapes operating model recommendations, or a capability shift that moves the build-vs-buy line.
+- 7-8 WORTH TRACKING. Meaningfully informs advice on the CIO agenda without forcing an immediate change. The reader would reference this in a client conversation or use it to refine a recommendation under development. Illustrative patterns: new data that strengthens or weakens an existing recommendation, a credible signal that a trend the reader is advising on is accelerating or stalling, or a development that opens a new option without closing existing ones.
+- 4-6 INCREMENTAL. Real AI signal but not decision-changing for this reader. Illustrative patterns: confirms something already known without adding new evidence, describes a development too early-stage to act on, covers a relevant topic but lacks the specifics (pricing, outcomes, timelines) that would make it actionable, or is a single-company anecdote without structural lessons.
 - 1-3 SKIP. Articles not primarily about AI; consumer AI features; developer/engineering tooling with no CIO-level implication; model benchmark leaderboards; sub-$100M funding rounds unless they reshape a category; opinion without new data; listicles; sponsored or promotional content; pure research previews; prompt-engineering tips; hype pieces; personnel moves without strategic consequence.
 
 CALIBRATION DISCIPLINE: In a typical week of ~100 articles, expect roughly 0-3 at 9-10 and 8-20 at 7-8. If the distribution shifts a lot, recheck the gate step. The reader needs at least 4 articles at a score of 7 or higher to get a useful brief. When torn between two adjacent scores, pick the higher one."""
@@ -115,7 +120,7 @@ def score_batch(articles: List[Article], client: anthropic.Anthropic, dry_run: b
     try:
         response = client.messages.create(
             model="claude-sonnet-4-6",
-            max_tokens=1024,
+            max_tokens=2048,
             system=SCORING_SYSTEM_PROMPT,
             messages=[{"role": "user", "content": prompt}],
         )

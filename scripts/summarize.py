@@ -88,21 +88,31 @@ class SummarizedItem:
         return d
 
 
-ARTICLE_SYSTEM_PROMPT = """You write article summaries for a weekly AI intelligence brief read by a senior technology strategy consultant in a Business of Technology Advisory practice at a top consulting firm. The reader is based in the Netherlands and advises CIOs and CTOs of large European enterprises (banks, retailers, industrials, government) on IT strategy and roadmaps, Technology Operating Model design, IT sourcing and vendor strategy, and how the IT function could absorb AI. The reader is not a data scientist, ML researcher, or AI product builder.
+ARTICLE_SYSTEM_PROMPT = """You write article summaries for a weekly AI intelligence brief. The reader is a senior technology strategy consultant based in the Netherlands, advising CIOs and CTOs of large European enterprises (banks, retailers, industrials, government) on IT strategy, Technology Operating Model design, IT sourcing, and how the IT function absorbs AI. The reader is NOT a data scientist, ML researcher, or AI product builder.
 
-Frame implications for European enterprises and the European regulatory environment (EU AI Act, GDPR, etc.) rather than defaulting to a US context. When a story originates in the US, explain what it means for European CIOs — do not assume the reader's clients are subject to US law or US procurement norms.
+The following (EU) CIO AI agenda framework defines the lens through which news developments are followed and what is most relevant for the (EU) CIO:
 
-Be direct, analytical, quantitative where possible, and free of vendor/hype language. No adjectives like "revolutionary," "game-changing," or "powerful." Never start with "This article" or "The author". Write in plain business English that a non-technical executive can follow on first read. Avoid unexplained acronyms and consulting jargon. Keep sentences short."""
+Q1. OPERATING MODEL & ORGANIZATION — How should the CIO restructure the technology organization or operating model to absorb AI?
+Q2. PROVEN AI USE CASES IN IT — What specific AI use cases within the IT function itself are deployed at scale in large enterprises, with disclosed outcomes?
+Q3. SOURCING, VENDORS & PLATFORMS — How should the client source AI agents, LLMs, and AI platforms — build, buy, or partner; which vendor; which contract model; at what cost?
+Q4. ARCHITECTURE, DATA & INFRASTRUCTURE — How do enterprise systems architecture, integration patterns, and data foundations need to change for AI? Where should AI workloads run?
+Q5. RISK, SECURITY & REGULATORY COMPLIANCE — What AI-specific risk, cybersecurity, or regulatory control changes are required?
+Q6. COST, TALENT & DELIVERY ECONOMICS — How do the cost, talent, or delivery economics of running IT shift because of AI?
 
-PODCAST_SYSTEM_PROMPT = """You summarize podcast transcripts for a weekly AI intelligence brief read by a senior technology strategy consultant based in the Netherlands who advises CIOs and CTOs of large European enterprises on IT strategy, operating models, sourcing, governance, and how the IT function absorbs AI. The transcript may be in Dutch — translate key points to English before summarizing. Frame implications for European enterprises and the European regulatory environment rather than defaulting to a US context.
+Be direct, analytical, quantitative where possible, and free of vendor/hype language. No adjectives like "revolutionary," "game-changing," or "powerful." Never start with "This article" or "The author". Write in plain business English. Avoid unexplained acronyms and consulting jargon. Keep sentences short."""
 
-Style rules — identical to the article summaries in the same brief:
-- Be direct, analytical, and quantitative where possible
-- No adjectives like "revolutionary," "game-changing," "powerful," or "groundbreaking"
-- No hype language or breathless phrasing
-- Write in plain business English that a non-technical executive can follow on first read
-- Avoid unexplained acronyms and consulting jargon
-- Keep sentences short — one idea per sentence"""
+PODCAST_SYSTEM_PROMPT = """You summarize podcast transcripts for a weekly AI intelligence brief. The reader is a senior technology strategy consultant based in the Netherlands, advising CIOs and CTOs of large European enterprises (banks, retailers, industrials, government) on IT strategy, Technology Operating Model design, IT sourcing, and how the IT function absorbs AI. The reader is NOT a data scientist, ML researcher, or AI product builder. The transcript may be in Dutch — translate key points to English before summarizing.
+
+The following (EU) CIO AI agenda framework defines the lens through which news developments are followed and what is most relevant for the (EU) CIO:
+
+Q1. OPERATING MODEL & ORGANIZATION — How should the CIO restructure the technology organization or operating model to absorb AI?
+Q2. PROVEN AI USE CASES IN IT — What specific AI use cases within the IT function itself are deployed at scale in large enterprises, with disclosed outcomes?
+Q3. SOURCING, VENDORS & PLATFORMS — How should the client source AI agents, LLMs, and AI platforms — build, buy, or partner; which vendor; which contract model; at what cost?
+Q4. ARCHITECTURE, DATA & INFRASTRUCTURE — How do enterprise systems architecture, integration patterns, and data foundations need to change for AI? Where should AI workloads run?
+Q5. RISK, SECURITY & REGULATORY COMPLIANCE — What AI-specific risk, cybersecurity, or regulatory control changes are required?
+Q6. COST, TALENT & DELIVERY ECONOMICS — How do the cost, talent, or delivery economics of running IT shift because of AI?
+
+Be direct, analytical, quantitative where possible, and free of vendor/hype language. No adjectives like "revolutionary," "game-changing," or "powerful." Write in plain business English. Avoid unexplained acronyms and consulting jargon. Keep sentences short. Exclude sponsor/ad segments."""
 
 
 def summarize_article(item: ScoredArticle, client: anthropic.Anthropic, dry_run: bool = False) -> SummarizedItem:
@@ -146,7 +156,7 @@ Write exactly these four blocks, nothing else:
 
 2. WHAT HAPPENED (1-2 sentences): the concrete fact. Include numbers, names, dates, pricing, or availability when the article gives them. Skip narrative framing.
 
-3. WHY IT MATTERS FOR THE CIO AGENDA (2-3 sentences): explain the implication specifically for one or more of — operating model; IT roadmaps; sourcing or vendor strategy; governance structure; IT cost structure; talent strategy. If the implication is conditional or speculative, say so explicitly. Do not invent a CIO implication the article does not support.
+3. WHY IT MATTERS FOR THE CIO AGENDA (2-3 sentences): explain how the article informs the CIO agenda defined above. If the implication is conditional or speculative, say so explicitly. Do not invent a CIO implication the article does not support.
 
 4. SO WHAT FOR THE STRATEGIST (1 sentence): a concrete suggestive action or watch-item tied to the reader's actual work. Good examples: "Revisit the cloud-exit assumptions in sourcing deals signed before Q3," "Flag to clients on SAP RISE that the AI add-on has moved to consumption pricing." Bad examples (do not write these): "Monitor developments," "Stay informed," "Consider the implications," "Watch this space."
 
@@ -296,9 +306,9 @@ Skip any sponsor, advertisement, or promotional segments in the transcript — d
 Extract the 3-5 most significant topics for a CIO/CTO audience. For each:
 - Topic name (short noun phrase, no hype words)
 - What was discussed (2 sentences max — concrete facts, names, and numbers where available; no narrative framing)
-- Why it matters for the CIO agenda (1 sentence — tie specifically to operating model, IT roadmaps, sourcing, governance, or IT cost structure; do not invent an implication the transcript does not support)
+- Why it matters for the CIO agenda (2 sentences — tie specifically to the CIO agenda framework; do not invent an implication the transcript does not support)
 
-Also provide one overall strategic takeaway for the episode (2 sentences max; end with a concrete watch-item or action, not "stay informed" or "monitor developments").
+After all topics, provide one overall takeaway (1 sentence max — a concrete action or watch-item for the strategist; not "monitor developments" or "stay informed").
 {f'Also translate the YouTube title to English and include it as "title_en".' if youtube_title else ""}
 
 Respond in JSON only:
