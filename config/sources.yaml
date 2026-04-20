@@ -17,6 +17,7 @@ sources:
     url: "https://deepmind.google/blog/"
     url_must_contain: "/blog/"
     score_threshold: 7
+    backfill_snippets: true
 
   - id: anthropic_news
     name: "Anthropic"
@@ -28,6 +29,7 @@ sources:
     article_selector: "article.postCard, div[class*='featuredGrid'] a[href]"
     date_selector: ".date"
     score_threshold: 7
+    backfill_snippets: true
 
   - id: techcrunch_ai
     name: "TechCrunch AI"
@@ -39,6 +41,7 @@ sources:
     date_selector: "time"
     max_articles: 50
     score_threshold: 7
+    backfill_snippets: true
 
   - id: mckinsey_insights
     name: "McKinsey Tech & AI Insights"
@@ -57,6 +60,7 @@ sources:
     url_must_contain: "venturebeat.com/"
     max_articles: 50
     score_threshold: 7
+    backfill_snippets: true
 
   - id: tldr_ai
     name: "TLDR AI"

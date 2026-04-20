@@ -11,6 +11,7 @@ Usage (standalone test):
 import hashlib
 import json
 import os
+import re
 import sys
 import time
 import argparse
@@ -225,7 +226,6 @@ def _fetch_scrape_structured(
     Returns articles with real publish dates instead of today's date.
     Falls back to a link-based approach if selectors return 0 results (handles
     sites with CSS-module-hashed class names, e.g. Anthropic)."""
-    import re
     articles = []
     seen_urls = set()
     url_must_contain = source.get("url_must_contain", "")
@@ -489,7 +489,6 @@ def fetch_rss_with_fallback(source: dict, cutoff: datetime, verbose: bool = Fals
 def fetch_date_range(source: dict, cutoff: datetime, verbose: bool = False) -> List[Article]:
     """Fetch a date-based source by constructing daily URLs for the freshness window.
     Extracts individual story cards per day using selectors defined in source config."""
-    import re
     articles = []
     seen_urls = set()
     base_url = source["base_url"]
@@ -730,6 +729,41 @@ def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False) -> List[A
             all_articles.extend(articles)
         except Exception as e:
             print(f"  [{source['id']}] FAILED: {e}")
+
+    # Backfill empty snippets for sources that flag it.
+    # Fetches individual article pages via plain HTTP (free) to populate body_snippet.
+    # Also corrects publish dates that were assigned as today-default during listing scrape.
+    _month_re = re.compile(
+        r'\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|'
+        r'Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|'
+        r'Dec(?:ember)?)\s+\d{1,2},?\s+\d{4}', re.IGNORECASE)
+    for source in config["sources"]:
+        if not source.get("backfill_snippets"):
+            continue
+        source_cutoff = _now_utc() - timedelta(days=source.get("freshness_days", freshness_days))
+        to_backfill = [a for a in all_articles
+                       if a.source_id == source["id"] and not a.body_snippet]
+        if not to_backfill:
+            continue
+        if verbose:
+            print(f"\n  [{source['id']}] Backfilling snippets for {len(to_backfill)} articles...")
+        stale = []
+        for a in to_backfill:
+            text = _extract_article_text(a.url)
+            if text:
+                a.body_snippet = text[:500]
+                dm = _month_re.search(text[:300])
+                if dm:
+                    real_date = _parse_date_text(dm.group(0))
+                    if real_date and real_date < source_cutoff:
+                        stale.append(a)
+                    elif real_date:
+                        a.published_date = real_date
+            time.sleep(0.5)
+        for a in stale:
+            all_articles.remove(a)
+        if verbose and stale:
+            print(f"  [{source['id']}] Dropped {len(stale)} stale articles after date correction")
 
     all_articles = deduplicate_within_batch(all_articles)
 

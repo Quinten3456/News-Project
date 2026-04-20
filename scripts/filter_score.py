@@ -132,8 +132,8 @@ def score_batch(articles: List[Article], client: anthropic.Anthropic, dry_run: b
                 text = text[4:]
         return json.loads(text)
     except Exception as e:
-        print(f"  [score_batch] Error: {e}")
-        return []
+        print(f"  [score_batch] BATCH FAILED ({len(articles)} articles): {e}")
+        return [{"id": a.id, "score": -1, "rationale": "batch-failed"} for a in articles]
 
 
 def cluster_articles(articles: List[ScoredArticle], client: anthropic.Anthropic, dry_run: bool = False) -> List[dict]:
@@ -276,7 +276,7 @@ def score_and_filter(
     scored = []
     for a in articles:
         result = scored_map.get(a.id, {})
-        score = result.get("score", 0)
+        score = result.get("score", -1)
         rationale = result.get("rationale", "")
         sa = ScoredArticle(
             **{k: v for k, v in asdict(a).items() if k not in (
@@ -285,12 +285,17 @@ def score_and_filter(
                 "published_date"
             )},
             published_date=a.published_date,
-            relevance_score=score,
+            relevance_score=max(score, 0),
             relevance_rationale=rationale,
         )
         sa.passed_threshold = score >= a.score_threshold
         if verbose:
-            status = "PASS" if sa.passed_threshold else "FAIL"
+            if score < 0:
+                status = "ERROR"
+            elif sa.passed_threshold:
+                status = "PASS"
+            else:
+                status = "FAIL"
             title_safe = a.title[:60].encode("ascii", errors="replace").decode("ascii")
             print(f"  [{status}] score={score} threshold={a.score_threshold} | {a.source_name} | {title_safe}")
         scored.append(sa)
