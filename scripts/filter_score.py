@@ -110,7 +110,7 @@ def score_batch(articles: List[Article], client: anthropic.Anthropic, dry_run: b
             "id": a.id,
             "title": a.title,
             "source": a.source_name,
-            "snippet": (a.body_snippet or a.full_text[:500])[:400],
+            "snippet": (a.body_snippet or a.full_text[:1500])[:1000],
         }
         for a in articles
     ]

@@ -751,7 +751,7 @@ def collect_all(config_path: str = CONFIG_PATH, verbose: bool = False) -> List[A
         for a in to_backfill:
             text = _extract_article_text(a.url)
             if text:
-                a.body_snippet = text[:500]
+                a.body_snippet = text[:1500]
                 dm = _month_re.search(text[:300])
                 if dm:
                     real_date = _parse_date_text(dm.group(0))
