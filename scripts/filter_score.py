@@ -79,13 +79,14 @@ Score bands are defined by impact on the reader's work, not by article type. Ill
 CALIBRATION DISCIPLINE: In a typical week of ~100 articles, expect roughly 0-3 at 9-10 and 8-20 at 7-8. If the distribution shifts a lot, recheck the gate step. The reader needs at least 4 articles at a score of 7 or higher to get a useful brief. When torn between two adjacent scores, pick the higher one."""
 
 
-CLUSTERING_SYSTEM_PROMPT = """You are deduplicating a list of AI news articles. Group articles that cover the same underlying story, announcement, or event — even if covered by different sources and even if they use different names for it.
+CLUSTERING_SYSTEM_PROMPT = """You are deduplicating a list of AI news articles. Group articles that cover the exact same underlying story, announcement, or event — even if covered by different sources and even if they use different names for it.
 
 Rules:
-- Articles about the same product launch, partnership, or regulatory decision belong in one cluster
-- If the same company makes a single announcement that has multiple named parts (e.g., a new model AND an initiative launched alongside it), those articles belong in the same cluster
-- Articles covering different aspects of a broad topic (e.g., "AI regulation" vs "EU AI Act vote") are separate clusters unless they directly reference the same event
-- When in doubt, cluster rather than split — over-clustering is better than showing the same story twice
+- Only cluster articles that reference the same specific event, announcement, or study. Two articles that are both about "AI coding productivity" are NOT the same story unless they discuss the same survey, paper, or product launch.
+- Articles about the same product launch, partnership, regulatory decision, or published study/report belong in one cluster
+- If the same company makes a single announcement that has multiple named parts, those articles belong in the same cluster
+- Articles covering different aspects of a broad topic, or drawing different conclusions from different sources, are separate clusters
+- When in doubt, keep as separate clusters — losing a distinct story by over-clustering is worse than showing two related stories
 - Each article must appear in exactly one cluster"""
 
 EDITORIAL_SELECT_SYSTEM_PROMPT = """You are the editor of a weekly AI intelligence brief for a senior technology strategy consultant who advises CIOs and CTOs on IT strategy, operating models, sourcing, governance, and how the IT function absorbs AI. Select the 8-10 most worth reading this week. Prioritize stories that change advice to clients on operating model design, IT roadmaps, vendor/sourcing strategy, AI governance, or IT cost structures. Avoid duplicating themes — if two stories cover the same development, pick only the more informative one.
@@ -144,7 +145,8 @@ def cluster_articles(articles: List[ScoredArticle], client: anthropic.Anthropic,
     if dry_run:
         return [{"cluster_id": a.id, "article_ids": [a.id], "canonical_title": a.title} for a in articles]
 
-    payload = [{"id": a.id, "title": a.title, "source": a.source_name} for a in articles]
+    payload = [{"id": a.id, "title": a.title, "source": a.source_name,
+                 "snippet": a.body_snippet} for a in articles]
     prompt = f"Articles to cluster:\n{json.dumps(payload, ensure_ascii=False)}\n\nRespond with a JSON array of clusters only."
 
     fallback = [{"cluster_id": a.id, "article_ids": [a.id], "canonical_title": a.title} for a in articles]

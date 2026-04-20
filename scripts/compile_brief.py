@@ -42,12 +42,8 @@ def render_markdown(
         lines.append("")
         for idx, item in enumerate(top_stories, 1):
             pub = item.published_date.strftime("%b %d") if item.published_date else ""
-            multi = ""
-            if item.supporting_sources:
-                multi = f"  \n*Also covered by: {', '.join(item.supporting_sources)}*"
-
             lines.append(f"### {idx}. {item.headline}")
-            lines.append(f"*{item.source_name} | {pub} | Score {item.relevance_score}/10*{multi}")
+            lines.append(f"*{item.source_name} | {pub} | Score {item.relevance_score}/10*")
             lines.append("")
             if item.what_happened:
                 lines.append(f"**What happened**")
@@ -72,9 +68,8 @@ def render_markdown(
         lines.append("")
         for idx, item in enumerate(digest_stories, len(top_stories) + 1):
             pub = item.published_date.strftime("%b %d") if item.published_date else ""
-            multi = f" | Also: {', '.join(item.supporting_sources)}" if item.supporting_sources else ""
             lines.append(f"**{idx}. {item.headline}**  ")
-            lines.append(f"*{item.source_name} | {pub}{multi}*  ")
+            lines.append(f"*{item.source_name} | {pub}*  ")
             lines.append("")
             if item.digest_summary:
                 lines.append(item.digest_summary)
@@ -141,9 +136,8 @@ def render_email_text(items: List[SummarizedItem], metadata: dict) -> str:
         lines.append("")
         for idx, item in enumerate(top_stories, 1):
             pub = item.published_date.strftime("%b %d") if item.published_date else ""
-            multi = f" | Also: {', '.join(item.supporting_sources)}" if item.supporting_sources else ""
             lines.append(f"{idx}. {item.headline.upper()}")
-            lines.append(f"   {item.source_name} | {pub}{multi}")
+            lines.append(f"   {item.source_name} | {pub}")
             lines.append("")
             if item.what_happened:
                 lines.append(f"   What happened: {item.what_happened}")
@@ -162,9 +156,8 @@ def render_email_text(items: List[SummarizedItem], metadata: dict) -> str:
         lines.append("")
         for idx, item in enumerate(digest_stories, len(top_stories) + 1):
             pub = item.published_date.strftime("%b %d") if item.published_date else ""
-            multi = f" | Also: {', '.join(item.supporting_sources)}" if item.supporting_sources else ""
             lines.append(f"{idx}. {item.headline.upper()}")
-            lines.append(f"   {item.source_name} | {pub}{multi}")
+            lines.append(f"   {item.source_name} | {pub}")
             lines.append("")
             if item.digest_summary:
                 lines.append(f"   {item.digest_summary}")
